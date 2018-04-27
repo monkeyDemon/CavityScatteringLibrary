@@ -1,0 +1,84 @@
+﻿  stdafx.cpp
+  Test.cpp
+F:\计算数学\CavityScatteringLibrary\CavityScatteringAlgorithm\Cavity.h(39): warning C4251: “Cavity::nu”: class“std::vector<int,std::allocator<_Ty>>”需要有 dll 接口由 class“Cavity”的客户端使用
+          with
+          [
+              _Ty=int
+          ]
+  F:\计算数学\CavityScatteringLibrary\CavityScatteringAlgorithm\Cavity.h(39): note: 参见“std::vector<int,std::allocator<_Ty>>”的声明
+          with
+          [
+              _Ty=int
+          ]
+F:\计算数学\CavityScatteringLibrary\CavityScatteringAlgorithm\Cavity.h(40): warning C4251: “Cavity::nbound”: class“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”需要有 dll 接口由 class“Cavity”的客户端使用
+          with
+          [
+              _Ty=double
+          ]
+  F:\计算数学\CavityScatteringLibrary\CavityScatteringAlgorithm\Cavity.h(40): note: 参见“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”的声明
+          with
+          [
+              _Ty=double
+          ]
+F:\计算数学\CavityScatteringLibrary\CavityScatteringAlgorithm\Cavity.h(43): warning C4251: “Cavity::solutionOfAperture”: class“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”需要有 dll 接口由 class“Cavity”的客户端使用
+  f:\c-library\eigen\eigen\src/Core/Matrix.h(453): note: 参见“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”的声明
+F:\计算数学\CavityScatteringLibrary\CavityScatteringAlgorithm\SingalCavity.h(18): warning C4251: “SingalCavity::epr”: class“std::complex<double>”需要有 dll 接口由 class“SingalCavity”的客户端使用
+  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\complex(846): note: 参见“std::complex<double>”的声明
+F:\计算数学\CavityScatteringLibrary\CavityScatteringAlgorithm\SingalCavity.h(19): warning C4251: “SingalCavity::k2”: class“std::complex<double>”需要有 dll 接口由 class“SingalCavity”的客户端使用
+  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\complex(846): note: 参见“std::complex<double>”的声明
+F:\计算数学\CavityScatteringLibrary\CavityScatteringAlgorithm\SingalCavity.h(24): warning C4251: “SingalCavity::G_aperture”: class“Eigen::Matrix<std::complex<double>,-1,-1,0,-1,-1>”需要有 dll 接口由 class“SingalCavity”的客户端使用
+  f:\c-library\eigen\eigen\src/Core/Matrix.h(453): note: 参见“Eigen::Matrix<std::complex<double>,-1,-1,0,-1,-1>”的声明
+F:\计算数学\CavityScatteringLibrary\CavityScatteringAlgorithm\SingalCavity.h(25): warning C4251: “SingalCavity::g_aperture”: class“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”需要有 dll 接口由 class“SingalCavity”的客户端使用
+  f:\c-library\eigen\eigen\src/Core/Matrix.h(453): note: 参见“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”的声明
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousSingalCavity.h(18): warning C4251: “InhomogeneousSingalCavity::epr”: class“std::complex<double>”需要有 dll 接口由 class“InhomogeneousSingalCavity”的客户端使用
+  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\complex(846): note: 参见“std::complex<double>”的声明
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousSingalCavity.h(18): warning C4251: “InhomogeneousSingalCavity::epr_int”: class“std::complex<double>”需要有 dll 接口由 class“InhomogeneousSingalCavity”的客户端使用
+  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\complex(846): note: 参见“std::complex<double>”的声明
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousSingalCavity.h(19): warning C4251: “InhomogeneousSingalCavity::k2”: class“std::complex<double>”需要有 dll 接口由 class“InhomogeneousSingalCavity”的客户端使用
+  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\complex(846): note: 参见“std::complex<double>”的声明
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousSingalCavity.h(19): warning C4251: “InhomogeneousSingalCavity::k2_int”: class“std::complex<double>”需要有 dll 接口由 class“InhomogeneousSingalCavity”的客户端使用
+  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\complex(846): note: 参见“std::complex<double>”的声明
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousSingalCavity.h(26): warning C4251: “InhomogeneousSingalCavity::G_aperture”: class“Eigen::Matrix<std::complex<double>,-1,-1,0,-1,-1>”需要有 dll 接口由 class“InhomogeneousSingalCavity”的客户端使用
+  f:\c-library\eigen\eigen\src/Core/Matrix.h(453): note: 参见“Eigen::Matrix<std::complex<double>,-1,-1,0,-1,-1>”的声明
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousSingalCavity.h(27): warning C4251: “InhomogeneousSingalCavity::g_aperture”: class“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”需要有 dll 接口由 class“InhomogeneousSingalCavity”的客户端使用
+  f:\c-library\eigen\eigen\src/Core/Matrix.h(453): note: 参见“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”的声明
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousThreeCavity.h(18): warning C4251: “InhomogeneousThreeCavity::epr1”: class“std::complex<double>”需要有 dll 接口由 class“InhomogeneousThreeCavity”的客户端使用
+  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\complex(846): note: 参见“std::complex<double>”的声明
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousThreeCavity.h(18): warning C4251: “InhomogeneousThreeCavity::epr1_int”: class“std::complex<double>”需要有 dll 接口由 class“InhomogeneousThreeCavity”的客户端使用
+  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\complex(846): note: 参见“std::complex<double>”的声明
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousThreeCavity.h(19): warning C4251: “InhomogeneousThreeCavity::epr2”: class“std::complex<double>”需要有 dll 接口由 class“InhomogeneousThreeCavity”的客户端使用
+  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\complex(846): note: 参见“std::complex<double>”的声明
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousThreeCavity.h(19): warning C4251: “InhomogeneousThreeCavity::epr2_int”: class“std::complex<double>”需要有 dll 接口由 class“InhomogeneousThreeCavity”的客户端使用
+  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\complex(846): note: 参见“std::complex<double>”的声明
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousThreeCavity.h(20): warning C4251: “InhomogeneousThreeCavity::epr3”: class“std::complex<double>”需要有 dll 接口由 class“InhomogeneousThreeCavity”的客户端使用
+  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\complex(846): note: 参见“std::complex<double>”的声明
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousThreeCavity.h(20): warning C4251: “InhomogeneousThreeCavity::epr3_int”: class“std::complex<double>”需要有 dll 接口由 class“InhomogeneousThreeCavity”的客户端使用
+  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\complex(846): note: 参见“std::complex<double>”的声明
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousThreeCavity.h(21): warning C4251: “InhomogeneousThreeCavity::k1_2”: class“std::complex<double>”需要有 dll 接口由 class“InhomogeneousThreeCavity”的客户端使用
+  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\complex(846): note: 参见“std::complex<double>”的声明
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousThreeCavity.h(21): warning C4251: “InhomogeneousThreeCavity::k1_2int”: class“std::complex<double>”需要有 dll 接口由 class“InhomogeneousThreeCavity”的客户端使用
+  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\complex(846): note: 参见“std::complex<double>”的声明
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousThreeCavity.h(22): warning C4251: “InhomogeneousThreeCavity::k2_2”: class“std::complex<double>”需要有 dll 接口由 class“InhomogeneousThreeCavity”的客户端使用
+  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\complex(846): note: 参见“std::complex<double>”的声明
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousThreeCavity.h(22): warning C4251: “InhomogeneousThreeCavity::k2_2int”: class“std::complex<double>”需要有 dll 接口由 class“InhomogeneousThreeCavity”的客户端使用
+  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\complex(846): note: 参见“std::complex<double>”的声明
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousThreeCavity.h(23): warning C4251: “InhomogeneousThreeCavity::k3_2”: class“std::complex<double>”需要有 dll 接口由 class“InhomogeneousThreeCavity”的客户端使用
+  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\complex(846): note: 参见“std::complex<double>”的声明
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousThreeCavity.h(23): warning C4251: “InhomogeneousThreeCavity::k3_2int”: class“std::complex<double>”需要有 dll 接口由 class“InhomogeneousThreeCavity”的客户端使用
+  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\complex(846): note: 参见“std::complex<double>”的声明
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousThreeCavity.h(40): warning C4251: “InhomogeneousThreeCavity::G1_aperture”: class“Eigen::Matrix<std::complex<double>,-1,-1,0,-1,-1>”需要有 dll 接口由 class“InhomogeneousThreeCavity”的客户端使用
+  f:\c-library\eigen\eigen\src/Core/Matrix.h(453): note: 参见“Eigen::Matrix<std::complex<double>,-1,-1,0,-1,-1>”的声明
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousThreeCavity.h(41): warning C4251: “InhomogeneousThreeCavity::G2_aperture”: class“Eigen::Matrix<std::complex<double>,-1,-1,0,-1,-1>”需要有 dll 接口由 class“InhomogeneousThreeCavity”的客户端使用
+  f:\c-library\eigen\eigen\src/Core/Matrix.h(453): note: 参见“Eigen::Matrix<std::complex<double>,-1,-1,0,-1,-1>”的声明
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousThreeCavity.h(42): warning C4251: “InhomogeneousThreeCavity::G3_aperture”: class“Eigen::Matrix<std::complex<double>,-1,-1,0,-1,-1>”需要有 dll 接口由 class“InhomogeneousThreeCavity”的客户端使用
+  f:\c-library\eigen\eigen\src/Core/Matrix.h(453): note: 参见“Eigen::Matrix<std::complex<double>,-1,-1,0,-1,-1>”的声明
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousThreeCavity.h(43): warning C4251: “InhomogeneousThreeCavity::g_aperture”: class“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”需要有 dll 接口由 class“InhomogeneousThreeCavity”的客户端使用
+  f:\c-library\eigen\eigen\src/Core/Matrix.h(453): note: 参见“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”的声明
+    正在创建库 F:\计算数学\CavityScatteringLibrary\x64\Release\Test.lib 和对象 F:\计算数学\CavityScatteringLibrary\x64\Release\Test.exp
+  正在生成代码
+  577 of 587 functions (98.3%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    1 functions had inline decision re-evaluated but remain unchanged
+  已完成代码的生成
+  Test.vcxproj -> F:\计算数学\CavityScatteringLibrary\x64\Release\Test.exe
+  Test.vcxproj -> F:\计算数学\CavityScatteringLibrary\x64\Release\Test.pdb (Full PDB)

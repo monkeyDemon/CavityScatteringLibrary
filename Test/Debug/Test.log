@@ -1,0 +1,14 @@
+﻿  stdafx.cpp
+  Test.cpp
+f:\计算数学\cavityscatteringalgorithm\cavityscatteringalgorithm\structure.h(78): warning C4018: “<”: 有符号/无符号不匹配
+f:\计算数学\cavityscatteringalgorithm\cavityscatteringalgorithm\singalcavity.h(17): warning C4251: “SingalCavity::epr”: class“std::complex<double>”需要有 dll 接口由 class“SingalCavity”的客户端使用
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\complex(846): note: 参见“std::complex<double>”的声明
+f:\计算数学\cavityscatteringalgorithm\cavityscatteringalgorithm\singalcavity.h(18): warning C4251: “SingalCavity::k2”: class“std::complex<double>”需要有 dll 接口由 class“SingalCavity”的客户端使用
+  c:\program files (x86)\microsoft visual studio 14.0\vc\include\complex(846): note: 参见“std::complex<double>”的声明
+f:\计算数学\cavityscatteringalgorithm\cavityscatteringalgorithm\singalcavity.h(24): warning C4251: “SingalCavity::G_aperture”: class“Eigen::Matrix<std::complex<double>,-1,-1,0,-1,-1>”需要有 dll 接口由 class“SingalCavity”的客户端使用
+  f:\c-library\eigen\eigen\src\core\matrix.h(453): note: 参见“Eigen::Matrix<std::complex<double>,-1,-1,0,-1,-1>”的声明
+f:\计算数学\cavityscatteringalgorithm\cavityscatteringalgorithm\singalcavity.h(25): warning C4251: “SingalCavity::g_aperture”: class“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”需要有 dll 接口由 class“SingalCavity”的客户端使用
+  f:\c-library\eigen\eigen\src\core\matrix.h(453): note: 参见“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”的声明
+    正在创建库 F:\计算数学\CavityScatteringAlgorithm\Debug\Test.lib 和对象 F:\计算数学\CavityScatteringAlgorithm\Debug\Test.exp
+  Test.vcxproj -> F:\计算数学\CavityScatteringAlgorithm\Debug\Test.exe
+  Test.vcxproj -> F:\计算数学\CavityScatteringAlgorithm\Debug\Test.pdb (Full PDB)
