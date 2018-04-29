@@ -21,7 +21,8 @@ using namespace std;
 class _declspec(dllexport) Cavity
 {
 public:
-	Cavity(unsigned int cavityType);
+	Cavity(unsigned int cavityType); //构造函数
+	~Cavity();                                     //析构函数
 	void InitVirtualBorder(double top, double bottom, double left, double right);
 	void InitMesh(int m, int n);
 	//void InitElectromagneticParameter() = 0;
@@ -32,6 +33,8 @@ public:
 	void PlotAperture(string title, string xlabel, string ylabel, int sign);
 
 protected:
+	Engine *ep;//matlab引擎
+
 	unsigned int initalCheckKey = 0;   //使用此二进制串进行初始化检查
 	unsigned int cavityType;
 
@@ -73,8 +76,11 @@ protected:
 	virtual void weak5(double x1, double y1, double x2, double y2, double v1, double v2, vector<vector<double>> &nbound, vector<complex<double>> &out5m, complex<double> &out5) = 0;
 	virtual VectorXcd setRightHand(TriangleMesh &U, TriangleMesh &L, vector<int> &nu)=0;
 	virtual SparseMatrix<complex<double>> setA(double nn, vector<int> &nu, vector<vector<double>> &nbound, vector<vector<gridCell>> &grid) = 0;
+	virtual mxArray* setA_mx(double nn, vector<int> &nu, vector<vector<double>> &nbound, vector<vector<gridCell>> &grid) = 0;
 	virtual VectorXcd setB(vector<vector<gridCell>> &grid, VectorXcd &rh, int nn, vector<int> &nu) = 0;
+	virtual mxArray* setB_mx(vector<vector<gridCell>> &grid, VectorXcd &rh, int nn, vector<int> &nu) = 0;
 	VectorXcd solveX(SparseMatrix<complex<double>> &A, VectorXcd &B);
+	VectorXcd solveX_mx(mxArray *A, mxArray *B);
 	virtual void assign(VectorXcd u, TriangleMesh &U, TriangleMesh &L, vector<int> &nu) = 0;
 	virtual VectorXcd getAperture(vector<vector<double>> &nbound, TriangleMesh &U, TriangleMesh &L) = 0;
 	virtual void drawAperture(VectorXd &plotX, VectorXd &plotY, vector<vector<double>> &nbound, int sign) = 0;

@@ -1698,6 +1698,11 @@ SparseMatrix<complex<double>> InhomogeneousSingalCavity::setA(double nn, vector<
 	return matrixA;
 }
 
+mxArray* InhomogeneousSingalCavity::setA_mx(double nn, vector<int> &nu, vector<vector<double>> &nbound, vector<vector<gridCell>> &grid)
+{
+	throw new exception("");
+}
+
 VectorXcd InhomogeneousSingalCavity::setB(vector<vector<gridCell>> &grid, VectorXcd &rh, int nn, vector<int> &nu)
 {
 	int m = this->meshWidth;
@@ -1721,6 +1726,10 @@ VectorXcd InhomogeneousSingalCavity::setB(vector<vector<gridCell>> &grid, Vector
 	return B;
 }
 
+mxArray* InhomogeneousSingalCavity::setB_mx(vector<vector<gridCell>> &grid, VectorXcd &rh, int nn, vector<int> &nu)
+{
+	throw new exception("");
+}
 
 void InhomogeneousSingalCavity::assign(VectorXcd solution, TriangleMesh &U, TriangleMesh &L, vector<int> &nu)
 {

@@ -1230,6 +1230,12 @@ SparseMatrix<complex<double>> SingalCavity::setA(double nn, vector<int> &nu, vec
 }
 
 
+mxArray* SingalCavity::setA_mx(double nn, vector<int> &nu, vector<vector<double>> &nbound, vector<vector<gridCell>> &grid)
+{
+	throw new exception("");
+}
+
+
 VectorXcd SingalCavity::setB(vector<vector<gridCell>> &grid, VectorXcd &rh, int nn, vector<int> &nu)
 {
 	int m = this->meshWidth;
@@ -1257,6 +1263,12 @@ VectorXcd SingalCavity::setB(vector<vector<gridCell>> &grid, VectorXcd &rh, int 
 		}
 	}
 	return B;
+}
+
+
+mxArray* SingalCavity::setB_mx(vector<vector<gridCell>> &grid, VectorXcd &rh, int nn, vector<int> &nu)
+{
+	throw new exception("");
 }
 
 

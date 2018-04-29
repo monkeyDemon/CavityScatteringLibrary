@@ -177,8 +177,14 @@ int main()
 	double VirtualRight = 3;
 	cavity.InitVirtualBorder(VirtualTop, VirtualBottom, VirtualLeft, VirtualRight);
 
-	int m = 48;
-	int n = 24;
+	//int m = 48;
+	//int n = 24;
+	//int m = 192;
+	//int n = 96;
+	/*int m = 384;
+	int n = 192;*/
+	int m = 24;
+	int n = 12;
 	cavity.InitMesh(m, n);
 
 	double k0 = 4 * M_PI;

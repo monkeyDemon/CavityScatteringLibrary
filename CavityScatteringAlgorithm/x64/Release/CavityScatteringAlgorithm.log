@@ -3,63 +3,64 @@ ApertureIntegral.cpp(22): warning C4267: “初始化”: 从“size_t”转换�
 ApertureIntegral.cpp(188): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
 ApertureIntegral.cpp(262): warning C4553: “==”: 运算符不起任何作用；是否是有意使用“=”的?
   Cavity.cpp
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(39): warning C4251: “Cavity::nu”: class“std::vector<int,std::allocator<_Ty>>”需要有 dll 接口由 class“Cavity”的客户端使用
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(42): warning C4251: “Cavity::nu”: class“std::vector<int,std::allocator<_Ty>>”需要有 dll 接口由 class“Cavity”的客户端使用
           with
           [
               _Ty=int
           ]
-  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(39): note: 参见“std::vector<int,std::allocator<_Ty>>”的声明
+  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(42): note: 参见“std::vector<int,std::allocator<_Ty>>”的声明
           with
           [
               _Ty=int
           ]
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(40): warning C4251: “Cavity::nbound”: class“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”需要有 dll 接口由 class“Cavity”的客户端使用
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(43): warning C4251: “Cavity::nbound”: class“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”需要有 dll 接口由 class“Cavity”的客户端使用
           with
           [
               _Ty=double
           ]
-  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(40): note: 参见“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”的声明
+  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(43): note: 参见“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”的声明
           with
           [
               _Ty=double
           ]
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(43): warning C4251: “Cavity::solutionOfAperture”: class“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”需要有 dll 接口由 class“Cavity”的客户端使用
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(46): warning C4251: “Cavity::solutionOfAperture”: class“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”需要有 dll 接口由 class“Cavity”的客户端使用
   f:\c-library\eigen\eigen\src/Core/Matrix.h(453): note: 参见“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”的声明
-Cavity.cpp(90): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-Cavity.cpp(91): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-Cavity.cpp(72): warning C4996: 'getcwd': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getcwd. See online help for details.
+Cavity.cpp(103): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+Cavity.cpp(104): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+Cavity.cpp(85): warning C4996: 'getcwd': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getcwd. See online help for details.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.10150.0\ucrt\direct.h(91): note: 参见“getcwd”的声明
-Cavity.cpp(292): warning C4244: “初始化”: 从“Eigen::EigenBase<Derived>::Index”转换到“int”，可能丢失数据
+Cavity.cpp(198): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+Cavity.cpp(327): warning C4244: “初始化”: 从“Eigen::EigenBase<Derived>::Index”转换到“int”，可能丢失数据
           with
           [
               Derived=Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>
           ]
-Cavity.cpp(304): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-Cavity.cpp(324): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-Cavity.cpp(378): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-Cavity.cpp(379): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+Cavity.cpp(339): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+Cavity.cpp(359): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+Cavity.cpp(413): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+Cavity.cpp(414): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
   InhomogeneousSigalRectangleCavityAAMM1.cpp
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(39): warning C4251: “Cavity::nu”: class“std::vector<int,std::allocator<_Ty>>”需要有 dll 接口由 class“Cavity”的客户端使用
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(42): warning C4251: “Cavity::nu”: class“std::vector<int,std::allocator<_Ty>>”需要有 dll 接口由 class“Cavity”的客户端使用
           with
           [
               _Ty=int
           ]
-  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(39): note: 参见“std::vector<int,std::allocator<_Ty>>”的声明
+  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(42): note: 参见“std::vector<int,std::allocator<_Ty>>”的声明
           with
           [
               _Ty=int
           ]
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(40): warning C4251: “Cavity::nbound”: class“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”需要有 dll 接口由 class“Cavity”的客户端使用
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(43): warning C4251: “Cavity::nbound”: class“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”需要有 dll 接口由 class“Cavity”的客户端使用
           with
           [
               _Ty=double
           ]
-  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(40): note: 参见“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”的声明
+  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(43): note: 参见“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”的声明
           with
           [
               _Ty=double
           ]
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(43): warning C4251: “Cavity::solutionOfAperture”: class“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”需要有 dll 接口由 class“Cavity”的客户端使用
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(46): warning C4251: “Cavity::solutionOfAperture”: class“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”需要有 dll 接口由 class“Cavity”的客户端使用
   f:\c-library\eigen\eigen\src/Core/Matrix.h(453): note: 参见“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”的声明
 f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousSingalCavity.h(18): warning C4251: “InhomogeneousSingalCavity::epr”: class“std::complex<double>”需要有 dll 接口由 class“InhomogeneousSingalCavity”的客户端使用
   C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\complex(846): note: 参见“std::complex<double>”的声明
@@ -75,27 +76,27 @@ f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousS
   f:\c-library\eigen\eigen\src/Core/Matrix.h(453): note: 参见“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”的声明
 InhomogeneousSigalRectangleCavityAAMM1.cpp(68): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
   InhomogeneousSingalCavity.cpp
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(39): warning C4251: “Cavity::nu”: class“std::vector<int,std::allocator<_Ty>>”需要有 dll 接口由 class“Cavity”的客户端使用
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(42): warning C4251: “Cavity::nu”: class“std::vector<int,std::allocator<_Ty>>”需要有 dll 接口由 class“Cavity”的客户端使用
           with
           [
               _Ty=int
           ]
-  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(39): note: 参见“std::vector<int,std::allocator<_Ty>>”的声明
+  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(42): note: 参见“std::vector<int,std::allocator<_Ty>>”的声明
           with
           [
               _Ty=int
           ]
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(40): warning C4251: “Cavity::nbound”: class“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”需要有 dll 接口由 class“Cavity”的客户端使用
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(43): warning C4251: “Cavity::nbound”: class“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”需要有 dll 接口由 class“Cavity”的客户端使用
           with
           [
               _Ty=double
           ]
-  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(40): note: 参见“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”的声明
+  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(43): note: 参见“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”的声明
           with
           [
               _Ty=double
           ]
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(43): warning C4251: “Cavity::solutionOfAperture”: class“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”需要有 dll 接口由 class“Cavity”的客户端使用
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(46): warning C4251: “Cavity::solutionOfAperture”: class“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”需要有 dll 接口由 class“Cavity”的客户端使用
   f:\c-library\eigen\eigen\src/Core/Matrix.h(453): note: 参见“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”的声明
 f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousSingalCavity.h(18): warning C4251: “InhomogeneousSingalCavity::epr”: class“std::complex<double>”需要有 dll 接口由 class“InhomogeneousSingalCavity”的客户端使用
   C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\complex(846): note: 参见“std::complex<double>”的声明
@@ -134,35 +135,35 @@ InhomogeneousSingalCavity.cpp(1690): warning C4244: “初始化”: 从“__int
 InhomogeneousSingalCavity.cpp(1696): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
 InhomogeneousSingalCavity.cpp(1586): warning C4101: “y”: 未引用的局部变量
 InhomogeneousSingalCavity.cpp(1586): warning C4101: “x”: 未引用的局部变量
-InhomogeneousSingalCavity.cpp(1730): warning C4101: “id”: 未引用的局部变量
-InhomogeneousSingalCavity.cpp(2056): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-InhomogeneousSingalCavity.cpp(2080): warning C4244: “初始化”: 从“Eigen::EigenBase<Derived>::Index”转换到“int”，可能丢失数据
+InhomogeneousSingalCavity.cpp(1739): warning C4101: “id”: 未引用的局部变量
+InhomogeneousSingalCavity.cpp(2065): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+InhomogeneousSingalCavity.cpp(2089): warning C4244: “初始化”: 从“Eigen::EigenBase<Derived>::Index”转换到“int”，可能丢失数据
           with
           [
               Derived=Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>
           ]
   InhomogeneousSingalCircleCavity.cpp
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(39): warning C4251: “Cavity::nu”: class“std::vector<int,std::allocator<_Ty>>”需要有 dll 接口由 class“Cavity”的客户端使用
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(42): warning C4251: “Cavity::nu”: class“std::vector<int,std::allocator<_Ty>>”需要有 dll 接口由 class“Cavity”的客户端使用
           with
           [
               _Ty=int
           ]
-  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(39): note: 参见“std::vector<int,std::allocator<_Ty>>”的声明
+  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(42): note: 参见“std::vector<int,std::allocator<_Ty>>”的声明
           with
           [
               _Ty=int
           ]
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(40): warning C4251: “Cavity::nbound”: class“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”需要有 dll 接口由 class“Cavity”的客户端使用
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(43): warning C4251: “Cavity::nbound”: class“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”需要有 dll 接口由 class“Cavity”的客户端使用
           with
           [
               _Ty=double
           ]
-  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(40): note: 参见“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”的声明
+  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(43): note: 参见“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”的声明
           with
           [
               _Ty=double
           ]
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(43): warning C4251: “Cavity::solutionOfAperture”: class“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”需要有 dll 接口由 class“Cavity”的客户端使用
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(46): warning C4251: “Cavity::solutionOfAperture”: class“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”需要有 dll 接口由 class“Cavity”的客户端使用
   f:\c-library\eigen\eigen\src/Core/Matrix.h(453): note: 参见“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”的声明
 f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousSingalCavity.h(18): warning C4251: “InhomogeneousSingalCavity::epr”: class“std::complex<double>”需要有 dll 接口由 class“InhomogeneousSingalCavity”的客户端使用
   C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\complex(846): note: 参见“std::complex<double>”的声明
@@ -181,27 +182,27 @@ f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousS
 f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousSingalCircleCavity.h(16): warning C4251: “InhomogeneousSingalCircleCavity::circleCenter_int”: class“Eigen::Matrix<double,2,1,0,2,1>”需要有 dll 接口由 class“InhomogeneousSingalCircleCavity”的客户端使用
   f:\c-library\eigen\eigen\src/Core/Matrix.h(451): note: 参见“Eigen::Matrix<double,2,1,0,2,1>”的声明
   InhomogeneousSingalRectangleCavity.cpp
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(39): warning C4251: “Cavity::nu”: class“std::vector<int,std::allocator<_Ty>>”需要有 dll 接口由 class“Cavity”的客户端使用
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(42): warning C4251: “Cavity::nu”: class“std::vector<int,std::allocator<_Ty>>”需要有 dll 接口由 class“Cavity”的客户端使用
           with
           [
               _Ty=int
           ]
-  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(39): note: 参见“std::vector<int,std::allocator<_Ty>>”的声明
+  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(42): note: 参见“std::vector<int,std::allocator<_Ty>>”的声明
           with
           [
               _Ty=int
           ]
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(40): warning C4251: “Cavity::nbound”: class“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”需要有 dll 接口由 class“Cavity”的客户端使用
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(43): warning C4251: “Cavity::nbound”: class“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”需要有 dll 接口由 class“Cavity”的客户端使用
           with
           [
               _Ty=double
           ]
-  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(40): note: 参见“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”的声明
+  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(43): note: 参见“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”的声明
           with
           [
               _Ty=double
           ]
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(43): warning C4251: “Cavity::solutionOfAperture”: class“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”需要有 dll 接口由 class“Cavity”的客户端使用
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(46): warning C4251: “Cavity::solutionOfAperture”: class“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”需要有 dll 接口由 class“Cavity”的客户端使用
   f:\c-library\eigen\eigen\src/Core/Matrix.h(453): note: 参见“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”的声明
 f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousSingalCavity.h(18): warning C4251: “InhomogeneousSingalCavity::epr”: class“std::complex<double>”需要有 dll 接口由 class“InhomogeneousSingalCavity”的客户端使用
   C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\complex(846): note: 参见“std::complex<double>”的声明
@@ -216,27 +217,27 @@ f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousS
 f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousSingalCavity.h(27): warning C4251: “InhomogeneousSingalCavity::g_aperture”: class“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”需要有 dll 接口由 class“InhomogeneousSingalCavity”的客户端使用
   f:\c-library\eigen\eigen\src/Core/Matrix.h(453): note: 参见“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”的声明
   InhomogeneousSingalRectangleCavityAAMM2.cpp
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(39): warning C4251: “Cavity::nu”: class“std::vector<int,std::allocator<_Ty>>”需要有 dll 接口由 class“Cavity”的客户端使用
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(42): warning C4251: “Cavity::nu”: class“std::vector<int,std::allocator<_Ty>>”需要有 dll 接口由 class“Cavity”的客户端使用
           with
           [
               _Ty=int
           ]
-  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(39): note: 参见“std::vector<int,std::allocator<_Ty>>”的声明
+  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(42): note: 参见“std::vector<int,std::allocator<_Ty>>”的声明
           with
           [
               _Ty=int
           ]
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(40): warning C4251: “Cavity::nbound”: class“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”需要有 dll 接口由 class“Cavity”的客户端使用
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(43): warning C4251: “Cavity::nbound”: class“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”需要有 dll 接口由 class“Cavity”的客户端使用
           with
           [
               _Ty=double
           ]
-  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(40): note: 参见“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”的声明
+  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(43): note: 参见“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”的声明
           with
           [
               _Ty=double
           ]
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(43): warning C4251: “Cavity::solutionOfAperture”: class“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”需要有 dll 接口由 class“Cavity”的客户端使用
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(46): warning C4251: “Cavity::solutionOfAperture”: class“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”需要有 dll 接口由 class“Cavity”的客户端使用
   f:\c-library\eigen\eigen\src/Core/Matrix.h(453): note: 参见“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”的声明
 f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousSingalCavity.h(18): warning C4251: “InhomogeneousSingalCavity::epr”: class“std::complex<double>”需要有 dll 接口由 class“InhomogeneousSingalCavity”的客户端使用
   C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\complex(846): note: 参见“std::complex<double>”的声明
@@ -252,27 +253,27 @@ f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousS
   f:\c-library\eigen\eigen\src/Core/Matrix.h(453): note: 参见“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”的声明
 InhomogeneousSingalRectangleCavityAAMM2.cpp(45): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
   InhomogeneousThreeCavity.cpp
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(39): warning C4251: “Cavity::nu”: class“std::vector<int,std::allocator<_Ty>>”需要有 dll 接口由 class“Cavity”的客户端使用
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(42): warning C4251: “Cavity::nu”: class“std::vector<int,std::allocator<_Ty>>”需要有 dll 接口由 class“Cavity”的客户端使用
           with
           [
               _Ty=int
           ]
-  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(39): note: 参见“std::vector<int,std::allocator<_Ty>>”的声明
+  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(42): note: 参见“std::vector<int,std::allocator<_Ty>>”的声明
           with
           [
               _Ty=int
           ]
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(40): warning C4251: “Cavity::nbound”: class“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”需要有 dll 接口由 class“Cavity”的客户端使用
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(43): warning C4251: “Cavity::nbound”: class“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”需要有 dll 接口由 class“Cavity”的客户端使用
           with
           [
               _Ty=double
           ]
-  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(40): note: 参见“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”的声明
+  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(43): note: 参见“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”的声明
           with
           [
               _Ty=double
           ]
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(43): warning C4251: “Cavity::solutionOfAperture”: class“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”需要有 dll 接口由 class“Cavity”的客户端使用
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(46): warning C4251: “Cavity::solutionOfAperture”: class“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”需要有 dll 接口由 class“Cavity”的客户端使用
   f:\c-library\eigen\eigen\src/Core/Matrix.h(453): note: 参见“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”的声明
 f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousThreeCavity.h(18): warning C4251: “InhomogeneousThreeCavity::epr1”: class“std::complex<double>”需要有 dll 接口由 class“InhomogeneousThreeCavity”的客户端使用
   C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\complex(846): note: 参见“std::complex<double>”的声明
@@ -309,57 +310,62 @@ f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousT
 InhomogeneousThreeCavity.cpp(77): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
 InhomogeneousThreeCavity.cpp(78): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
 InhomogeneousThreeCavity.cpp(79): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-InhomogeneousThreeCavity.cpp(456): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-InhomogeneousThreeCavity.cpp(523): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-InhomogeneousThreeCavity.cpp(589): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-InhomogeneousThreeCavity.cpp(652): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
-InhomogeneousThreeCavity.cpp(653): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+InhomogeneousThreeCavity.cpp(458): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+InhomogeneousThreeCavity.cpp(525): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+InhomogeneousThreeCavity.cpp(591): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
 InhomogeneousThreeCavity.cpp(654): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
-InhomogeneousThreeCavity.cpp(884): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
-InhomogeneousThreeCavity.cpp(885): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+InhomogeneousThreeCavity.cpp(655): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+InhomogeneousThreeCavity.cpp(656): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
 InhomogeneousThreeCavity.cpp(886): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
-InhomogeneousThreeCavity.cpp(962): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
-InhomogeneousThreeCavity.cpp(963): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+InhomogeneousThreeCavity.cpp(887): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+InhomogeneousThreeCavity.cpp(888): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
 InhomogeneousThreeCavity.cpp(964): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
-InhomogeneousThreeCavity.cpp(1282): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-InhomogeneousThreeCavity.cpp(1287): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-InhomogeneousThreeCavity.cpp(1461): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-InhomogeneousThreeCavity.cpp(1731): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-InhomogeneousThreeCavity.cpp(1739): warning C4244: “参数”: 从“double”转换到“std::size_t”，可能丢失数据
-InhomogeneousThreeCavity.cpp(1910): warning C4244: “初始化”: 从“__int64”转换到“int”，可能丢失数据
-InhomogeneousThreeCavity.cpp(1916): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
-InhomogeneousThreeCavity.cpp(1749): warning C4101: “y”: 未引用的局部变量
-InhomogeneousThreeCavity.cpp(1749): warning C4101: “x”: 未引用的局部变量
-InhomogeneousThreeCavity.cpp(1952): warning C4101: “id”: 未引用的局部变量
-InhomogeneousThreeCavity.cpp(2154): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-InhomogeneousThreeCavity.cpp(2178): warning C4244: “初始化”: 从“Eigen::EigenBase<Derived>::Index”转换到“int”，可能丢失数据
+InhomogeneousThreeCavity.cpp(965): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+InhomogeneousThreeCavity.cpp(966): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+InhomogeneousThreeCavity.cpp(1284): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+InhomogeneousThreeCavity.cpp(1289): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+InhomogeneousThreeCavity.cpp(1463): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+InhomogeneousThreeCavity.cpp(1733): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+InhomogeneousThreeCavity.cpp(1741): warning C4244: “参数”: 从“double”转换到“std::size_t”，可能丢失数据
+InhomogeneousThreeCavity.cpp(1912): warning C4244: “初始化”: 从“__int64”转换到“int”，可能丢失数据
+InhomogeneousThreeCavity.cpp(1918): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
+InhomogeneousThreeCavity.cpp(1751): warning C4101: “y”: 未引用的局部变量
+InhomogeneousThreeCavity.cpp(1751): warning C4101: “x”: 未引用的局部变量
+InhomogeneousThreeCavity.cpp(1934): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+InhomogeneousThreeCavity.cpp(1942): warning C4244: “参数”: 从“double”转换到“std::size_t”，可能丢失数据
+InhomogeneousThreeCavity.cpp(2113): warning C4244: “初始化”: 从“__int64”转换到“int”，可能丢失数据
+InhomogeneousThreeCavity.cpp(1952): warning C4101: “y”: 未引用的局部变量
+InhomogeneousThreeCavity.cpp(1952): warning C4101: “x”: 未引用的局部变量
+InhomogeneousThreeCavity.cpp(2210): warning C4101: “id”: 未引用的局部变量
+InhomogeneousThreeCavity.cpp(2412): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+InhomogeneousThreeCavity.cpp(2436): warning C4244: “初始化”: 从“Eigen::EigenBase<Derived>::Index”转换到“int”，可能丢失数据
           with
           [
               Derived=Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>
           ]
-InhomogeneousThreeCavity.cpp(3583): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+InhomogeneousThreeCavity.cpp(3841): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
   InhomogeneousThreeRectangleCavity.cpp
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(39): warning C4251: “Cavity::nu”: class“std::vector<int,std::allocator<_Ty>>”需要有 dll 接口由 class“Cavity”的客户端使用
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(42): warning C4251: “Cavity::nu”: class“std::vector<int,std::allocator<_Ty>>”需要有 dll 接口由 class“Cavity”的客户端使用
           with
           [
               _Ty=int
           ]
-  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(39): note: 参见“std::vector<int,std::allocator<_Ty>>”的声明
+  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(42): note: 参见“std::vector<int,std::allocator<_Ty>>”的声明
           with
           [
               _Ty=int
           ]
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(40): warning C4251: “Cavity::nbound”: class“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”需要有 dll 接口由 class“Cavity”的客户端使用
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(43): warning C4251: “Cavity::nbound”: class“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”需要有 dll 接口由 class“Cavity”的客户端使用
           with
           [
               _Ty=double
           ]
-  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(40): note: 参见“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”的声明
+  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(43): note: 参见“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”的声明
           with
           [
               _Ty=double
           ]
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(43): warning C4251: “Cavity::solutionOfAperture”: class“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”需要有 dll 接口由 class“Cavity”的客户端使用
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(46): warning C4251: “Cavity::solutionOfAperture”: class“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”需要有 dll 接口由 class“Cavity”的客户端使用
   f:\c-library\eigen\eigen\src/Core/Matrix.h(453): note: 参见“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”的声明
 f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousThreeCavity.h(18): warning C4251: “InhomogeneousThreeCavity::epr1”: class“std::complex<double>”需要有 dll 接口由 class“InhomogeneousThreeCavity”的客户端使用
   C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\complex(846): note: 参见“std::complex<double>”的声明
@@ -394,27 +400,27 @@ f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousT
 f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousThreeCavity.h(43): warning C4251: “InhomogeneousThreeCavity::g_aperture”: class“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”需要有 dll 接口由 class“InhomogeneousThreeCavity”的客户端使用
   f:\c-library\eigen\eigen\src/Core/Matrix.h(453): note: 参见“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”的声明
   InhomogeneousThreeRectangleCircleCavity.cpp
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(39): warning C4251: “Cavity::nu”: class“std::vector<int,std::allocator<_Ty>>”需要有 dll 接口由 class“Cavity”的客户端使用
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(42): warning C4251: “Cavity::nu”: class“std::vector<int,std::allocator<_Ty>>”需要有 dll 接口由 class“Cavity”的客户端使用
           with
           [
               _Ty=int
           ]
-  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(39): note: 参见“std::vector<int,std::allocator<_Ty>>”的声明
+  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(42): note: 参见“std::vector<int,std::allocator<_Ty>>”的声明
           with
           [
               _Ty=int
           ]
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(40): warning C4251: “Cavity::nbound”: class“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”需要有 dll 接口由 class“Cavity”的客户端使用
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(43): warning C4251: “Cavity::nbound”: class“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”需要有 dll 接口由 class“Cavity”的客户端使用
           with
           [
               _Ty=double
           ]
-  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(40): note: 参见“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”的声明
+  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(43): note: 参见“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”的声明
           with
           [
               _Ty=double
           ]
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(43): warning C4251: “Cavity::solutionOfAperture”: class“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”需要有 dll 接口由 class“Cavity”的客户端使用
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(46): warning C4251: “Cavity::solutionOfAperture”: class“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”需要有 dll 接口由 class“Cavity”的客户端使用
   f:\c-library\eigen\eigen\src/Core/Matrix.h(453): note: 参见“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”的声明
 f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousThreeCavity.h(18): warning C4251: “InhomogeneousThreeCavity::epr1”: class“std::complex<double>”需要有 dll 接口由 class“InhomogeneousThreeCavity”的客户端使用
   C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\complex(846): note: 参见“std::complex<double>”的声明
@@ -449,27 +455,27 @@ f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousT
 f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\InhomogeneousThreeCavity.h(43): warning C4251: “InhomogeneousThreeCavity::g_aperture”: class“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”需要有 dll 接口由 class“InhomogeneousThreeCavity”的客户端使用
   f:\c-library\eigen\eigen\src/Core/Matrix.h(453): note: 参见“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”的声明
   SingalCavity.cpp
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(39): warning C4251: “Cavity::nu”: class“std::vector<int,std::allocator<_Ty>>”需要有 dll 接口由 class“Cavity”的客户端使用
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(42): warning C4251: “Cavity::nu”: class“std::vector<int,std::allocator<_Ty>>”需要有 dll 接口由 class“Cavity”的客户端使用
           with
           [
               _Ty=int
           ]
-  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(39): note: 参见“std::vector<int,std::allocator<_Ty>>”的声明
+  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(42): note: 参见“std::vector<int,std::allocator<_Ty>>”的声明
           with
           [
               _Ty=int
           ]
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(40): warning C4251: “Cavity::nbound”: class“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”需要有 dll 接口由 class“Cavity”的客户端使用
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(43): warning C4251: “Cavity::nbound”: class“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”需要有 dll 接口由 class“Cavity”的客户端使用
           with
           [
               _Ty=double
           ]
-  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(40): note: 参见“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”的声明
+  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(43): note: 参见“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”的声明
           with
           [
               _Ty=double
           ]
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(43): warning C4251: “Cavity::solutionOfAperture”: class“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”需要有 dll 接口由 class“Cavity”的客户端使用
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(46): warning C4251: “Cavity::solutionOfAperture”: class“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”需要有 dll 接口由 class“Cavity”的客户端使用
   f:\c-library\eigen\eigen\src/Core/Matrix.h(453): note: 参见“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”的声明
 f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\SingalCavity.h(18): warning C4251: “SingalCavity::epr”: class“std::complex<double>”需要有 dll 接口由 class“SingalCavity”的客户端使用
   C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\complex(846): note: 参见“std::complex<double>”的声明
@@ -498,35 +504,35 @@ SingalCavity.cpp(1221): warning C4244: “初始化”: 从“__int64”转换�
 SingalCavity.cpp(1227): warning C4244: “参数”: 从“double”转换到“int”，可能丢失数据
 SingalCavity.cpp(1117): warning C4101: “y”: 未引用的局部变量
 SingalCavity.cpp(1117): warning C4101: “x”: 未引用的局部变量
-SingalCavity.cpp(1269): warning C4101: “id”: 未引用的局部变量
-SingalCavity.cpp(1471): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-SingalCavity.cpp(1495): warning C4244: “初始化”: 从“Eigen::EigenBase<Derived>::Index”转换到“int”，可能丢失数据
+SingalCavity.cpp(1281): warning C4101: “id”: 未引用的局部变量
+SingalCavity.cpp(1483): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+SingalCavity.cpp(1507): warning C4244: “初始化”: 从“Eigen::EigenBase<Derived>::Index”转换到“int”，可能丢失数据
           with
           [
               Derived=Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>
           ]
   SingalRectangleCavity.cpp
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(39): warning C4251: “Cavity::nu”: class“std::vector<int,std::allocator<_Ty>>”需要有 dll 接口由 class“Cavity”的客户端使用
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(42): warning C4251: “Cavity::nu”: class“std::vector<int,std::allocator<_Ty>>”需要有 dll 接口由 class“Cavity”的客户端使用
           with
           [
               _Ty=int
           ]
-  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(39): note: 参见“std::vector<int,std::allocator<_Ty>>”的声明
+  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(42): note: 参见“std::vector<int,std::allocator<_Ty>>”的声明
           with
           [
               _Ty=int
           ]
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(40): warning C4251: “Cavity::nbound”: class“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”需要有 dll 接口由 class“Cavity”的客户端使用
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(43): warning C4251: “Cavity::nbound”: class“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”需要有 dll 接口由 class“Cavity”的客户端使用
           with
           [
               _Ty=double
           ]
-  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(40): note: 参见“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”的声明
+  f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(43): note: 参见“std::vector<std::vector<double,std::allocator<_Ty>>,std::allocator<std::vector<_Ty,std::allocator<_Ty>>>>”的声明
           with
           [
               _Ty=double
           ]
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(43): warning C4251: “Cavity::solutionOfAperture”: class“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”需要有 dll 接口由 class“Cavity”的客户端使用
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\Cavity.h(46): warning C4251: “Cavity::solutionOfAperture”: class“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”需要有 dll 接口由 class“Cavity”的客户端使用
   f:\c-library\eigen\eigen\src/Core/Matrix.h(453): note: 参见“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”的声明
 f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\SingalCavity.h(18): warning C4251: “SingalCavity::epr”: class“std::complex<double>”需要有 dll 接口由 class“SingalCavity”的客户端使用
   C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\complex(846): note: 参见“std::complex<double>”的声明
@@ -538,26 +544,26 @@ f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\SingalCavity.h
   f:\c-library\eigen\eigen\src/Core/Matrix.h(453): note: 参见“Eigen::Matrix<std::complex<double>,-1,1,0,-1,1>”的声明
     正在创建库 F:\计算数学\CavityScatteringLibrary\x64\Release\CavityScatteringAlgorithm.lib 和对象 F:\计算数学\CavityScatteringLibrary\x64\Release\CavityScatteringAlgorithm.exp
   正在生成代码
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\inhomogeneousthreecavity.cpp(3243): warning C4715: “InhomogeneousThreeCavity::value”: 不是所有的控件路径都返回值
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\inhomogeneoussingalcavity.cpp(3144): warning C4715: “InhomogeneousSingalCavity::value”: 不是所有的控件路径都返回值
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\inhomogeneousthreecavity.cpp(3501): warning C4715: “InhomogeneousThreeCavity::value”: 不是所有的控件路径都返回值
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\inhomogeneoussingalcavity.cpp(3153): warning C4715: 
 f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\inhomogeneoussingalcavity.cpp(1205): warning C4715: “InhomogeneousSingalCavity::weak3_int”: 不是所有的控件路径都返回值
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\inhomogeneousthreecavity.cpp(1219): warning C4715: “InhomogeneousThreeCavity::weak3_int”: 不是所有的控件路径都返回值
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\inhomogeneousthreecavity.cpp(1686): warning C4715: “InhomogeneousThreeCavity::fInt_int”: 不是所有的控件路径都返回值
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\inhomogeneousthreecavity.cpp(2418): warning C4715: “InhomogeneousThreeCavity::tri”: 不是所有的控件路径都返回值
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\inhomogeneousthreecavity.cpp(1221): warning C4715: “InhomogeneousThreeCavity::weak3_int”: 不是所有的控件路径都返回值
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\inhomogeneousthreecavity.cpp(1688): warning C4715: “InhomogeneousThreeCavity::fInt_int”: 不是所有的控件路径都返回值
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\inhomogeneousthreecavity.cpp(2676): warning C4715: “InhomogeneousThreeCavity::tri”: 不是所有的控件路径都返回值
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\inhomogeneoussingalcavity.cpp(2328): warning C4715: “InhomogeneousSingalCavity::tri”: 不是所有的控件路径都返回值
 f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\inhomogeneoussingalcavity.cpp(1528): warning C4715: “InhomogeneousSingalCavity::fInt_int”: 不是所有的控件路径都返回值
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\inhomogeneoussingalcavity.cpp(2319): warning C4715: “InhomogeneousSingalCavity::tri”: 不是所有的控件路径都返回值
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\inhomogeneousthreecavity.cpp(1593): warning C4715: “InhomogeneousThreeCavity::fInt_f”: 不是所有的控件路径都返回值
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\inhomogeneousthreecavity.cpp(1595): warning C4715: “InhomogeneousThreeCavity::fInt_f”: 不是所有的控件路径都返回值
 f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\inhomogeneoussingalcavity.cpp(1435): warning C4715: “InhomogeneousSingalCavity::fInt_f”: 不是所有的控件路径都返回值
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\inhomogeneousthreecavity.cpp(115): warning C4715: “InhomogeneousThreeCavity::Solve”: 不是所有的控件路径都返回值
 f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\singalcavity.cpp(92): warning C4715: “SingalCavity::Solve”: 不是所有的控件路径都返回值
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\inhomogeneousthreecavity.cpp(113): warning C4715: “InhomogeneousThreeCavity::Solve”: 不是所有的控件路径都返回值
 f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\inhomogeneoussingalcavity.cpp(95): warning C4715: “InhomogeneousSingalCavity::Solve”: 不是所有的控件路径都返回值
 f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\inhomogeneoussingalcavity.cpp(1107): warning C4715: “InhomogeneousSingalCavity::weak1_int”: 不是所有的控件路径都返回值
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\inhomogeneousthreecavity.cpp(1121): warning C4715: “InhomogeneousThreeCavity::weak1_int”: 不是所有的控件路径都返回值
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\inhomogeneousthreecavity.cpp(1123): warning C4715: “InhomogeneousThreeCavity::weak1_int”: 不是所有的控件路径都返回值
 f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\inhomogeneoussingalcavity.cpp(1011): warning C4715: “InhomogeneousSingalCavity::weak_int”: 不是所有的控件路径都返回值
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\inhomogeneousthreecavity.cpp(1025): warning C4715: “InhomogeneousThreeCavity::weak_int”: 不是所有的控件路径都返回值
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\inhomogeneoussingalcavity.cpp(3479): warning C4715: “InhomogeneousSingalCavity::solveweak4”: 不是所有的控件路径都返回值
-f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\inhomogeneousthreecavity.cpp(3578): warning C4715: “InhomogeneousThreeCavity::solveweak4”: 不是所有的控件路径都返回值
-  All 5595 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\inhomogeneousthreecavity.cpp(1027): warning C4715: “InhomogeneousThreeCavity::weak_int”: 不是所有的控件路径都返回值
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\inhomogeneoussingalcavity.cpp(3488): warning C4715: “InhomogeneousSingalCavity::solveweak4”: 不是所有的控件路径都返回值
+f:\计算数学\cavityscatteringlibrary\cavityscatteringalgorithm\inhomogeneousthreecavity.cpp(3836): warning C4715: “InhomogeneousThreeCavity::solveweak4”: 不是所有的控件路径都返回值
+  All 5693 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   已完成代码的生成
   CavityScatteringAlgorithm.vcxproj -> F:\计算数学\CavityScatteringLibrary\x64\Release\CavityScatteringAlgorithm.dll
   CavityScatteringAlgorithm.vcxproj -> F:\计算数学\CavityScatteringLibrary\x64\Release\CavityScatteringAlgorithm.pdb (Full PDB)

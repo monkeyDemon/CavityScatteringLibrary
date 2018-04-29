@@ -4,6 +4,19 @@
 Cavity::Cavity(unsigned int cavityType)
 {
 	this->cavityType = cavityType;
+
+	//启动matlab引擎
+	cout << endl << "正在启动matlab引擎,请稍后..." << endl;
+	if (!(this->ep = engOpen(NULL)))
+	{
+		fprintf(stderr, "\n无法启动MATLAB引擎\n");
+		return;
+	}
+}
+
+Cavity::~Cavity()
+{
+	engClose(this->ep);
 }
 
 
@@ -103,13 +116,7 @@ void Cavity::PlotAperture(string title, string xlabel, string ylabel, int sign)
 
 
 	///调用matalb引擎画图
-	Engine *ep;
 	mxArray *mx_xValue, *mx_apertureValue;
-	if (!(ep = engOpen(NULL)))
-	{
-		fprintf(stderr, "\n无法启动MATLAB引擎\n");
-		return;
-	}
 	
 	//将C中数组转化为matlab数组mxArray
 	mx_xValue = mxCreateDoubleMatrix(1, plotX.size(), mxREAL);
@@ -157,6 +164,7 @@ VectorXcd Cavity::solveX(SparseMatrix<complex<double>> &A, VectorXcd &B)
 	//求解Ax = b
 	VectorXcd x(B.size());
 	//SolverClassName<SparseMatrix<double> > solver;
+
 	BiCGSTAB<SparseMatrix <complex<double>>> solver;
 	//IncompleteLUT<SparseMatrix <complex<double>> > solver;
 	solver.compute(A);
@@ -167,6 +175,33 @@ VectorXcd Cavity::solveX(SparseMatrix<complex<double>> &A, VectorXcd &B)
 	x = solver.solve(B);
 	if (solver.info() != Success) {
 		throw "solving failed";
+	}
+	return x;
+}
+
+VectorXcd Cavity::solveX_mx(mxArray *A_mx, mxArray *B_mx)
+{
+	///将需要的变量加入matlab引擎
+	engPutVariable(this->ep, "A", A_mx);
+	engPutVariable(this->ep, "B", B_mx);
+
+	///调用matlab命令
+	//将A转化为matlab中的稀疏矩阵(调用前不要忘记A需要转制，原因详见setA_mx函数最后)
+	engEvalString(ep, "A = spconvert(A.');");  //此外，注意转置应使用A.'   （对于复矩阵A'是共轭转置） 
+	// 解方程
+	engEvalString(ep, "u_mx = A\\B;"); 
+
+	//获取matlab求解结果
+	mxArray *u_mx = engGetVariable(this->ep, "u_mx");
+
+	//将matlab数组mxArray转化为C数组
+	int u_size = mxGetNumberOfElements(u_mx);  //获得解向量的长度
+	VectorXcd x(u_size);
+	double *UvaluePr = mxGetPr(u_mx);
+	double *UvaluePi = mxGetPi(u_mx);
+	for (int i = 0; i < u_size; i++)
+	{
+		x(i) = complex<double>(*UvaluePr++, *UvaluePi++);
 	}
 	return x;
 }
@@ -380,6 +415,7 @@ SparseMatrix<complex<double>> Cavity::buildSparseMatrixA(double* pA, int MatrixS
 		real= *(pA++);
 		ima = *(pA++);
 		complex<double> v_ij(real,ima);
+		//cout << xIndex << "  " << yIndex << "  " << v_ij << endl;
 		tripletList.push_back(Triplet<complex<double>>(xIndex-1, yIndex-1, v_ij));
 	}
 
