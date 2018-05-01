@@ -72,7 +72,7 @@ bool Cavity::InitialCheck(char *checkLog) {
 void Cavity::PlotAperture(string title, string xlabel, string ylabel, int sign)
 {
 	cout << endl << "正在调用matlab引擎进行绘图,请稍后..." << endl;
-	
+
 	///获取用于绘图的横纵坐标数据
 	VectorXd plotX, plotY;
 	drawAperture(plotX, plotY, nbound, sign);
@@ -105,7 +105,7 @@ void Cavity::PlotAperture(string title, string xlabel, string ylabel, int sign)
 
 	//组合出整个命令
 	//首先分配内存
-	char *cdCommand = (char*)malloc(len_start + len_path + len_end + 1 );
+	char *cdCommand = (char*)malloc(len_start + len_path + len_end + 1);
 	if (!cdCommand)
 		abort();
 	//拼接
@@ -117,20 +117,20 @@ void Cavity::PlotAperture(string title, string xlabel, string ylabel, int sign)
 
 	///调用matalb引擎画图
 	mxArray *mx_xValue, *mx_apertureValue;
-	
+
 	//将C中数组转化为matlab数组mxArray
 	mx_xValue = mxCreateDoubleMatrix(1, plotX.size(), mxREAL);
 	//memcpy(mxGetPr(matrix), m, sizeof(double) * 3 * 3);
 	double *xValuePr = mxGetPr(mx_xValue);
-	for (int i = 0; i<plotX.size(); i++) 
+	for (int i = 0; i < plotX.size(); i++)
 		*xValuePr++ = plotX(i);
 
 	mx_apertureValue = mxCreateDoubleMatrix(1, plotX.size(), mxREAL);
 	//memcpy(mxGetPr(matrix), m, sizeof(double) * 3 * 3);
 	double *apertureValuePr = mxGetPr(mx_apertureValue);
-	for (int i = 0; i<plotY.size(); i++)
+	for (int i = 0; i < plotY.size(); i++)
 		*apertureValuePr++ = plotY(i);
-	
+
 
 	///将需要的变量加入matlab引擎
 	engPutVariable(ep, "xValue", mx_xValue);
@@ -142,9 +142,39 @@ void Cavity::PlotAperture(string title, string xlabel, string ylabel, int sign)
 	engEvalString(ep, cdCommand);
 	//cout << cdCommand << endl;
 
-
+	//以弃用，修改起来太麻烦，不够灵活
 	///调用编写的matlab函数plotAperture（plotAperture.m文件应存放于当前路径下）
-	engEvalString(ep, "plotAperture( xValue, apertureValue)");
+	//engEvalString(ep, "plotAperture( xValue, apertureValue)");
+
+	//直接调用matlab的内置函数绘图
+
+	engEvalString(ep, "figure");
+	engEvalString(ep, "plot(xValue, apertureValue, 'b');");
+
+	engEvalString(ep, "xlabel('x', 'FontSize', 12);");
+
+	if (sign == 0)//幅值
+		engEvalString(ep, "ylabel('Magnitude', 'FontSize', 12);");
+	else if (sign == 1)//实部
+		engEvalString(ep, "ylabel('Real', 'FontSize', 12);");
+	else if (sign == -1)//虚部
+		engEvalString(ep, "ylabel('Imaginary', 'FontSize', 12);");
+	else if (sign == 10)//相位
+		engEvalString(ep, "ylabel('Phase', 'FontSize', 12);");
+	else
+	{
+		;
+	}
+
+	engEvalString(ep, "set(gca, 'LineWidth', 1.5);");
+
+	//set(gca, 'XLim', [para.box.left para.box.right]);
+	//set(gca, 'XTick', -3:1 : 3);
+	//set(gca, 'YLim', [0 1.5]);
+	//set(gca, 'YTick', 0:0.5 : 1.5);
+	//set(gca, 'YLim', [-20 50]);
+	//set(gca, 'YTick', -20:10 : 50);
+
 
 	//如无法成功绘图，需要重新注册matlab引擎
 	//详见https://blog.csdn.net/xiaoqiang920/article/details/8949254

@@ -102,4 +102,7 @@ private:
 	complex<double> fInt_int(Triangle &T, Vector3d v);
 	complex<double> tr(Triangle &T, Vector3d v, bool f);
 
+	//assign中需要使用的子函数
+	void assign_int(Triangle &T);
+	void assign_intex(Triangle &T);
 };

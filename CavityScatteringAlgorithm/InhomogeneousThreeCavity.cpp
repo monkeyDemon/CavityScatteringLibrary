@@ -2200,13 +2200,11 @@ mxArray* InhomogeneousThreeCavity::setB_mx(vector<vector<gridCell>> &grid, Vecto
 }
 
 
-///待重写！！！！！！！！！！！！！！！！
 void InhomogeneousThreeCavity::assign(VectorXcd solution, TriangleMesh &U, TriangleMesh &L, vector<int> &nu)
 {
 	int m = this->meshWidth;
 	int n = this->meshHeight;
-	//g = para.g;
-	//phi = para.phi;
+
 	int id;
 	for (int j = 0; j < m; j++)
 	{
@@ -2220,42 +2218,76 @@ void InhomogeneousThreeCavity::assign(VectorXcd solution, TriangleMesh &U, Trian
 			{
 				complex<double> a1, a2, a3;
 				if (abs(phi(a->x(0), a->y(0))) < 1e-10)
-					a1 = this->u(a->x(0), a->y(0));
+				{
+					if (phi_int(a->x(0), a->y(0)) > -1e-10)
+						a1 = u(a->x(0), a->y(0));
+					else
+						a1 = u_(a->x(0), a->y(0));
+				}
 				else
 					a1 = solution(nu[id] - 1);
 
 				if (abs(phi(a->x(1), a->y(1))) < 1e-10)
-					a2 = this->u(a->x(1), a->y(1));
+				{
+					if (phi_int(a->x(1), a->y(1)) > -1e-10)
+						a2 = u(a->x(1), a->y(1));
+					else
+						a2 = u_(a->x(1), a->y(1));
+				}
 				else
 					a2 = solution(nu[id - 1] - 1);
 
 				if (abs(phi(a->x(2), a->y(2))) < 1e-10)
-					a3 = this->u(a->x(2), a->y(2));
+				{
+					if (phi_int(a->x(2), a->y(2)) > -1e-10)
+						a3 = u(a->x(2), a->y(2));
+					else
+						a3 = u_(a->x(2), a->y(2));
+				}
 				else
 					a3 = solution(nu[id - m + 1] - 1);
 
-				a->z = Vector3cd(a1, a2, a3);
+				a->z_int = Vector3cd(a1, a2, a3);
+				if (abs(a->sgn_int) != 10)
+					assign_int(*a);
 			}
 
 			if (b->sgn == -10)
 			{
 				complex<double> a1, a2, a3;
 				if (abs(phi(b->x(0), b->y(0))) < 1e-10)
-					a1 = this->u(b->x(0), b->y(0));
+				{
+					if (phi_int(b->x(0), b->y(0)) > -1e-10)
+						a1 = u(b->x(0), b->y(0));
+					else
+						a1 = u_(b->x(0), b->y(0));
+				}
 				else
 					a1 = solution(nu[id - m] - 1);
 
 				if (abs(phi(b->x(1), b->y(1))) < 1e-10)
-					a2 = this->u(b->x(1), b->y(1));
+				{
+					if (phi_int(b->x(1), b->y(1)) > -1e-10)
+						a2 = u(b->x(1), b->y(1));
+					else
+						a2 = u_(b->x(1), b->y(1));
+				}
 				else
 					a2 = solution(nu[id - m + 1] - 1);
 
 				if (abs(phi(b->x(2), b->y(2))) < 1e-10)
-					a3 = this->u(b->x(2), b->y(2));
+				{
+					if (phi_int(b->x(2), b->y(2)) > -1e-10)
+						a3 = u(b->x(2), b->y(2));
+					else
+						a3 = u_(b->x(2), b->y(2));
+				}
 				else
 					a3 = solution(nu[id - 1] - 1);
 
-				b->z = Vector3cd(a1, a2, a3);
+				b->z_int = Vector3cd(a1, a2, a3);
+				if (abs(b->sgn_int) != 10)
+					assign_int(*b);
 			}
 
 			if (abs(a->sgn) < 10)
@@ -2265,40 +2297,62 @@ void InhomogeneousThreeCavity::assign(VectorXcd solution, TriangleMesh &U, Trian
 				int t = s % 3 + 1;
 				if (a->sgn < 0)
 				{
+					complex<double> a1, a4, a5;
 					if (r == 1)
-						a->z1 = solution(nu[id] - 1);
-
+						a1 = solution(nu[id] - 1);
 					if (r == 2)
-						a->z1 = solution(nu[id - 1] - 1);
-
+						a1 = solution(nu[id - 1] - 1);
 					if (r == 3)
-						a->z1 = solution(nu[id - m + 1] - 1);
+						a1 = solution(nu[id - m + 1] - 1);
+
+					if (phi_int(a->x4, a->y4) > -1e-10)
+						a4 = u(a->x4, a->y4);
+					else
+						a4 = u_(a->x4, a->y4);
+
+					if (phi_int(a->x5, a->y5) > -1e-10)
+						a5 = u(a->x5, a->y5);
+					else
+						a5 = u_(a->x5, a->y5);
+
+					a->z_int = Vector3cd(a1, a4, a5);
+					if (abs(a->sgn_int) != 10)
+						assign_int(*a);
 				}
 				else
 				{
-					if (a->sgn > 0)
-					{
-						if (s == 1)
-							a->z2 = solution(nu[id] - 1);
+					complex<double> a2, a3, a4, a5;
+					if (s == 1)
+						a2 = solution(nu[id] - 1);
+					if (s == 2)
+						a2 = solution(nu[id - 1] - 1);
+					if (s == 3)
+						a2 = solution(nu[id - m + 1] - 1);
+					if (t == 1)
+						a3 = solution(nu[id] - 1);
+					if (t == 2)
+						a3 = solution(nu[id - 1] - 1);
+					if (t == 3)
+						a3 = solution(nu[id - m + 1] - 1);
 
-						if (s == 2)
-							a->z2 = solution(nu[id - 1] - 1);
+					if (phi_int(a->x4, a->y4)>-1e-10)
+						a4 = u(a->x4, a->y4);
+					else
+						a4 = u_(a->x4, a->y4);
 
-						if (s == 3)
-							a->z2 = solution(nu[id - m + 1] - 1);
+					if (phi_int(a->x5, a->y5) > -1e-10)
+						a5 = u(a->x5, a->y5);
+					else
+						a5 = u_(a->x5, a->y5);
 
-						if (t == 1)
-							a->z3 = solution(nu[id] - 1);
+					a->z_int = Vector3cd(a2, a3, a4);
+					a->z_intex = Vector3cd(a3, a5, a4);
+					if (abs(a->sgn_int) != 10)
+						assign_int(*a);
 
-						if (t == 2)
-							a->z3 = solution(nu[id - 1] - 1);
-
-						if (t == 3)
-							a->z3 = solution(nu[id - m + 1] - 1);
-					}
+					if (abs(a->sgn_intex) != 10)
+						assign_intex(*a);
 				}
-				a->z4 = this->u(a->x4, a->y4);
-				a->z5 = this->u(a->x5, a->y5);
 			}
 
 			if (abs(b->sgn) < 10)
@@ -2308,103 +2362,171 @@ void InhomogeneousThreeCavity::assign(VectorXcd solution, TriangleMesh &U, Trian
 				int t = s % 3 + 1;
 				if (b->sgn < 0)
 				{
+					complex<double> a1, a4, a5;
 					if (r == 1)
-						b->z1 = solution(nu[id - m] - 1);
-
+						a1 = solution(nu[id - m] - 1);
 					if (r == 2)
-						b->z1 = solution(nu[id - m + 1] - 1);
-
+						a1 = solution(nu[id - m + 1] - 1);
 					if (r == 3)
-						b->z1 = solution(nu[id - 1] - 1);
+						a1 = solution(nu[id - 1] - 1);
+
+					if (phi_int(b->x4, b->y4) > -1e-10)
+						a4 = u(b->x4, b->y4);
+					else
+						a4 = u_(b->x4, b->y4);
+
+					if (phi_int(b->x5, b->y5) > -1e-10)
+						a5 = u(b->x5, b->y5);
+					else
+						a5 = u_(b->x5, b->y5);
+
+					b->z_int = Vector3cd(a1, a4, a5);
+					if (abs(b->sgn_int) != 10)
+						assign_int(*b);
 				}
 				else
 				{
-					if (b->sgn > 0)
-					{
-						if (s == 1)
-							b->z2 = solution(nu[id - m] - 1);
+					complex<double> a2, a3, a4, a5;
+					if (s == 1)
+						a2 = solution(nu[id - m] - 1);
+					if (s == 2)
+						a2 = solution(nu[id - m + 1] - 1);
+					if (s == 3)
+						a2 = solution(nu[id - 1] - 1);
+					if (t == 1)
+						a3 = solution(nu[id - m] - 1);
+					if (t == 2)
+						a3 = solution(nu[id - m + 1] - 1);
+					if (t == 3)
+						a3 = solution(nu[id - 1] - 1);
 
-						if (s == 2)
-							b->z2 = solution(nu[id - m + 1] - 1);
+					if (phi_int(b->x4, b->y4) > -1e-10)
+						a4 = u(b->x4, b->y4);
+					else
+						a4 = u_(b->x4, b->y4);
 
-						if (s == 3)
-							b->z2 = solution(nu[id - 1] - 1);
+					if (phi_int(b->x5, b->y5) > -1e-10)
+						a5 = u(b->x5, b->y5);
+					else
+						a5 = u_(b->x5, b->y5);
 
-						if (t == 1)
-							b->z3 = solution(nu[id - m] - 1);
+					b->z_int = Vector3cd(a2, a3, a4);
+					b->z_intex = Vector3cd(a3, a5, a4);
+					if (abs(b->sgn_int) != 10)
+						assign_int(*b);
 
-						if (t == 2)
-							b->z3 = solution(nu[id - m + 1] - 1);
-
-						if (t == 3)
-							b->z3 = solution(nu[id - 1] - 1);
-					}
+					if (abs(b->sgn_intex) != 10)
+						assign_intex(*b);
 				}
-				b->z4 = this->u(b->x4, b->y4);
-				b->z5 = this->u(b->x5, b->y5);
 			}
 
 			if (abs(a->sgn) > 10)
 			{
 				if (a->sgn < 0)
 				{
+					complex<double> a1, a2, a5;
 					if (a->v(0) == 1)
-						a->z1 = solution(nu[id] - 1);
-
+						a1 = solution(nu[id] - 1);
 					if (a->v(0) == 2)
-						a->z1 = solution(nu[id - 1] - 1);
-
+						a1 = solution(nu[id - 1] - 1);
 					if (a->v(0) == 3)
-						a->z1 = solution(nu[id - m + 1] - 1);
+						a1 = solution(nu[id - m + 1] - 1);
+					if (phi_int(a->x2, a->y2) > -1e-10)
+						a2 = u(a->x2, a->y2);
+					else
+						a2 = u_(a->x2, a->y2);
+
+					if (phi_int(a->x5, a->y5) > -1e-10)
+						a5 = u(a->x5, a->y5);
+					else
+						a5 = u_(a->x5, a->y5);
+
+					a->z_int = Vector3cd(a1, a2, a5);
+					if (abs(a->sgn_int) != 10)
+						assign_int(*a);
 				}
 				if (a->sgn > 0)
 				{
+					complex<double> a2, a3, a5;
 					if (a->v(2) == 1)
-						a->z3 = solution(nu[id] - 1);
-
+						a3 = solution(nu[id] - 1);
 					if (a->v(2) == 2)
-						a->z3 = solution(nu[id - 1] - 1);
-
+						a3 = solution(nu[id - 1] - 1);
 					if (a->v(2) == 3)
-						a->z3 = solution(nu[id - m + 1] - 1);
+						a3 = solution(nu[id - m + 1] - 1);
+					if (phi_int(a->x2, a->y2) > -1e-10)
+						a2 = u(a->x2, a->y2);
+					else
+						a2 = u_(a->x2, a->y2);
+
+					if (phi_int(a->x5, a->y5) > -1e-10)
+						a5 = u(a->x5, a->y5);
+					else
+						a5 = u_(a->x5, a->y5);
+
+					a->z_int = Vector3cd(a3, a5, a2);
+					if (abs(a->sgn_int) != 10)
+						assign_int(*a);
 				}
-				a->z2 = this->u(a->x2, a->y2);
-				a->z5 = this->u(a->p5(0), a->p5(1));
 			}
 
 			if (abs(b->sgn) > 10)
 			{
 				if (b->sgn < 0)
 				{
+					complex<double> a1, a2, a5;
 					if (b->v(0) == 1)
-						b->z1 = solution(nu[id - m] - 1);
-
+						a1 = solution(nu[id - m] - 1);
 					if (b->v(0) == 2)
-						b->z1 = solution(nu[id - m + 1] - 1);
-
+						a1 = solution(nu[id - m + 1] - 1);
 					if (b->v(0) == 3)
-						b->z1 = solution(nu[id - 1] - 1);
+						a1 = solution(nu[id - 1] - 1);
+
+					if (phi_int(b->x2, b->y2) > -1e-10)
+						a2 = u(b->x2, b->y2);
+					else
+						a2 = u_(b->x2, b->y2);
+
+					if (phi_int(b->x5, b->y5) > -1e-10)
+						a5 = u(b->x5, b->y5);
+					else
+						a5 = u_(b->x5, b->y5);
+
+					b->z_int = Vector3cd(a1, a2, a5);
+					if (abs(b->sgn_int) != 10)
+						assign_int(*b);
 				}
 				if (b->sgn > 0)
 				{
+					complex<double> a2, a3, a5;
 					if (b->v(2) == 1)
-						b->z3 = solution(nu[id - m] - 1);
-
+						a3 = solution(nu[id - m] - 1);
 					if (b->v(2) == 2)
-						b->z3 = solution(nu[id - m + 1] - 1);
-
+						a3 = solution(nu[id - m + 1] - 1);
 					if (b->v(2) == 3)
-						b->z3 = solution(nu[id - 1] - 1);
+						a3 = solution(nu[id - 1] - 1);
+
+					if (phi_int(b->x2, b->y2) > -1e-10)
+						a2 = u(b->x2, b->y2);
+					else
+						a2 = u_(b->x2, b->y2);
+
+					if (phi_int(b->x5, b->y5) > -1e-10)
+						a5 = u(b->x5, b->y5);
+					else
+						a5 = u_(b->x5, b->y5);
+
+					b->z_int = Vector3cd(a3, a5, a2);
+					if (abs(b->sgn_int) != 10)
+						assign_int(*b);
 				}
-				b->z2 = this->u(b->x2, b->y2);
-				b->z5 = this->u(b->p5(0), b->p5(1));
 			}
 
 		}// end for (int l = 0; l < n; l++)
 	}
 }
 
-///待重写！！！！！！！！！！！！！！！！
+
 VectorXcd InhomogeneousThreeCavity::getAperture(vector<vector<double>> &nbound, TriangleMesh &U, TriangleMesh &L)
 {
 	int m = this->meshWidth;
@@ -2420,7 +2542,7 @@ VectorXcd InhomogeneousThreeCavity::getAperture(vector<vector<double>> &nbound, 
 
 		if (tri.x(0) == nbound[1][index])
 		{
-			ApertureValue(index) = tri.z(0);
+			ApertureValue(index) = tri.z_int(0);
 			index++;
 			if (index >= aperture_Num)
 				break;
@@ -2430,54 +2552,106 @@ VectorXcd InhomogeneousThreeCavity::getAperture(vector<vector<double>> &nbound, 
 	return ApertureValue;
 }
 
-///待重写！！！！！！！！！！！！！！！！
+
 void InhomogeneousThreeCavity::drawAperture(VectorXd &plotX, VectorXd &plotY, vector<vector<double>> &nbound, int sign)
 {
-	int plotArraySize = this->solutionOfAperture.size() + 2;
+	// 本函数暂时只适用于多个腔体开口大小一致的情况。
+
+	int number_each_cavity = nbound[0].size() / cavity_number; //每个腔体口径面有多少个网格点
+
+	int plotArraySize = this->solutionOfAperture.size() + 8;
 	plotX = VectorXd(plotArraySize);
 	plotY = VectorXd(plotArraySize);
+	VectorXcd plotY_temp = VectorXcd(plotArraySize);
 
-	//plotX(0) = this->apertureLeft;
-	//plotX(plotArraySize - 1) = this->apertureRight;
+	//为plotX赋值
+	int index = 0;
 	double *nboundPt = &nbound[1][0];
-	for (int i = 1; i < plotArraySize - 1; i++)
+	plotX(index++) = this->virtualBorderLeft;
+	plotX(index++) = this->aperture1Left;
+	for (int i = index; i < index+ number_each_cavity; i++)
 	{
 		plotX(i) = *nboundPt++;
 	}
+	index += number_each_cavity;
+	plotX(index++) = this->aperture1Right;
+	plotX(index++) = this->aperture2Left;
+	for (int i = index; i < index + number_each_cavity; i++)
+	{
+		plotX(i) = *nboundPt++;
+	}
+	index += number_each_cavity;
+	plotX(index++) = this->aperture2Right;
+	plotX(index++) = this->aperture3Left;
+	for (int i = index; i < index + number_each_cavity; i++)
+	{
+		plotX(i) = *nboundPt++;
+	}
+	index += number_each_cavity;
+	plotX(index++) = this->aperture3Right;
+	plotX(index++) = this->virtualBorderRight;
 
-	plotY(0) = 0;
-	plotY(plotArraySize - 1) = 0;
+
+	//为plotY_temp赋值
+	index = 0;
+	complex<double> *aperPt = &solutionOfAperture(0);
+	plotY_temp(index++) = 0;
+	plotY_temp(index++) = 0;
+	for (int i = index; i < index + number_each_cavity; i++)
+	{
+		plotY_temp(i) = *aperPt++;
+	}
+	index += number_each_cavity;
+	plotY_temp(index++) = 0;
+	plotY_temp(index++) = 0;
+	for (int i = index; i < index + number_each_cavity; i++)
+	{
+		plotY_temp(i) = *aperPt++;
+	}
+	index += number_each_cavity;
+	plotY_temp(index++) = 0;
+	plotY_temp(index++) = 0;
+	for (int i = index; i < index + number_each_cavity; i++)
+	{
+		plotY_temp(i) = *aperPt++;
+	}
+	index += number_each_cavity;
+	plotY_temp(index++) = 0;
+	plotY_temp(index++) = 0;
+	
+
+	//为plotY赋值
 	if (sign == 0)
 	{
-		complex<double> *aperPt = &solutionOfAperture(0);
-		for (int i = 1; i < plotArraySize - 1; i++)
+		//幅值
+		for (int i = 0; i < plotArraySize; i++)
 		{
-			plotY(i) = abs(*aperPt++);
+			plotY(i) = abs(plotY_temp(i));
 		}
 	}
 	else if (sign == 1)
 	{
-		complex<double> *aperPt = &solutionOfAperture(0);
-		for (int i = 1; i < plotArraySize - 1; i++)
+		//实部
+		for (int i = 0; i < plotArraySize; i++)
 		{
-			plotY(i) = real(*aperPt++);
+			plotY(i) = real(plotY_temp(i));
 		}
 	}
 	else if (sign == -1)
 	{
-		complex<double> *aperPt = &solutionOfAperture(0);
-		for (int i = 1; i < plotArraySize - 1; i++)
+		//虚部
+		for (int i = 0; i < plotArraySize; i++)
 		{
-			plotY(i) = imag(*aperPt++);
+			plotY(i) = imag(plotY_temp(i));
 		}
 	}
 	else if (sign == 10)
 	{
-		complex<double> *aperPt = &solutionOfAperture(0);
-		for (int i = 1; i < plotArraySize - 1; i++)
+		//相位
+		for (int i = 0; i < plotArraySize; i++)
 		{
-			double re = real(*aperPt);
-			double im = imag(*aperPt);
+			double re = real(plotY_temp(i));
+			double im = imag(plotY_temp(i));
 			plotY(i) = (-180 / M_PI)*atan2(im, re);
 		}
 	}
@@ -3854,4 +4028,58 @@ int InhomogeneousThreeCavity::findXinNbound_multiple(vector<vector<double>> nbou
 		return index;
 	else
 		throw"not find";
+}
+
+
+//assign中需要使用的子函数
+void InhomogeneousThreeCavity::assign_int(Triangle &T)
+{
+	if (abs(T.sgn_int) < 10)
+	{
+		int r = abs(T.sgn_int);
+		int s = r % 3 + 1;
+		int t = s % 3 + 1;
+		T.z1_int = T.z_int(r - 1);
+		T.z2_int = T.z_int(s - 1);
+		T.z3_int = T.z_int(t - 1);
+		T.z4_int = T.u4_int.transpose() * Vector4cd(T.z1_int, T.z2_int, T.z3_int, 1);
+		T.z5_int = T.u5_int.transpose() * Vector4cd(T.z1_int, T.z2_int, T.z3_int, 1);
+		T.z4_int_ = T.u4_int_.transpose() * Vector4cd(T.z1_int, T.z2_int, T.z3_int, 1);
+		T.z5_int_ = T.u5_int_.transpose() * Vector4cd(T.z1_int, T.z2_int, T.z3_int, 1);
+	}
+	if (abs(T.sgn_int) > 10)
+	{
+		T.z1_int = T.z_int(T.v_int(0) - 1);
+		T.z2_int = T.z_int(T.v_int(1) - 1);
+		T.z2_int_ = T.z_int(T.v_int(1) - 1) - this->a(T.x2_int, T.y2_int);
+		T.z3_int = T.z_int(T.v_int(2) - 1);
+		T.z5_int = T.u5_int.transpose() * Vector4cd(T.z1_int, T.z2_int, T.z3_int, 1);
+		T.z5_int_ = T.u5_int_.transpose() * Vector4cd(T.z1_int, T.z2_int, T.z3_int, 1);
+	}
+}
+
+void InhomogeneousThreeCavity::assign_intex(Triangle &T)
+{
+	if (abs(T.sgn_intex) < 10)
+	{
+		int r = abs(T.sgn_intex);
+		int s = r % 3 + 1;
+		int t = s % 3 + 1;
+		T.z1_intex = T.z_intex(r - 1);
+		T.z2_intex = T.z_intex(s - 1);
+		T.z3_intex = T.z_intex(t - 1);
+		T.z4_intex = T.u4_intex.transpose() * Vector4cd(T.z1_intex, T.z2_intex, T.z3_intex, 1);
+		T.z5_intex = T.u5_intex.transpose() * Vector4cd(T.z1_intex, T.z2_intex, T.z3_intex, 1);
+		T.z4_intex_ = T.u4_intex_.transpose() * Vector4cd(T.z1_intex, T.z2_intex, T.z3_intex, 1);
+		T.z5_intex_ = T.u5_intex_.transpose() * Vector4cd(T.z1_intex, T.z2_intex, T.z3_intex, 1);
+	}
+	if (abs(T.sgn_intex) > 10)
+	{
+		T.z1_intex = T.z_intex(T.v_intex(0) - 1);
+		T.z2_intex = T.z_intex(T.v_intex(1) - 1);
+		T.z2_intex_ = T.z_intex(T.v_intex(1) - 1) - this->a(T.x2_intex, T.y2_intex);
+		T.z3_intex = T.z_intex(T.v_intex(2) - 1);
+		T.z5_intex = T.u5_intex.transpose() * Vector4cd(T.z1_intex, T.z2_intex, T.z3_intex, 1);
+		T.z5_intex_ = T.u5_intex_.transpose() * Vector4cd(T.z1_intex, T.z2_intex, T.z3_intex, 1);
+	}
 }
