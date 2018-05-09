@@ -57,6 +57,9 @@
     <ClInclude Include="InhomogeneousThreeRectangleCircleCavity.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="InhomogeneousThreeRectangleRectangleCavity.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Cavity.cpp">
@@ -93,6 +96,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="InhomogeneousThreeRectangleCircleCavity.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="InhomogeneousThreeRectangleRectangleCavity.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

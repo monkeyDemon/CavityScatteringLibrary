@@ -84,8 +84,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>D:\Matlab2015bx64\extern\include;F:\C-Library\Eigen;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Matlab2015bx64\extern\lib\win64\microsoft;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Program Files\MATLAB\R2015b\extern\include;D:\C-Library\Eigen;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\MATLAB\R2015b\extern\lib\win64\microsoft;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -160,6 +160,7 @@
     <ClInclude Include="InhomogeneousThreeCavity.h" />
     <ClInclude Include="InhomogeneousThreeRectangleCavity.h" />
     <ClInclude Include="InhomogeneousThreeRectangleCircleCavity.h" />
+    <ClInclude Include="InhomogeneousThreeRectangleRectangleCavity.h" />
     <ClInclude Include="MyTimer.h" />
     <ClInclude Include="SingalCavity.h" />
     <ClInclude Include="SingalRectangleCavity.h" />
@@ -176,6 +177,7 @@
     <ClCompile Include="InhomogeneousThreeCavity.cpp" />
     <ClCompile Include="InhomogeneousThreeRectangleCavity.cpp" />
     <ClCompile Include="InhomogeneousThreeRectangleCircleCavity.cpp" />
+    <ClCompile Include="InhomogeneousThreeRectangleRectangleCavity.cpp" />
     <ClCompile Include="SingalCavity.cpp" />
     <ClCompile Include="SingalRectangleCavity.cpp" />
   </ItemGroup>
