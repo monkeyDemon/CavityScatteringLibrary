@@ -30,8 +30,6 @@ void SingalCavity::InitAperture(double apertureLeft, double apertureRight, doubl
 
 
 
-
-
 bool SingalCavity::Solve()
 {
 	char *checkLog = "";
@@ -69,15 +67,18 @@ bool SingalCavity::Solve()
 	myTimer.EndAndPrint();
 
 	myTimer.Start("setA");
-	SparseMatrix<complex<double>> A = setA(nn, nu, nbound, gridCell);
+	//SparseMatrix<complex<double>> A = setA(nn, nu, nbound, gridCell);
+	mxArray * mx_A = setA_mx(nn, nu, nbound, gridCell);
 	myTimer.EndAndPrint();
 
 	myTimer.Start("setB");
-	VectorXcd B = setB(gridCell, rh, nn, nu);
+	//VectorXcd B = setB(gridCell, rh, nn, nu);
+	mxArray *mx_B = setB_mx(gridCell, rh, nn, nu);
 	myTimer.EndAndPrint();
 
 	myTimer.Start("solveX");
-	VectorXcd x = solveX(A, B);
+	//VectorXcd x = solveX(A, B);
+	VectorXcd x = solveX_mx(mx_A, mx_B);
 	myTimer.EndAndPrint();
 	//cout << x << endl;
 
@@ -90,6 +91,10 @@ bool SingalCavity::Solve()
 	myTimer.EndAndPrint();
 	//cout << solutionOfAperture << endl;
 }
+
+
+
+
 
 
 
@@ -158,7 +163,7 @@ void SingalCavity::setTri(TriangleMesh &U, TriangleMesh &L, int &nn, vector<int>
 			double x4 = left + j*dx;
 			double y4 = bottom + k*dy;
 			double a4 = phi(x4, y4);
-			if (a4 < 0 && j < m)
+			if (a4 < -1e-10 && j < m)
 			{
 				if (k != n)
 					notApertureNum++;
@@ -220,7 +225,7 @@ void SingalCavity::setTri(TriangleMesh &U, TriangleMesh &L, int &nn, vector<int>
 			if (j < m - 1)
 			{
 				id = j + k*(m - 1);
-				if (a4 < 0)
+				if (a4 <  -1e-10)
 				{
 					if (k == n - 1) {
 						ApertureIndex = ApertureIndex + 1;
@@ -1232,7 +1237,159 @@ SparseMatrix<complex<double>> SingalCavity::setA(double nn, vector<int> &nu, vec
 
 mxArray* SingalCavity::setA_mx(double nn, vector<int> &nu, vector<vector<double>> &nbound, vector<vector<gridCell>> &grid)
 {
-	throw new exception("");
+	int m = this->meshWidth;
+	int n = this->meshHeight;
+
+	double dx = this->stepX;
+	double dy = this->stepY;
+
+	double left = this->virtualBorderLeft;
+	double bottom = this->virtualBorderBottom;
+
+	int apertureNumber = nbound[0].size();
+
+	double* A, *pA;
+	A = (double*)malloc(sizeof(double)*(nn * 7 + apertureNumber*apertureNumber) * 4);
+	pA = A;
+	if (A == NULL) {
+		//printf("allocate memory for data failed.");
+		//return(A);
+		throw "allocate memory for data failed.";
+	}
+
+	int list = 0;
+	int id;
+	double x, y;
+	int sq;
+	double cur_nu;
+	for (int j = 0; j < m - 1; j++)
+	{
+		for (int l = 0; l < n; l++)
+		{
+			// j=j+1;l=l+1;
+			//x = left + (j + 1)*dx;
+			//y = bottom + (l + 1)*dy;
+			//以当前点（j,l）为中心，分别将其在周围6点处的积分值组装到对应位置
+			id = j + l*(m - 1);
+			cur_nu = nu[id];
+			if (cur_nu > 0)
+			{
+				gridCell curGrid = grid[j][l];
+
+				if (l == n - 1)
+					sq = findXIndexinNbound(nbound, cur_nu);
+
+				// west
+				if (nu[id - 1] > 0)
+				{
+					if (l == n - 1)
+					{
+						//sq = findApertureIndex(nbound, apertureNumber, cur_nu);
+						curGrid._w += curGrid.tm[sq - 1];
+					}
+					*(pA++) = cur_nu;
+					*(pA++) = nu[id - 1];
+					*(pA++) = curGrid._w.real();
+					*(pA++) = curGrid._w.imag();
+				}
+				// north - west
+				if (l != n - 1 && nu[id + m - 2] > 0)
+				{
+					*(pA++) = cur_nu;
+					*(pA++) = nu[id + m - 2];
+					*(pA++) = curGrid._nw.real();
+					*(pA++) = curGrid._nw.imag();
+				}
+				// north
+				if (l != n - 1 && nu[id + m - 1] > 0)
+				{
+					*(pA++) = cur_nu;
+					*(pA++) = nu[id + m - 1];
+					*(pA++) = curGrid._n.real();
+					*(pA++) = curGrid._n.imag();
+				}
+				// east
+				if (nu[id + 1] > 0)
+				{
+					if (l == n - 1)
+					{
+						//sq = findApertureIndex(nbound, apertureNumber, cur_nu);
+						curGrid._e += curGrid.tm[sq + 1];
+					}
+					*(pA++) = cur_nu;
+					*(pA++) = nu[id + 1];
+					*(pA++) = curGrid._e.real();
+					*(pA++) = curGrid._e.imag();
+				}
+				// south
+				if (nu[id - m + 1] > 0)
+				{
+					*(pA++) = cur_nu;
+					*(pA++) = nu[id - m + 1];
+					*(pA++) = curGrid._s.real();
+					*(pA++) = curGrid._s.imag();
+				}
+				// south - east
+				if (nu[id - m + 2] > 0)
+				{
+					*(pA++) = cur_nu;
+					*(pA++) = nu[id - m + 2];
+					*(pA++) = curGrid._se.real();
+					*(pA++) = curGrid._se.imag();
+				}
+				// 将 l = n-1 时，在口径面剩余点处产生的积分值进行组装
+				if (l == n - 1)
+				{
+					//sq = findApertureIndex(nbound, apertureNumber, cur_nu);
+					curGrid._c += curGrid.tm[sq];
+					for (int apeIndex = 0; apeIndex < apertureNumber; apeIndex++)
+					{
+						if (apeIndex<sq - 1 || apeIndex>sq + 1)//这个条件确保不会再次考虑已经组装的部分
+						{
+							*(pA++) = cur_nu;
+							*(pA++) = nbound[0][apeIndex];
+							*(pA++) = curGrid.tm[apeIndex].real();
+							*(pA++) = curGrid.tm[apeIndex].imag();
+						}
+					}
+				}
+				*(pA++) = cur_nu;
+				*(pA++) = cur_nu;
+				*(pA++) = curGrid._c.real();
+				*(pA++) = curGrid._c.imag();
+			}
+
+		}
+	}
+
+	//截去多余内存区域
+	int ArowNum = (pA - A) / 4;
+	double *A_result = (double*)malloc(ArowNum * 4 * sizeof(double));
+	//memcpy(A_result, A, (pA - A)- sizeof(double));
+	memcpy(A_result, A, ArowNum * 4 * sizeof(double));
+
+	//构造matlab中对应的setA函数的返回值
+	mxArray *mx_A;
+
+	//将C中数组转化为matlab数组mxArray
+	//注意matlab默认是列优先的
+	//我们要生产ArowNum*3的矩阵，可以先构造3*ArowNum的矩阵再转置
+	mx_A = mxCreateDoubleMatrix(3, ArowNum, mxCOMPLEX);
+	double *AvaluePr = mxGetPr(mx_A);
+	double *AvaluePi = mxGetPi(mx_A);
+	for (int i = 0; i < ArowNum; i++)
+	{
+		//行索引
+		*AvaluePr++ = *A_result++; ////这个索引是从1计数的(因此传给matlab不需要-1)
+		*AvaluePi++ = 0;
+		//列索引
+		*AvaluePr++ = *A_result++;
+		*AvaluePi++ = 0;
+		//取值
+		*AvaluePr++ = *A_result++;
+		*AvaluePi++ = *A_result++;
+	}
+	return mx_A;
 }
 
 
@@ -1268,7 +1425,43 @@ VectorXcd SingalCavity::setB(vector<vector<gridCell>> &grid, VectorXcd &rh, int 
 
 mxArray* SingalCavity::setB_mx(vector<vector<gridCell>> &grid, VectorXcd &rh, int nn, vector<int> &nu)
 {
-	throw new exception("");
+	int m = this->meshWidth;
+	int n = this->meshHeight;
+	double dx = this->stepX;
+	double dy = this->stepY;
+	double left = this->virtualBorderLeft;
+	double bottom = this->virtualBorderBottom;
+
+	VectorXcd B(nn);
+	//B = zeros(nn, 1);
+
+	gridCell curGrid;
+	int id;
+	for (int j = 0; j<m - 1; j++)
+	{
+		for (int l = 0; l< n; l++)
+		{
+			curGrid = grid[j][l];
+			id = j + l*(m - 1);
+			if (nu[id] > 0)
+			{
+				B(nu[id] - 1) = rh(id) - curGrid._const;
+			}
+		}
+	}
+	
+	//构造matlab中对应的setB函数的返回值
+	mxArray *mx_B;
+	//将C中数组转化为matlab数组mxArray
+	mx_B = mxCreateDoubleMatrix(B.size(), 1, mxCOMPLEX);
+	double *BvaluePr = mxGetPr(mx_B);
+	double *BvaluePi = mxGetPi(mx_B);
+	for (int i = 0; i < B.size(); i++)
+	{
+		*BvaluePr++ = B(i).real();
+		*BvaluePi++ = B(i).imag();
+	}
+	return mx_B;
 }
 
 

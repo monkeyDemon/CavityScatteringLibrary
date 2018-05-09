@@ -13,8 +13,6 @@ public:
 	bool Solve();
 
 protected:
-	double k0;
-	double theta;
 	complex<double> epr1, epr1_int;
 	complex<double> epr2, epr2_int;
 	complex<double> epr3, epr3_int;

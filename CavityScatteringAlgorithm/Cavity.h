@@ -31,6 +31,7 @@ public:
 	bool InitialCheck(char *checkLog);
 	virtual bool Solve()=0;
 	void PlotAperture(string title, string xlabel, string ylabel, int sign);
+	void SolveRCS(double interval);
 
 protected:
 	Engine *ep;//matlab“˝«Ê
@@ -44,6 +45,11 @@ protected:
 
 	// Solution of the Holmholtz equation on aperture
 	VectorXcd solutionOfAperture;
+
+	//»Î…‰Ω«
+	double theta;
+	//≤® ˝
+	double k0;
 
 	// parameter of the virtual border which cover the cavity(initial by InitVirtualBorder)
 	double virtualBorderTop;

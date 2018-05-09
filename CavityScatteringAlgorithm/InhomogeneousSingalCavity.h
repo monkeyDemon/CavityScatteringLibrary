@@ -6,15 +6,13 @@ class  _declspec(dllexport) InhomogeneousSingalCavity : public Cavity
 public:
 	InhomogeneousSingalCavity(unsigned int cavityType);
 	//初始化电磁相关物理参数
-	void InitElectromagneticParameter(double k0, double k0_int,complex<double>epr, complex<double> epr_int, double theta);
+	void InitElectromagneticParameter(double k0, complex<double>epr, complex<double> epr_int, double theta);
 	//初始化口径面信息
 	void InitAperture(double apertureLeft, double apertureRight, double apertureY);
 	
 	bool Solve();
 
 protected:
-	double k0, k0_int;
-	double theta;
 	complex<double> epr, epr_int;
 	complex<double> k2, k2_int;
 

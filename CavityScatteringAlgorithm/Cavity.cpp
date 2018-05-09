@@ -181,6 +181,112 @@ void Cavity::PlotAperture(string title, string xlabel, string ylabel, int sign)
 }
 
 
+//求解并绘制RCS
+//interval：计算RCS的间隔，目前的合法取值有：0.125，0.25，0.5，1
+void Cavity::SolveRCS(double interval)
+{
+	if (interval != 0.125 && interval != 0.25 && interval != 0.5 && interval != 1)
+		throw("interval设置不合法");
+
+	//获取RCS求解次数
+	double temp = (int)(1 / interval);
+	int rcs_length = 89 * temp + 1;
+
+	//初始化RCS的求解范围
+	VectorXd rcs_range(rcs_length);//rcs_range = 0:-0.25 : -89;
+	temp = 0;
+	for (int i = 0; i < rcs_length; i++)
+	{
+		rcs_range(i) = temp;
+		temp -= interval;
+	}
+
+	//初始化RCS求解结果
+	VectorXd RCS(rcs_length);
+
+	//开始计算！
+	MyTimer myTimer(1);//初始化计时器
+	myTimer.Start("RCS");
+	for (int index_rcs = 0; index_rcs < rcs_length; index_rcs++)
+	{
+		double aj = rcs_range(index_rcs);
+		this->theta = aj*M_PI / 180;
+
+		//求解当前theta时口径面的解
+		cout << "============================" << endl;
+		cout << "theta = " << theta << endl;
+		cout << "============================" << endl;
+		this->Solve();
+		cout << endl;
+
+		// 计算当前theta的RCS
+		int aperNum = this->nbound[0].size();
+		complex<double> Ptheta = 0;
+		double as, ac;
+		complex<double> temp_i(0, 1);
+		for (int k = 0; k < aperNum; k++)
+		{
+			double x_aperture = nbound[1][k];
+			double ang = -theta + M_PI / 2;
+			as = sin(ang);
+			ac = cos(ang);
+			Ptheta += this->solutionOfAperture(k)*(cos(ac*k0*x_aperture) + sin(ac*k0*x_aperture)*temp_i);
+		}
+		Ptheta = 0.5*k0*as*(1.0 / (aperNum + 1))*Ptheta;              // P(theta), defined in Zhao's PhD thesis, P26 (2.120)
+		double gama_theta = 4.0*abs(Ptheta)*abs(Ptheta) / k0;   // gama(theta), defined in Zhao's PhD thesis, P26 (2.119)
+		double ttt = log(gama_theta);
+		RCS(index_rcs) = 10.0*log(gama_theta) / log(10.0);        // RCS
+	}
+	myTimer.EndAndPrint();
+
+
+	// 绘制RCS
+	cout << endl << "正在调用matlab引擎进行绘图,请稍后..." << endl;
+	//如无法成功绘图，需要重新注册matlab引擎
+	//详见https://blog.csdn.net/xiaoqiang920/article/details/8949254
+
+	//初始化RCS绘制的X轴数据
+	VectorXd plotX(rcs_length);
+	temp = 91;
+	for (int i = 0; i < rcs_length; i++)
+	{
+		plotX(i) = temp;
+		temp += interval;
+	}
+	//cout << plotX << endl;
+	//cout << RCS << endl;
+
+
+	///调用matalb引擎画图
+	mxArray *mx_xValue, *mx_RCS;
+
+	//将C中数组转化为matlab数组mxArray
+	mx_xValue = mxCreateDoubleMatrix(1, plotX.size(), mxREAL);
+	//memcpy(mxGetPr(matrix), m, sizeof(double) * 3 * 3);
+	double *xValuePr = mxGetPr(mx_xValue);
+	for (int i = 0; i < plotX.size(); i++)
+		*xValuePr++ = plotX(i);
+
+	mx_RCS = mxCreateDoubleMatrix(1, RCS.size(), mxREAL);
+	double *RCSValuePr = mxGetPr(mx_RCS);
+	for (int i = 0; i < RCS.size(); i++)
+		*RCSValuePr++ = RCS(i);
+
+
+	///将需要的变量加入matlab引擎
+	engPutVariable(ep, "xValue", mx_xValue);
+	engPutVariable(ep, "RCS", mx_RCS);
+
+	//直接调用matlab的内置函数绘图
+	engEvalString(ep, "figure");
+	//engEvalString(ep, "plot(91 : 0.25 : 180, RCS, 'k-', 'LineWidth', 1.2);");
+	engEvalString(ep, "plot(xValue, RCS, 'k-', 'LineWidth', 1.2);");
+	//engEvalString(ep, "ylim([-70, 20]);");
+	//engEvalString(ep, "set(gca, 'YTick', -70:10 : 20, 'LineWidth', 1.2);");
+	engEvalString(ep, "xlabel('Observation angle(degree)', 'FontSize', 12);");
+	engEvalString(ep, "ylabel('Backscatter RCS(dB)', 'FontSize', 12);");
+}
+
 
 
 

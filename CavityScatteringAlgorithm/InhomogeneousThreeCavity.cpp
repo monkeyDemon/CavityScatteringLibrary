@@ -119,6 +119,7 @@ bool InhomogeneousThreeCavity::Solve()
 
 
 
+
 /*  --------------------------------------
 --------------------------------------
 protect
@@ -234,7 +235,7 @@ void InhomogeneousThreeCavity::setTri(TriangleMesh &U, TriangleMesh &L, int &nn,
 			double x4 = left + j*dx;
 			double y4 = bottom + k*dy;
 			double a4 = phi(x4, y4);
-			if (a4 < 0 && j < m)
+			if (a4 < -1e-10 && j < m)
 			{
 				if (k != n)
 					notApertureNum++;
@@ -290,7 +291,7 @@ void InhomogeneousThreeCavity::setTri(TriangleMesh &U, TriangleMesh &L, int &nn,
 			if (j < m - 1)
 			{
 				id = j + k*(m - 1);
-				if (a4 < 0)
+				if (a4 < -1e-10)
 				{
 					if (k == n - 1) {
 						ApertureIndex = ApertureIndex + 1;

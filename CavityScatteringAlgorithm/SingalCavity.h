@@ -13,8 +13,6 @@ public:
 	bool Solve();
 
 protected:
-	double k0;
-	double theta;
 	complex<double> epr;
 	complex<double> k2;
 	double apertureLeft;
