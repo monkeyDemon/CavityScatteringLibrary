@@ -76,8 +76,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\Matlab2015bx64\extern\include;F:\C-Library\Eigen;F:\计算数学\CavityScatteringLibrary备份\CavityScatteringLibrary_v3.2%28内存优化方案2%29\CavityScatteringAlgorithm;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Matlab2015bx64\extern\lib\win64\microsoft;F:\计算数学\CavityScatteringLibrary备份\CavityScatteringLibrary_v3.2%28内存优化方案2%29\x64\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\Matlab2015bx64\extern\include;F:\C-Library\Eigen;F:\计算数学\CavityScatteringLibrary\CavityScatteringLibrary_v3.2%28内存优化方案2%29\CavityScatteringAlgorithm;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Matlab2015bx64\extern\lib\win64\microsoft;F:\计算数学\CavityScatteringLibrary\CavityScatteringLibrary_v3.2%28内存优化方案2%29\x64\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
