@@ -6485,7 +6485,7 @@ void InhomogeneousThreeCavity::ustar_int(Triangle_All &T, Vector4d &u4, Vector4d
 	M2 << x2, y2, 1,
 		x3, y3, 1,
 		x4, y4, 1;
-	M2 = M2.inverse();
+	M2 = M2.inverse().eval();
 
 	Vector3d u234 = Vector3d(x5, y5, 1).transpose() * M2;      // u2, u3, u4     
 
@@ -6493,7 +6493,7 @@ void InhomogeneousThreeCavity::ustar_int(Triangle_All &T, Vector4d &u4, Vector4d
 	M1 << x1, y1, 1,
 		x4, y4, 1,
 		x5, y5, 1;
-	M1 = M1.inverse();
+	M1 = M1.inverse().eval();
 
 	MatrixXd M1_12row(2, 3);
 	M1_12row = M1.block(0, 0, 2, 3);
@@ -6566,13 +6566,17 @@ void InhomogeneousThreeCavity::ustar2_int(Triangle_All &T, Vector4d &u5, Vector4
 	M1 << x1, y1, 1,
 		x2, y2, 1,
 		x5, y5, 1;
-	M1 = M1.inverse();
+	M1 = M1.inverse().eval();
+	// AS fix the bug of function inverse()
+	// function M.inverse() can't get the real inverse of M
+	// see more in http://eigen.tuxfamily.org/bz/show_bug.cgi?id=1442
+
 
 	Matrix3d  M2;
 	M2 << x2, y2, 1,
 		x3, y3, 1,
 		x5, y5, 1;
-	M2 = M2.inverse();
+	M2 = M2.inverse().eval();
 
 	MatrixXd M1_12row(2, 3);
 	M1_12row = M1.block(0, 0, 2, 3);
@@ -6647,7 +6651,7 @@ void InhomogeneousThreeCavity::ustar_int1(Triangle_All &T, Vector4d &u4, Vector4
 	M2 << x2, y2, 1,
 		x3, y3, 1,
 		x4, y4, 1;
-	M2 = M2.inverse();
+	M2 = M2.inverse().eval();
 
 	Vector3d u234 = Vector3d(x5, y5, 1).transpose() * M2;
 
@@ -6655,7 +6659,7 @@ void InhomogeneousThreeCavity::ustar_int1(Triangle_All &T, Vector4d &u4, Vector4
 	M1 << x1, y1, 1,
 		x4, y4, 1,
 		x5, y5, 1;
-	M1 = M1.inverse();
+	M1 = M1.inverse().eval();
 
 	MatrixXd M1_12row(2, 3);
 	M1_12row = M1.block(0, 0, 2, 3);
@@ -6725,13 +6729,14 @@ void InhomogeneousThreeCavity::ustar2_int1(Triangle_All &T, Vector4d &u5, Vector
 	M1 << x1, y1, 1,
 		x2, y2, 1,
 		x5, y5, 1;
-	M1 = M1.inverse();
+
+	M1 = M1.inverse().eval();
 
 	Matrix3d  M2;
 	M2 << x2, y2, 1,
 		x3, y3, 1,
 		x5, y5, 1;
-	M2 = M2.inverse();
+	M2 = M2.inverse().eval();
 
 	MatrixXd M1_12row(2, 3);
 	M1_12row = M1.block(0, 0, 2, 3);
