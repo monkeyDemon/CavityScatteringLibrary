@@ -44,8 +44,8 @@ int main()
 	//double VirtualRight = 1;
 	//cavity.InitVirtualBorder(VirtualTop, VirtualBottom, VirtualLeft, VirtualRight);
 
-	//int m = 160;
-	//int n = 160;
+	//int m = 16;
+	//int n = 16;
 	//cavity.InitMesh(m, n);
 
 	//double k0 = 2 * M_PI;
@@ -61,14 +61,18 @@ int main()
 	//double cavityBottom = 0.75;
 	//cavity.InitCavityShapeParameter(cavityBottom);
 
-	/////求解
-	//cavity.Solve();//求解
-	//
-	////可视化
-	//cavity.PlotAperture("title", "xlabel", "ylabel", 0);
+	//// 绘制三角形网格
+	//cavity.PlotTriangleMesh("title", "xlabel", "ylabel");
 
-	//double interval = 0.25;
-	//cavity.SolveRCS(interval);
+	////// 求解
+	////cavity.Solve();//求解
+	////
+	////// 口径面解的可视化
+	////cavity.PlotAperture("title", "xlabel", "ylabel", 0);
+
+	////// 计算并绘制RCS
+	////double interval = 0.25;
+	////cavity.SolveRCS(interval);
 
 	#pragma endregion
 
@@ -88,8 +92,8 @@ int main()
 	//double VirtualRight = 1.5;
 	//cavity.InitVirtualBorder(VirtualTop, VirtualBottom, VirtualLeft, VirtualRight);
 
-	//int m = 240;
-	//int n = 240;
+	//int m = 24;
+	//int n = 24;
 	//cavity.InitMesh(m, n);
 
 	//double k0 = 4 * M_PI;
@@ -113,14 +117,17 @@ int main()
 	//double cavityRight_ = 1;
 	//cavity.InitCavityShapeParameter(cavityTop, cavityBottom, cavityLeft, cavityRight, cavityTop_, cavityBottom_, cavityLeft_, cavityRight_);
 
-	/////求解
-	//cavity.Solve();//求解
+	//// 绘制三角形网格
+	//cavity.PlotTriangleMesh("title", "xlabel", "ylabel");
 
-	/////可视化
-	//cavity.PlotAperture("title", "xlabel", "ylabel", 0);
+	///////求解
+	////cavity.Solve();//求解
 
-	//double interval = 0.25;
-	//cavity.SolveRCS(interval);
+	///////可视化
+	////cavity.PlotAperture("title", "xlabel", "ylabel", 0);
+
+	////double interval = 0.25;
+	////cavity.SolveRCS(interval);
 
 	#pragma endregion
 
@@ -136,8 +143,8 @@ int main()
 	//double VirtualRight = 1.5;
 	//cavity.InitVirtualBorder(VirtualTop, VirtualBottom, VirtualLeft, VirtualRight);
 
-	//int m = 240;
-	//int n = 240;
+	//int m = 24;
+	//int n = 24;
 	//cavity.InitMesh(m, n);
 
 	//double k0 = 4 * M_PI;
@@ -161,14 +168,17 @@ int main()
 	//double cavityRight_ = 0.75;
 	//cavity.InitCavityShapeParameter(cavityTop, cavityBottom, cavityLeft, cavityRight, cavityTop_, cavityBottom_, cavityLeft_, cavityRight_);
 
-	/////求解
-	//cavity.Solve();//求解
+	//// 绘制三角形网格
+	//cavity.PlotTriangleMesh("title", "xlabel", "ylabel");
 
-	/////可视化
-	//cavity.PlotAperture("title", "xlabel", "ylabel", 0);
+	///////求解
+	////cavity.Solve();//求解
 
-	/*double interval = 0.25;
-	cavity.SolveRCS(interval);*/
+	///////可视化
+	////cavity.PlotAperture("title", "xlabel", "ylabel", 0);
+
+	/////*double interval = 0.25;
+	////cavity.SolveRCS(interval);*/
 
 	#pragma endregion
 
@@ -186,14 +196,14 @@ int main()
 	//double VirtualRight = 3;
 	//cavity.InitVirtualBorder(VirtualTop, VirtualBottom, VirtualLeft, VirtualRight);
 
-	////int m = 48;
-	////int n = 24;
+	//int m = 48;
+	//int n = 12;
 	////int m = 192;
 	////int n = 96;
 	///*int m = 384;
 	//int n = 192;*/
-	//int m = 24;
-	//int n = 12;
+	////int m = 24;
+	////int n = 6;
 	//cavity.InitMesh(m, n);
 
 	//double k0 = 64 * M_PI;
@@ -243,11 +253,14 @@ int main()
 	//circle3.radius = 0.8;
 	//cavity.InitCavityInhomogeneousShapeParameter(circle1, circle2, circle3);
 
-	/////求解
-	//cavity.Solve();//求解
+	//// 绘制三角形网格
+	//cavity.PlotTriangleMesh("title", "xlabel", "ylabel");
 
-	/////可视化
-	//cavity.PlotAperture("title", "xlabel", "ylabel", 0);
+	///////求解
+	////cavity.Solve();//求解
+
+	///////可视化
+	////cavity.PlotAperture("title", "xlabel", "ylabel", 0);
 
 	#pragma endregion
 
@@ -256,19 +269,19 @@ int main()
 	InhomogeneousThreeRectangleRectangleCavity cavity(1);
 	///初始化参数
 	double VirtualTop = 0;
-	double VirtualBottom = -1.5;
+	double VirtualBottom = -1.2;
 	double VirtualLeft = -3;
 	double VirtualRight = 3;
 	cavity.InitVirtualBorder(VirtualTop, VirtualBottom, VirtualLeft, VirtualRight);
 
 	//int m = 48;
-	//int n = 24;
+	//int n = 12;
+	int m = 96;
+	int n = 24;
 	//int m = 192;
-	//int n = 96;
+	//int n = 48;
 	/*int m = 384;
-	int n = 192;*/
-	int m = 24;
-	int n = 12;
+	int n = 96;*/
 	cavity.InitMesh(m, n);
 
 	double k0 = 4 * M_PI;
@@ -324,11 +337,14 @@ int main()
 	box3_int.cavityRight = 2.25;
 	cavity.InitCavityInhomogeneousShapeParameter(box1_int, box2_int, box3_int);
 
-	///求解
-	cavity.Solve();//求解
+	// 绘制三角形网格
+	cavity.PlotTriangleMesh("title", "xlabel", "ylabel");
 
-	///可视化
-	cavity.PlotAperture("title", "xlabel", "ylabel", 0);
+	/////求解
+	//cavity.Solve();//求解
+
+	/////可视化
+	//cavity.PlotAperture("title", "xlabel", "ylabel", 0);
 
 	#pragma endregion
 

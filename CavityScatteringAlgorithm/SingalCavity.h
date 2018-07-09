@@ -9,8 +9,10 @@ public:
 	void InitElectromagneticParameter(double k0, complex<double> epr, double theta);
 	//初始化口径面信息
 	void InitAperture(double apertureLeft, double apertureRight, double apertureY);
-	
+		
 	bool Solve();
+
+	void PlotTriangleMesh(string title, string xlabel, string ylabel) ;
 
 protected:
 	complex<double> epr;

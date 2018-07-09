@@ -30,8 +30,22 @@ public:
 	//void InitCavityShapeParameter() = 0;
 	bool InitialCheck(char *checkLog);
 	virtual bool Solve()=0;
-	void PlotAperture(string title, string xlabel, string ylabel, int sign);
 	void SolveRCS(double interval);
+
+	/*
+	绘制口径面处的数值解
+	sign 标识绘制数值解的类型：
+		sign = 0   幅值
+		sign = 1   实部
+		sign = -1  虚部
+		sign = 10 相位
+	*/
+	void PlotAperture(string title, string xlabel, string ylabel, int sign);
+
+	/*
+	绘制三角形网格
+	*/
+	virtual void PlotTriangleMesh(string title, string xlabel, string ylabel) = 0;
 
 protected:
 	Engine *ep;//matlab引擎

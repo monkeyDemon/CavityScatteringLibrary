@@ -31,6 +31,7 @@ void InhomogeneousSingalCavity::InitAperture(double apertureLeft, double apertur
 	this->initalCheckKey = this->initalCheckKey | 8; // 8 means 0000 1000
 }
 
+
 bool InhomogeneousSingalCavity::Solve()
 {
 	char *checkLog = "";
@@ -97,7 +98,459 @@ bool InhomogeneousSingalCavity::Solve()
 }
 
 
+void InhomogeneousSingalCavity::PlotTriangleMesh(string title, string xlabel, string ylabel)
+{
+	char *checkLog = "";
+	bool checkResult;
+	checkResult = InitialCheck(checkLog);
 
+	if (checkResult == false)
+	{
+		printf(checkLog);
+		throw exception("初始化检查未通过！");
+		return;
+	}
+
+	MyTimer myTimer(1);
+
+	// =====================================================
+	myTimer.Start("setTri");
+	TriangleMesh U(this->meshWidth, this->meshHeight);
+	TriangleMesh L(this->meshWidth, this->meshHeight);
+
+	setTri(U, L, nn, nu, nbound);
+	myTimer.EndAndPrint();
+
+
+	// =====================================================
+	myTimer.Start("绘制三角形网格");
+	//调用matalb引擎画图
+	engEvalString(ep, "figure");
+	engEvalString(ep, "hold on;");
+
+	// 定义matlab数组mxArray
+	mxArray *mx_xValue, *mx_yValue;
+	mxArray *mx_xValue2, *mx_yValue2;
+
+	//将C中数组转化为matlab数组mxArray
+	mx_xValue = mxCreateDoubleMatrix(1, 4, mxREAL);
+	mx_yValue = mxCreateDoubleMatrix(1, 4, mxREAL);
+	mx_xValue2 = mxCreateDoubleMatrix(1, 2, mxREAL);
+	mx_yValue2 = mxCreateDoubleMatrix(1, 2, mxREAL);
+
+	// 定义matlab数组的数据指针
+	double *xValuePr, *yValuePr;
+
+	int m = this->meshWidth;
+	int n = this->meshHeight;
+	for (int j = 0; j < m; j++)
+	{
+		for (int l = 0; l < n; l++)
+		{
+			// 如需要继续缩减内存，在这里将sgn==10排除
+
+			// 处理U
+			if (U.Get_sign(j, l))
+			{
+				// normal triangle
+				Triangle_Normal a = U.Get_normal(j, l);
+				if (a.sgn != 10)
+				{
+					if (a.sgn == -10)
+					{
+						//plot([a.x, a.x(1)], [a.y, a.y(1)], 'b');
+						xValuePr = mxGetPr(mx_xValue);
+						*xValuePr++ = a.x(0); *xValuePr++ = a.x(1); *xValuePr++ = a.x(2); *xValuePr++ = a.x(0);
+						yValuePr = mxGetPr(mx_yValue);
+						*yValuePr++ = a.y(0); *yValuePr++ = a.y(1); *yValuePr++ = a.y(2); *yValuePr++ = a.y(0);
+						engPutVariable(ep, "xValue", mx_xValue); engPutVariable(ep, "yValue", mx_yValue);
+						engEvalString(ep, "plot(xValue, yValue, 'b');");
+					}
+					if (abs(a.sgn_int) == 10)
+					{
+						if ( abs(phi_int(a.x_int(0), a.y_int(0))) < 1e-10 && abs(phi_int(a.x_int(1), a.y_int(1))) < 1e-10 && abs(phi_int((a.x_int(0) + a.x_int(1)) / 2, (a.y_int(0) + a.y_int(1)) / 2)) < 1e-10)
+						{
+							//plot([a.x_int(1), a.x_int(2)], [a.y_int(1), a.y_int(2)], 'r', 'LineWidth', 2);
+							xValuePr = mxGetPr(mx_xValue2);
+							*xValuePr++ = a.x_int(0); *xValuePr++ = a.x_int(1); 
+							yValuePr = mxGetPr(mx_yValue2);
+							*yValuePr++ = a.y_int(0); *yValuePr++ = a.y_int(1);
+							engPutVariable(ep, "xValue", mx_xValue2); engPutVariable(ep, "yValue", mx_yValue2);
+							engEvalString(ep, "plot(xValue, yValue, 'r', 'LineWidth', 2);");
+						}
+						if (abs(phi_int(a.x_int(1), a.y_int(1))) < 1e-10 && abs(phi_int(a.x_int(2), a.y_int(2))) < 1e-10 && abs(phi_int((a.x_int(1) + a.x_int(2)) / 2, (a.y_int(1) + a.y_int(2)) / 2)) < 1e-10)
+						{
+							//plot([a.x_int(2), a.x_int(3)], [a.y_int(2), a.y_int(3)], 'r', 'LineWidth', 2);
+							xValuePr = mxGetPr(mx_xValue2);
+							*xValuePr++ = a.x_int(1); *xValuePr++ = a.x_int(2);
+							yValuePr = mxGetPr(mx_yValue2);
+							*yValuePr++ = a.y_int(1); *yValuePr++ = a.y_int(2);
+							engPutVariable(ep, "xValue", mx_xValue2); engPutVariable(ep, "yValue", mx_yValue2);
+							engEvalString(ep, "plot(xValue, yValue, 'r', 'LineWidth', 2);");
+						}
+						if (abs(phi_int(a.x_int(2), a.y_int(2))) < 1e-10 && abs(phi_int(a.x_int(0), a.y_int(0))) < 1e-10 && abs(phi_int((a.x_int(2) + a.x_int(0)) / 2, (a.y_int(2) + a.y_int(0)) / 2)) < 1e-10)
+						{
+							//plot([a.x_int(3), a.x_int(1)], [a.y_int(3), a.y_int(1)], 'r', 'LineWidth', 2);
+							xValuePr = mxGetPr(mx_xValue2);
+							*xValuePr++ = a.x_int(2); *xValuePr++ = a.x_int(0);
+							yValuePr = mxGetPr(mx_yValue2);
+							*yValuePr++ = a.y_int(2); *yValuePr++ = a.y_int(0);
+							engPutVariable(ep, "xValue", mx_xValue2); engPutVariable(ep, "yValue", mx_yValue2);
+							engEvalString(ep, "plot(xValue, yValue, 'r', 'LineWidth', 2);");
+						}
+					}
+				}
+			}
+			else
+			{
+				// all triangle
+				Triangle_All a = U.Get_all(j, l);
+				if (a.sgn != 10)
+				{
+					if (a.sgn == -10)
+					{
+						//plot([a.x, a.x(1)], [a.y, a.y(1)], 'b');
+						xValuePr = mxGetPr(mx_xValue);
+						*xValuePr++ = a.x(0); *xValuePr++ = a.x(1); *xValuePr++ = a.x(2); *xValuePr++ = a.x(0);
+						yValuePr = mxGetPr(mx_yValue);
+						*yValuePr++ = a.y(0); *yValuePr++ = a.y(1); *yValuePr++ = a.y(2); *yValuePr++ = a.y(0);
+						engPutVariable(ep, "xValue", mx_xValue); engPutVariable(ep, "yValue", mx_yValue);
+						engEvalString(ep, "plot(xValue, yValue, 'b');");
+					}
+					if (abs(a.sgn) < 10)
+					{
+						if (a.sgn > 0)
+						{
+							//plot([a.x2, a.x3, a.x4, a.x2], [a.y2, a.y3, a.y4, a.y2], 'b');
+							xValuePr = mxGetPr(mx_xValue);
+							*xValuePr++ = a.x2; *xValuePr++ = a.x3; *xValuePr++ = a.x4; *xValuePr++ = a.x2;
+							yValuePr = mxGetPr(mx_yValue);
+							*yValuePr++ = a.y2; *yValuePr++ = a.y3; *yValuePr++ = a.y4; *yValuePr++ = a.y2;
+							engPutVariable(ep, "xValue", mx_xValue); engPutVariable(ep, "yValue", mx_yValue);
+							engEvalString(ep, "plot(xValue, yValue, 'b');");
+
+							//plot([a.x3, a.x5, a.x4, a.x3], [a.y3, a.y5, a.y4, a.y3], 'b');
+							xValuePr = mxGetPr(mx_xValue);
+							*xValuePr++ = a.x3; *xValuePr++ = a.x5; *xValuePr++ = a.x4; *xValuePr++ = a.x3;
+							yValuePr = mxGetPr(mx_yValue);
+							*yValuePr++ = a.y3; *yValuePr++ = a.y5; *yValuePr++ = a.y4; *yValuePr++ = a.y3;
+							engPutVariable(ep, "xValue", mx_xValue); engPutVariable(ep, "yValue", mx_yValue);
+							engEvalString(ep, "plot(xValue, yValue, 'b');");
+						}
+						else
+						{
+							//plot([a.x1, a.x4, a.x5, a.x1], [a.y1, a.y4, a.y5, a.y1], 'b');
+							xValuePr = mxGetPr(mx_xValue);
+							*xValuePr++ = a.x1; *xValuePr++ = a.x4; *xValuePr++ = a.x5; *xValuePr++ = a.x1;
+							yValuePr = mxGetPr(mx_yValue);
+							*yValuePr++ = a.y1; *yValuePr++ = a.y4; *yValuePr++ = a.y5; *yValuePr++ = a.y1;
+							engPutVariable(ep, "xValue", mx_xValue); engPutVariable(ep, "yValue", mx_yValue);
+							engEvalString(ep, "plot(xValue, yValue, 'b');");
+						}
+					}
+					if (abs(a.sgn) > 10)
+					{
+						if (a.sgn > 0)
+						{
+							//plot([a.x2, a.x3, a.x5, a.x2], [a.y2, a.y3, a.y5, a.y2], 'b');
+							xValuePr = mxGetPr(mx_xValue);
+							*xValuePr++ = a.x2; *xValuePr++ = a.x3; *xValuePr++ = a.x5; *xValuePr++ = a.x2;
+							yValuePr = mxGetPr(mx_yValue);
+							*yValuePr++ = a.y2; *yValuePr++ = a.y3; *yValuePr++ = a.y5; *yValuePr++ = a.y2;
+							engPutVariable(ep, "xValue", mx_xValue); engPutVariable(ep, "yValue", mx_yValue);
+							engEvalString(ep, "plot(xValue, yValue, 'b');");
+						}
+						else
+						{
+							//plot([a.x1, a.x2, a.x5, a.x1], [a.y1, a.y2, a.y5, a.y1], 'b');
+							xValuePr = mxGetPr(mx_xValue);
+							*xValuePr++ = a.x1; *xValuePr++ = a.x2; *xValuePr++ = a.x5; *xValuePr++ = a.x1;
+							yValuePr = mxGetPr(mx_yValue);
+							*yValuePr++ = a.y1; *yValuePr++ = a.y2; *yValuePr++ = a.y5; *yValuePr++ = a.y1;
+							engPutVariable(ep, "xValue", mx_xValue); engPutVariable(ep, "yValue", mx_yValue);
+							engEvalString(ep, "plot(xValue, yValue, 'b');");
+						}
+					}
+					if (abs(a.sgn_int) == 10)
+					{
+						if (abs(phi_int(a.x_int(0), a.y_int(0))) < 1e-10 && abs(phi_int(a.x_int(1), a.y_int(1))) < 1e-10 && abs(phi_int((a.x_int(0) + a.x_int(1)) / 2, (a.y_int(0) + a.y_int(1)) / 2)) < 1e-10)
+						{
+							//plot([a.x_int(1), a.x_int(2)], [a.y_int(1), a.y_int(2)], 'r', 'LineWidth', 2);
+							xValuePr = mxGetPr(mx_xValue2);
+							*xValuePr++ = a.x_int(0); *xValuePr++ = a.x_int(1);
+							yValuePr = mxGetPr(mx_yValue2);
+							*yValuePr++ = a.y_int(0); *yValuePr++ = a.y_int(1);
+							engPutVariable(ep, "xValue", mx_xValue2); engPutVariable(ep, "yValue", mx_yValue2);
+							engEvalString(ep, "plot(xValue, yValue, 'r', 'LineWidth', 2);");
+						}
+						if (abs(phi_int(a.x_int(1), a.y_int(1))) < 1e-10 && abs(phi_int(a.x_int(2), a.y_int(2))) < 1e-10 && abs(phi_int((a.x_int(1) + a.x_int(2)) / 2, (a.y_int(1) + a.y_int(2)) / 2)) < 1e-10)
+						{
+							//plot([a.x_int(2), a.x_int(3)], [a.y_int(2), a.y_int(3)], 'r', 'LineWidth', 2);
+							xValuePr = mxGetPr(mx_xValue2);
+							*xValuePr++ = a.x_int(1); *xValuePr++ = a.x_int(2);
+							yValuePr = mxGetPr(mx_yValue2);
+							*yValuePr++ = a.y_int(1); *yValuePr++ = a.y_int(2);
+							engPutVariable(ep, "xValue", mx_xValue2); engPutVariable(ep, "yValue", mx_yValue2);
+							engEvalString(ep, "plot(xValue, yValue, 'r', 'LineWidth', 2);");
+						}
+						if (abs(phi_int(a.x_int(2), a.y_int(2))) < 1e-10 && abs(phi_int(a.x_int(0), a.y_int(0))) < 1e-10 && abs(phi_int((a.x_int(2) + a.x_int(0)) / 2, (a.y_int(2) + a.y_int(0)) / 2)) < 1e-10)
+						{
+							//plot([a.x_int(3), a.x_int(1)], [a.y_int(3), a.y_int(1)], 'r', 'LineWidth', 2);
+							xValuePr = mxGetPr(mx_xValue2);
+							*xValuePr++ = a.x_int(2); *xValuePr++ = a.x_int(0);
+							yValuePr = mxGetPr(mx_yValue2);
+							*yValuePr++ = a.y_int(2); *yValuePr++ = a.y_int(0);
+							engPutVariable(ep, "xValue", mx_xValue2); engPutVariable(ep, "yValue", mx_yValue2);
+							engEvalString(ep, "plot(xValue, yValue, 'r', 'LineWidth', 2);");
+						}
+					}
+					if (abs(a.sgn_int) < 10)
+					{
+						//plot([a.x_int4, a.x_int5], [a.y_int4, a.y_int5], 'r', 'LineWidth', 2);
+						xValuePr = mxGetPr(mx_xValue2);
+						*xValuePr++ = a.x4_int; *xValuePr++ = a.x5_int;
+						yValuePr = mxGetPr(mx_yValue2);
+						*yValuePr++ = a.y4_int; *yValuePr++ = a.y5_int;
+						engPutVariable(ep, "xValue", mx_xValue2); engPutVariable(ep, "yValue", mx_yValue2);
+						engEvalString(ep, "plot(xValue, yValue, 'r', 'LineWidth', 2);");
+					}
+					if (abs(a.sgn_int) > 10)
+					{
+						//plot([a.x_int2, a.x_int5], [a.y_int2, a.y_int5], 'r', 'LineWidth', 2);
+						xValuePr = mxGetPr(mx_xValue2);
+						*xValuePr++ = a.x2_int; *xValuePr++ = a.x5_int;
+						yValuePr = mxGetPr(mx_yValue2);
+						*yValuePr++ = a.y2_int; *yValuePr++ = a.y5_int;
+						engPutVariable(ep, "xValue", mx_xValue2); engPutVariable(ep, "yValue", mx_yValue2);
+						engEvalString(ep, "plot(xValue, yValue, 'r', 'LineWidth', 2);");
+					}
+					if (a.sgn_intex != 0)
+					{
+						if (abs(a.sgn_intex) < 10)
+						{
+							//plot([a.x_intex4, a.x_intex5], [a.y_intex4, a.y_intex5], 'r', 'LineWidth', 2);
+							xValuePr = mxGetPr(mx_xValue2);
+							*xValuePr++ = a.x4_intex; *xValuePr++ = a.x5_intex;
+							yValuePr = mxGetPr(mx_yValue2);
+							*yValuePr++ = a.y4_intex; *yValuePr++ = a.y5_intex;
+							engPutVariable(ep, "xValue", mx_xValue2); engPutVariable(ep, "yValue", mx_yValue2);
+							engEvalString(ep, "plot(xValue, yValue, 'r', 'LineWidth', 2);");
+						}
+						if (abs(a.sgn_intex) > 10)
+						{
+							//plot([a.x_intex2, a.x_intex5], [a.y_intex2, a.y_intex5], 'r', 'LineWidth', 2);
+							xValuePr = mxGetPr(mx_xValue2);
+							*xValuePr++ = a.x2_intex; *xValuePr++ = a.x5_intex;
+							yValuePr = mxGetPr(mx_yValue2);
+							*yValuePr++ = a.y2_intex; *yValuePr++ = a.y5_intex;
+							engPutVariable(ep, "xValue", mx_xValue2); engPutVariable(ep, "yValue", mx_yValue2);
+							engEvalString(ep, "plot(xValue, yValue, 'r', 'LineWidth', 2);");
+						}
+					}
+				}
+			}
+
+			// 处理L
+			if (L.Get_sign(j, l))
+			{
+				// normal triangle
+				Triangle_Normal a = L.Get_normal(j, l);
+				if (a.sgn == -10)
+				{
+					//plot([a.x, a.x(1)], [a.y, a.y(1)], 'b');
+					xValuePr = mxGetPr(mx_xValue);
+					*xValuePr++ = a.x(0); *xValuePr++ = a.x(1); *xValuePr++ = a.x(2); *xValuePr++ = a.x(0);
+					yValuePr = mxGetPr(mx_yValue);
+					*yValuePr++ = a.y(0); *yValuePr++ = a.y(1); *yValuePr++ = a.y(2); *yValuePr++ = a.y(0);
+					engPutVariable(ep, "xValue", mx_xValue); engPutVariable(ep, "yValue", mx_yValue);
+					engEvalString(ep, "plot(xValue, yValue, 'b');");
+				}
+				if (abs(a.sgn_int) == 10)
+				{
+					if (abs(phi_int(a.x_int(0), a.y_int(0))) < 1e-10 && abs(phi_int(a.x_int(1), a.y_int(1))) < 1e-10 && abs(phi_int((a.x_int(0) + a.x_int(1)) / 2, (a.y_int(0) + a.y_int(1)) / 2)) < 1e-10)
+					{
+						//plot([a.x_int(1), a.x_int(2)], [a.y_int(1), a.y_int(2)], 'r', 'LineWidth', 2);
+						xValuePr = mxGetPr(mx_xValue2);
+						*xValuePr++ = a.x_int(0); *xValuePr++ = a.x_int(1);
+						yValuePr = mxGetPr(mx_yValue2);
+						*yValuePr++ = a.y_int(0); *yValuePr++ = a.y_int(1);
+						engPutVariable(ep, "xValue", mx_xValue2); engPutVariable(ep, "yValue", mx_yValue2);
+						engEvalString(ep, "plot(xValue, yValue, 'r', 'LineWidth', 2);");
+					}
+					if (abs(phi_int(a.x_int(1), a.y_int(1))) < 1e-10 && abs(phi_int(a.x_int(2), a.y_int(2))) < 1e-10 && abs(phi_int((a.x_int(1) + a.x_int(2)) / 2, (a.y_int(1) + a.y_int(2)) / 2)) < 1e-10)
+					{
+						//plot([a.x_int(2), a.x_int(3)], [a.y_int(2), a.y_int(3)], 'r', 'LineWidth', 2);
+						xValuePr = mxGetPr(mx_xValue2);
+						*xValuePr++ = a.x_int(1); *xValuePr++ = a.x_int(2);
+						yValuePr = mxGetPr(mx_yValue2);
+						*yValuePr++ = a.y_int(1); *yValuePr++ = a.y_int(2);
+						engPutVariable(ep, "xValue", mx_xValue2); engPutVariable(ep, "yValue", mx_yValue2);
+						engEvalString(ep, "plot(xValue, yValue, 'r', 'LineWidth', 2);");
+					}
+					if (abs(phi_int(a.x_int(2), a.y_int(2))) < 1e-10 && abs(phi_int(a.x_int(0), a.y_int(0))) < 1e-10 && abs(phi_int((a.x_int(2) + a.x_int(0)) / 2, (a.y_int(2) + a.y_int(0)) / 2)) < 1e-10)
+					{
+						//plot([a.x_int(3), a.x_int(1)], [a.y_int(3), a.y_int(1)], 'r', 'LineWidth', 2);
+						xValuePr = mxGetPr(mx_xValue2);
+						*xValuePr++ = a.x_int(2); *xValuePr++ = a.x_int(0);
+						yValuePr = mxGetPr(mx_yValue2);
+						*yValuePr++ = a.y_int(2); *yValuePr++ = a.y_int(0);
+						engPutVariable(ep, "xValue", mx_xValue2); engPutVariable(ep, "yValue", mx_yValue2);
+						engEvalString(ep, "plot(xValue, yValue, 'r', 'LineWidth', 2);");
+					}
+				}
+			}
+			else
+			{
+				// all triangle
+				Triangle_All a = L.Get_all(j, l);
+
+				if (a.sgn!= 10)
+				{
+					if (a.sgn == -10)
+					{
+						//plot([a.x, a.x(1)], [a.y, a.y(1)], 'b');
+						xValuePr = mxGetPr(mx_xValue);
+						*xValuePr++ = a.x(0); *xValuePr++ = a.x(1); *xValuePr++ = a.x(2); *xValuePr++ = a.x(0);
+						yValuePr = mxGetPr(mx_yValue);
+						*yValuePr++ = a.y(0); *yValuePr++ = a.y(1); *yValuePr++ = a.y(2); *yValuePr++ = a.y(0);
+						engPutVariable(ep, "xValue", mx_xValue); engPutVariable(ep, "yValue", mx_yValue);
+						engEvalString(ep, "plot(xValue, yValue, 'b');");
+					}
+					if (abs(a.sgn) < 10)
+					{
+						if (a.sgn > 0)
+						{
+							//plot([a.x2, a.x3, a.x4, a.x2], [a.y2, a.y3, a.y4, a.y2], 'b');
+							xValuePr = mxGetPr(mx_xValue);
+							*xValuePr++ = a.x2; *xValuePr++ = a.x3; *xValuePr++ = a.x4; *xValuePr++ = a.x2;
+							yValuePr = mxGetPr(mx_yValue);
+							*yValuePr++ = a.y2; *yValuePr++ = a.y3; *yValuePr++ = a.y4; *yValuePr++ = a.y2;
+							engPutVariable(ep, "xValue", mx_xValue); engPutVariable(ep, "yValue", mx_yValue);
+							engEvalString(ep, "plot(xValue, yValue, 'b');");
+
+							//plot([a.x3, a.x5, a.x4, a.x3], [a.y3, a.y5, a.y4, a.y3], 'b');
+							xValuePr = mxGetPr(mx_xValue);
+							*xValuePr++ = a.x3; *xValuePr++ = a.x5; *xValuePr++ = a.x4; *xValuePr++ = a.x3;
+							yValuePr = mxGetPr(mx_yValue);
+							*yValuePr++ = a.y3; *yValuePr++ = a.y5; *yValuePr++ = a.y4; *yValuePr++ = a.y3;
+							engPutVariable(ep, "xValue", mx_xValue); engPutVariable(ep, "yValue", mx_yValue);
+							engEvalString(ep, "plot(xValue, yValue, 'b');");
+						}
+						else
+						{
+							//plot([a.x1, a.x4, a.x5, a.x1], [a.y1, a.y4, a.y5, a.y1], 'b');
+							xValuePr = mxGetPr(mx_xValue);
+							*xValuePr++ = a.x1; *xValuePr++ = a.x4; *xValuePr++ = a.x5; *xValuePr++ = a.x1;
+							yValuePr = mxGetPr(mx_yValue);
+							*yValuePr++ = a.y1; *yValuePr++ = a.y4; *yValuePr++ = a.y5; *yValuePr++ = a.y1;
+							engPutVariable(ep, "xValue", mx_xValue); engPutVariable(ep, "yValue", mx_yValue);
+							engEvalString(ep, "plot(xValue, yValue, 'b');");
+						}
+					}
+					if (abs(a.sgn) > 10)
+					{
+						if (a.sgn > 0)
+						{
+							//plot([a.x2, a.x3, a.x5, a.x2], [a.y2, a.y3, a.y5, a.y2], 'b');
+							xValuePr = mxGetPr(mx_xValue);
+							*xValuePr++ = a.x2; *xValuePr++ = a.x3; *xValuePr++ = a.x5; *xValuePr++ = a.x2;
+							yValuePr = mxGetPr(mx_yValue);
+							*yValuePr++ = a.y2; *yValuePr++ = a.y3; *yValuePr++ = a.y5; *yValuePr++ = a.y2;
+							engPutVariable(ep, "xValue", mx_xValue); engPutVariable(ep, "yValue", mx_yValue);
+							engEvalString(ep, "plot(xValue, yValue, 'b');");
+						}
+						else
+						{
+							//plot([a.x1, a.x2, a.x5, a.x1], [a.y1, a.y2, a.y5, a.y1], 'b');
+							xValuePr = mxGetPr(mx_xValue);
+							*xValuePr++ = a.x1; *xValuePr++ = a.x2; *xValuePr++ = a.x5; *xValuePr++ = a.x1;
+							yValuePr = mxGetPr(mx_yValue);
+							*yValuePr++ = a.y1; *yValuePr++ = a.y2; *yValuePr++ = a.y5; *yValuePr++ = a.y1;
+							engPutVariable(ep, "xValue", mx_xValue); engPutVariable(ep, "yValue", mx_yValue);
+							engEvalString(ep, "plot(xValue, yValue, 'b');");
+						}
+					}
+					if (abs(a.sgn_int) == 10)
+					{
+						if (abs(phi_int(a.x_int(0), a.y_int(0))) < 1e-10 && abs(phi_int(a.x_int(1), a.y_int(1))) < 1e-10 && abs(phi_int((a.x_int(0) + a.x_int(1)) / 2, (a.y_int(0) + a.y_int(1)) / 2)) < 1e-10)
+						{
+							//plot([a.x_int(1), a.x_int(2)], [a.y_int(1), a.y_int(2)], 'r', 'LineWidth', 2);
+							xValuePr = mxGetPr(mx_xValue2);
+							*xValuePr++ = a.x_int(0); *xValuePr++ = a.x_int(1);
+							yValuePr = mxGetPr(mx_yValue2);
+							*yValuePr++ = a.y_int(0); *yValuePr++ = a.y_int(1);
+							engPutVariable(ep, "xValue", mx_xValue2); engPutVariable(ep, "yValue", mx_yValue2);
+							engEvalString(ep, "plot(xValue, yValue, 'r', 'LineWidth', 2);");
+						}
+						if (abs(phi_int(a.x_int(1), a.y_int(1))) < 1e-10 && abs(phi_int(a.x_int(2), a.y_int(2))) < 1e-10 && abs(phi_int((a.x_int(1) + a.x_int(2)) / 2, (a.y_int(1) + a.y_int(2)) / 2)) < 1e-10)
+						{
+							//plot([a.x_int(2), a.x_int(3)], [a.y_int(2), a.y_int(3)], 'r', 'LineWidth', 2);
+							xValuePr = mxGetPr(mx_xValue2);
+							*xValuePr++ = a.x_int(1); *xValuePr++ = a.x_int(2);
+							yValuePr = mxGetPr(mx_yValue2);
+							*yValuePr++ = a.y_int(1); *yValuePr++ = a.y_int(2);
+							engPutVariable(ep, "xValue", mx_xValue2); engPutVariable(ep, "yValue", mx_yValue2);
+							engEvalString(ep, "plot(xValue, yValue, 'r', 'LineWidth', 2);");
+						}
+						if (abs(phi_int(a.x_int(2), a.y_int(2))) < 1e-10 && abs(phi_int(a.x_int(0), a.y_int(0))) < 1e-10 && abs(phi_int((a.x_int(2) + a.x_int(0)) / 2, (a.y_int(2) + a.y_int(0)) / 2)) < 1e-10)
+						{
+							//plot([a.x_int(3), a.x_int(1)], [a.y_int(3), a.y_int(1)], 'r', 'LineWidth', 2);
+							xValuePr = mxGetPr(mx_xValue2);
+							*xValuePr++ = a.x_int(2); *xValuePr++ = a.x_int(0);
+							yValuePr = mxGetPr(mx_yValue2);
+							*yValuePr++ = a.y_int(2); *yValuePr++ = a.y_int(0);
+							engPutVariable(ep, "xValue", mx_xValue2); engPutVariable(ep, "yValue", mx_yValue2);
+							engEvalString(ep, "plot(xValue, yValue, 'r', 'LineWidth', 2);");
+						}
+					}
+					if (abs(a.sgn_int) < 10)
+					{
+						//plot([a.x_int4, a.x_int5], [a.y_int4, a.y_int5], 'r', 'LineWidth', 2);
+						xValuePr = mxGetPr(mx_xValue2);
+						*xValuePr++ = a.x4_int; *xValuePr++ = a.x5_int;
+						yValuePr = mxGetPr(mx_yValue2);
+						*yValuePr++ = a.y4_int; *yValuePr++ = a.y5_int;
+						engPutVariable(ep, "xValue", mx_xValue2); engPutVariable(ep, "yValue", mx_yValue2);
+						engEvalString(ep, "plot(xValue, yValue, 'r', 'LineWidth', 2);");
+					}
+					if (abs(a.sgn_int) > 10)
+					{
+						//plot([a.x_int2, a.x_int5], [a.y_int2, a.y_int5], 'r', 'LineWidth', 2);
+						xValuePr = mxGetPr(mx_xValue2);
+						*xValuePr++ = a.x2_int; *xValuePr++ = a.x5_int;
+						yValuePr = mxGetPr(mx_yValue2);
+						*yValuePr++ = a.y2_int; *yValuePr++ = a.y5_int;
+						engPutVariable(ep, "xValue", mx_xValue2); engPutVariable(ep, "yValue", mx_yValue2);
+						engEvalString(ep, "plot(xValue, yValue, 'r', 'LineWidth', 2);");
+					}
+					if ( a.sgn_intex!= 0 )
+					{
+						if (abs(a.sgn_intex) < 10)
+						{
+							//plot([a.x_intex4, a.x_intex5], [a.y_intex4, a.y_intex5], 'r', 'LineWidth', 2);
+							xValuePr = mxGetPr(mx_xValue2);
+							*xValuePr++ = a.x4_intex; *xValuePr++ = a.x5_intex;
+							yValuePr = mxGetPr(mx_yValue2);
+							*yValuePr++ = a.y4_intex; *yValuePr++ = a.y5_intex;
+							engPutVariable(ep, "xValue", mx_xValue2); engPutVariable(ep, "yValue", mx_yValue2);
+							engEvalString(ep, "plot(xValue, yValue, 'r', 'LineWidth', 2);");
+						}
+						if (abs(a.sgn_intex) > 10)
+						{
+							//plot([a.x_intex2, a.x_intex5], [a.y_intex2, a.y_intex5], 'r', 'LineWidth', 2);
+							xValuePr = mxGetPr(mx_xValue2);
+							*xValuePr++ = a.x2_intex; *xValuePr++ = a.x5_intex;
+							yValuePr = mxGetPr(mx_yValue2);
+							*yValuePr++ = a.y2_intex; *yValuePr++ = a.y5_intex;
+							engPutVariable(ep, "xValue", mx_xValue2); engPutVariable(ep, "yValue", mx_yValue2);
+							engEvalString(ep, "plot(xValue, yValue, 'r', 'LineWidth', 2);");
+						}
+					}
+				}
+			}
+		}
+	}
+}
 
 
 

@@ -115,7 +115,7 @@ void Cavity::PlotAperture(string title, string xlabel, string ylabel, int sign)
 	cdCommand[len_start + len_path + len_end] = '\0';
 
 
-	///调用matalb引擎画图
+	//调用matalb引擎画图
 	mxArray *mx_xValue, *mx_apertureValue;
 
 	//将C中数组转化为matlab数组mxArray

@@ -12,6 +12,8 @@ public:
 
 	bool Solve();
 
+	void PlotTriangleMesh(string title, string xlabel, string ylabel);
+
 protected:
 	complex<double> epr1, epr1_int;
 	complex<double> epr2, epr2_int;
