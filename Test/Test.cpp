@@ -433,19 +433,17 @@ int main()
 	InhomogeneousThreeCircleCircleCavity cavity(1);
 	///初始化参数
 	double VirtualTop = 0;
-	double VirtualBottom = -0.5;
+	double VirtualBottom = -0.75;
 	double VirtualLeft = -3;
 	double VirtualRight = 3;
 	cavity.InitVirtualBorder(VirtualTop, VirtualBottom, VirtualLeft, VirtualRight);
 
-	int m = 48;
-	int n = 4;
-	//int m = 192;
-	//int n = 96;
+	//int m = 48;
+	//int n = 6;
+	int m = 192;
+	int n = 24;
 	/*int m = 384;
 	int n = 192;*/
-	//int m = 24;
-	//int n = 6;
 	cavity.InitMesh(m, n);
 
 	double k0 = 4 * M_PI;
@@ -492,11 +490,15 @@ int main()
 	//// 绘制三角形网格
 	//cavity.PlotTriangleMesh("title", "xlabel", "ylabel");
 
-	///求解
-	cavity.Solve();//求解
+	/////求解
+	//cavity.Solve();//求解
 
-	///可视化
-	cavity.PlotAperture("title", "xlabel", "ylabel", 0);
+	/////可视化
+	//cavity.PlotAperture("title", "xlabel", "ylabel", 0);
+
+	// 计算并绘制RCS
+	double interval = 0.5;
+	cavity.SolveRCS(interval);
 
 	#pragma endregion
 
