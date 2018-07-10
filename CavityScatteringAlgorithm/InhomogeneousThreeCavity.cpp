@@ -6044,37 +6044,37 @@ void InhomogeneousThreeCavity::tri_int1(double x1, double  x2, double  x3, doubl
 			{
 				//三角形越过界面
 				// (x1, y1)位于Ω + (x2, y2)、(x3, y3)位于Ω -
-				L.r1_intex = findzero(x1, y1, x2, y2);
-				L.r2_intex = findzero(x1, y1, x3, y3);
+				L.r1_intex = findzero_int(x1, y1, x2, y2);
+				L.r2_intex = findzero_int(x1, y1, x3, y3);
 			}
 			if (L.sgn_intex == -1)
 			{
 				// 三角形越过界面
 				//a1位于Ω - a2、a3位于Ω +
-				L.r1_intex = findzero(x1, y1, x2, y2);
-				L.r2_intex = findzero(x1, y1, x3, y3);
+				L.r1_intex = findzero_int(x1, y1, x2, y2);
+				L.r2_intex = findzero_int(x1, y1, x3, y3);
 			}
 			if (L.sgn_intex == 2)
 			{
 				//三角形越过界面
 				//a2位于Ω + a1、a3位于Ω -
-				L.r1_intex = findzero(x2, y2, x3, y3);
-				L.r2_intex = findzero(x2, y2, x1, y1);
+				L.r1_intex = findzero_int(x2, y2, x3, y3);
+				L.r2_intex = findzero_int(x2, y2, x1, y1);
 			}
 			if (L.sgn_intex == -2)
 			{
-				L.r1_intex = findzero(x2, y2, x3, y3);
-				L.r2_intex = findzero(x2, y2, x1, y1);
+				L.r1_intex = findzero_int(x2, y2, x3, y3);
+				L.r2_intex = findzero_int(x2, y2, x1, y1);
 			}
 			if (L.sgn_intex == 3)
 			{
-				L.r1_intex = findzero(x3, y3, x1, y1);
-				L.r2_intex = findzero(x3, y3, x2, y2);
+				L.r1_intex = findzero_int(x3, y3, x1, y1);
+				L.r2_intex = findzero_int(x3, y3, x2, y2);
 			}
 			if (L.sgn_intex == -3)
 			{
-				L.r1_intex = findzero(x3, y3, x1, y1);
-				L.r2_intex = findzero(x3, y3, x2, y2);
+				L.r1_intex = findzero_int(x3, y3, x1, y1);
+				L.r2_intex = findzero_int(x3, y3, x2, y2);
 			}
 		}
 
@@ -6092,7 +6092,7 @@ void InhomogeneousThreeCavity::tri_int1(double x1, double  x2, double  x3, doubl
 				L.C_intex = Vector2d(x3, y3);  //与B按照逆时针相对排列
 				L.v_intex = Vector3i(1, 2, 3); //标识ABC三点分别对应的点
 				L.r1_intex = 1;
-				L.r2_intex = findzero(x1, y1, x3, y3);
+				L.r2_intex = findzero_int(x1, y1, x3, y3);
 			}
 			if (L.sgn_intex == -11)
 			{
@@ -6101,7 +6101,7 @@ void InhomogeneousThreeCavity::tri_int1(double x1, double  x2, double  x3, doubl
 				L.C_intex = Vector2d(x3, y3);
 				L.v_intex = Vector3i(1, 2, 3);
 				L.r1_intex = 1;
-				L.r2_intex = findzero(x1, y1, x3, y3);
+				L.r2_intex = findzero_int(x1, y1, x3, y3);
 			}
 			if (L.sgn_intex == 12)
 			{
@@ -6110,7 +6110,7 @@ void InhomogeneousThreeCavity::tri_int1(double x1, double  x2, double  x3, doubl
 				L.C_intex = Vector2d(x1, y1);
 				L.v_intex = Vector3i(2, 3, 1);
 				L.r1_intex = 1;
-				L.r2_intex = findzero(x2, y2, x1, y1);
+				L.r2_intex = findzero_int(x2, y2, x1, y1);
 			}
 			if (L.sgn_intex == -12)
 			{
@@ -6119,7 +6119,7 @@ void InhomogeneousThreeCavity::tri_int1(double x1, double  x2, double  x3, doubl
 				L.C_intex = Vector2d(x1, y1);
 				L.v_intex = Vector3i(2, 3, 1);
 				L.r1_intex = 1;
-				L.r2_intex = findzero(x2, y2, x1, y1);
+				L.r2_intex = findzero_int(x2, y2, x1, y1);
 			}
 			if (L.sgn_intex == 13)
 			{
@@ -6128,7 +6128,7 @@ void InhomogeneousThreeCavity::tri_int1(double x1, double  x2, double  x3, doubl
 				L.C_intex = Vector2d(x2, y2);
 				L.v_intex = Vector3i(3, 1, 2);
 				L.r1_intex = 1;
-				L.r2_intex = findzero(x3, y3, x2, y2);
+				L.r2_intex = findzero_int(x3, y3, x2, y2);
 			}
 			if (L.sgn_intex == -13)
 			{
@@ -6137,7 +6137,7 @@ void InhomogeneousThreeCavity::tri_int1(double x1, double  x2, double  x3, doubl
 				L.C_intex = Vector2d(x2, y2);
 				L.v_intex = Vector3i(3, 1, 2);
 				L.r1_intex = 1;
-				L.r2_intex = findzero(x3, y3, x2, y2);
+				L.r2_intex = findzero_int(x3, y3, x2, y2);
 			}
 		}
 	}
@@ -6159,37 +6159,37 @@ void InhomogeneousThreeCavity::tri_int1(double x1, double  x2, double  x3, doubl
 			{
 				//三角形越过界面
 				// (x1, y1)位于Ω + (x2, y2)、(x3, y3)位于Ω -
-				L.r1_intex = findzero(x1, y1, x2, y2);
-				L.r2_intex = findzero(x1, y1, x3, y3);
+				L.r1_intex = findzero_int(x1, y1, x2, y2);
+				L.r2_intex = findzero_int(x1, y1, x3, y3);
 			}
 			if (L.sgn_intex == -1)
 			{
 				// 三角形越过界面
 				//a1位于Ω - a2、a3位于Ω +
-				L.r1_intex = findzero(x1, y1, x2, y2);
-				L.r2_intex = findzero(x1, y1, x3, y3);
+				L.r1_intex = findzero_int(x1, y1, x2, y2);
+				L.r2_intex = findzero_int(x1, y1, x3, y3);
 			}
 			if (L.sgn_intex == 2)
 			{
 				//三角形越过界面
 				//a2位于Ω + a1、a3位于Ω -
-				L.r1_intex = findzero(x2, y2, x3, y3);
-				L.r2_intex = findzero(x2, y2, x1, y1);
+				L.r1_intex = findzero_int(x2, y2, x3, y3);
+				L.r2_intex = findzero_int(x2, y2, x1, y1);
 			}
 			if (L.sgn_intex == -2)
 			{
-				L.r1_intex = findzero(x2, y2, x3, y3);
-				L.r2_intex = findzero(x2, y2, x1, y1);
+				L.r1_intex = findzero_int(x2, y2, x3, y3);
+				L.r2_intex = findzero_int(x2, y2, x1, y1);
 			}
 			if (L.sgn_intex == 3)
 			{
-				L.r1_intex = findzero(x3, y3, x1, y1);
-				L.r2_intex = findzero(x3, y3, x2, y2);
+				L.r1_intex = findzero_int(x3, y3, x1, y1);
+				L.r2_intex = findzero_int(x3, y3, x2, y2);
 			}
 			if (L.sgn_intex == -3)
 			{
-				L.r1_intex = findzero(x3, y3, x1, y1);
-				L.r2_intex = findzero(x3, y3, x2, y2);
+				L.r1_intex = findzero_int(x3, y3, x1, y1);
+				L.r2_intex = findzero_int(x3, y3, x2, y2);
 			}
 		}
 
@@ -6207,7 +6207,7 @@ void InhomogeneousThreeCavity::tri_int1(double x1, double  x2, double  x3, doubl
 				L.C_intex = Vector2d(x3, y3);  //与B按照逆时针相对排列
 				L.v_intex = Vector3i(1, 2, 3); //标识ABC三点分别对应的点
 				L.r1_intex = 1;
-				L.r2_intex = findzero(x1, y1, x3, y3);
+				L.r2_intex = findzero_int(x1, y1, x3, y3);
 			}
 			if (L.sgn_intex == -11)
 			{
@@ -6216,7 +6216,7 @@ void InhomogeneousThreeCavity::tri_int1(double x1, double  x2, double  x3, doubl
 				L.C_intex = Vector2d(x3, y3);
 				L.v_intex = Vector3i(1, 2, 3);
 				L.r1_intex = 1;
-				L.r2_intex = findzero(x1, y1, x3, y3);
+				L.r2_intex = findzero_int(x1, y1, x3, y3);
 			}
 			if (L.sgn_intex == 12)
 			{
@@ -6225,7 +6225,7 @@ void InhomogeneousThreeCavity::tri_int1(double x1, double  x2, double  x3, doubl
 				L.C_intex = Vector2d(x1, y1);
 				L.v_intex = Vector3i(2, 3, 1);
 				L.r1_intex = 1;
-				L.r2_intex = findzero(x2, y2, x1, y1);
+				L.r2_intex = findzero_int(x2, y2, x1, y1);
 			}
 			if (L.sgn_intex == -12)
 			{
@@ -6234,7 +6234,7 @@ void InhomogeneousThreeCavity::tri_int1(double x1, double  x2, double  x3, doubl
 				L.C_intex = Vector2d(x1, y1);
 				L.v_intex = Vector3i(2, 3, 1);
 				L.r1_intex = 1;
-				L.r2_intex = findzero(x2, y2, x1, y1);
+				L.r2_intex = findzero_int(x2, y2, x1, y1);
 			}
 			if (L.sgn_intex == 13)
 			{
@@ -6243,7 +6243,7 @@ void InhomogeneousThreeCavity::tri_int1(double x1, double  x2, double  x3, doubl
 				L.C_intex = Vector2d(x2, y2);
 				L.v_intex = Vector3i(3, 1, 2);
 				L.r1_intex = 1;
-				L.r2_intex = findzero(x3, y3, x2, y2);
+				L.r2_intex = findzero_int(x3, y3, x2, y2);
 			}
 			if (L.sgn_intex == -13)
 			{
@@ -6252,7 +6252,7 @@ void InhomogeneousThreeCavity::tri_int1(double x1, double  x2, double  x3, doubl
 				L.C_intex = Vector2d(x2, y2);
 				L.v_intex = Vector3i(3, 1, 2);
 				L.r1_intex = 1;
-				L.r2_intex = findzero(x3, y3, x2, y2);
+				L.r2_intex = findzero_int(x3, y3, x2, y2);
 			}
 		}
 	}
@@ -6274,37 +6274,37 @@ void InhomogeneousThreeCavity::tri_int1(double x1, double  x2, double  x3, doubl
 			{
 				//三角形越过界面
 				// (x1, y1)位于Ω + (x2, y2)、(x3, y3)位于Ω -
-				L.r1_intex = findzero(x1, y1, x2, y2);
-				L.r2_intex = findzero(x1, y1, x3, y3);
+				L.r1_intex = findzero_int(x1, y1, x2, y2);
+				L.r2_intex = findzero_int(x1, y1, x3, y3);
 			}
 			if (L.sgn_intex == -1)
 			{
 				// 三角形越过界面
 				//a1位于Ω - a2、a3位于Ω +
-				L.r1_intex = findzero(x1, y1, x2, y2);
-				L.r2_intex = findzero(x1, y1, x3, y3);
+				L.r1_intex = findzero_int(x1, y1, x2, y2);
+				L.r2_intex = findzero_int(x1, y1, x3, y3);
 			}
 			if (L.sgn_intex == 2)
 			{
 				//三角形越过界面
 				//a2位于Ω + a1、a3位于Ω -
-				L.r1_intex = findzero(x2, y2, x3, y3);
-				L.r2_intex = findzero(x2, y2, x1, y1);
+				L.r1_intex = findzero_int(x2, y2, x3, y3);
+				L.r2_intex = findzero_int(x2, y2, x1, y1);
 			}
 			if (L.sgn_intex == -2)
 			{
-				L.r1_intex = findzero(x2, y2, x3, y3);
-				L.r2_intex = findzero(x2, y2, x1, y1);
+				L.r1_intex = findzero_int(x2, y2, x3, y3);
+				L.r2_intex = findzero_int(x2, y2, x1, y1);
 			}
 			if (L.sgn_intex == 3)
 			{
-				L.r1_intex = findzero(x3, y3, x1, y1);
-				L.r2_intex = findzero(x3, y3, x2, y2);
+				L.r1_intex = findzero_int(x3, y3, x1, y1);
+				L.r2_intex = findzero_int(x3, y3, x2, y2);
 			}
 			if (L.sgn_intex == -3)
 			{
-				L.r1_intex = findzero(x3, y3, x1, y1);
-				L.r2_intex = findzero(x3, y3, x2, y2);
+				L.r1_intex = findzero_int(x3, y3, x1, y1);
+				L.r2_intex = findzero_int(x3, y3, x2, y2);
 			}
 		}
 
@@ -6322,7 +6322,7 @@ void InhomogeneousThreeCavity::tri_int1(double x1, double  x2, double  x3, doubl
 				L.C_intex = Vector2d(x3, y3);  //与B按照逆时针相对排列
 				L.v_intex = Vector3i(1, 2, 3); //标识ABC三点分别对应的点
 				L.r1_intex = 1;
-				L.r2_intex = findzero(x1, y1, x3, y3);
+				L.r2_intex = findzero_int(x1, y1, x3, y3);
 			}
 			if (L.sgn_intex == -11)
 			{
@@ -6331,7 +6331,7 @@ void InhomogeneousThreeCavity::tri_int1(double x1, double  x2, double  x3, doubl
 				L.C_intex = Vector2d(x3, y3);
 				L.v_intex = Vector3i(1, 2, 3);
 				L.r1_intex = 1;
-				L.r2_intex = findzero(x1, y1, x3, y3);
+				L.r2_intex = findzero_int(x1, y1, x3, y3);
 			}
 			if (L.sgn_intex == 12)
 			{
@@ -6340,7 +6340,7 @@ void InhomogeneousThreeCavity::tri_int1(double x1, double  x2, double  x3, doubl
 				L.C_intex = Vector2d(x1, y1);
 				L.v_intex = Vector3i(2, 3, 1);
 				L.r1_intex = 1;
-				L.r2_intex = findzero(x2, y2, x1, y1);
+				L.r2_intex = findzero_int(x2, y2, x1, y1);
 			}
 			if (L.sgn_intex == -12)
 			{
@@ -6349,7 +6349,7 @@ void InhomogeneousThreeCavity::tri_int1(double x1, double  x2, double  x3, doubl
 				L.C_intex = Vector2d(x1, y1);
 				L.v_intex = Vector3i(2, 3, 1);
 				L.r1_intex = 1;
-				L.r2_intex = findzero(x2, y2, x1, y1);
+				L.r2_intex = findzero_int(x2, y2, x1, y1);
 			}
 			if (L.sgn_intex == 13)
 			{
@@ -6358,7 +6358,7 @@ void InhomogeneousThreeCavity::tri_int1(double x1, double  x2, double  x3, doubl
 				L.C_intex = Vector2d(x2, y2);
 				L.v_intex = Vector3i(3, 1, 2);
 				L.r1_intex = 1;
-				L.r2_intex = findzero(x3, y3, x2, y2);
+				L.r2_intex = findzero_int(x3, y3, x2, y2);
 			}
 			if (L.sgn_intex == -13)
 			{
@@ -6367,7 +6367,7 @@ void InhomogeneousThreeCavity::tri_int1(double x1, double  x2, double  x3, doubl
 				L.C_intex = Vector2d(x2, y2);
 				L.v_intex = Vector3i(3, 1, 2);
 				L.r1_intex = 1;
-				L.r2_intex = findzero(x3, y3, x2, y2);
+				L.r2_intex = findzero_int(x3, y3, x2, y2);
 			}
 		}
 	}
@@ -6389,37 +6389,37 @@ void InhomogeneousThreeCavity::tri_int1(double x1, double  x2, double  x3, doubl
 			{
 				//三角形越过界面
 				// (x1, y1)位于Ω + (x2, y2)、(x3, y3)位于Ω -
-				L.r1_intex = findzero(x1, y1, x2, y2);
-				L.r2_intex = findzero(x1, y1, x3, y3);
+				L.r1_intex = findzero_int(x1, y1, x2, y2);
+				L.r2_intex = findzero_int(x1, y1, x3, y3);
 			}
 			if (L.sgn_intex == -1)
 			{
 				// 三角形越过界面
 				//a1位于Ω - a2、a3位于Ω +
-				L.r1_intex = findzero(x1, y1, x2, y2);
-				L.r2_intex = findzero(x1, y1, x3, y3);
+				L.r1_intex = findzero_int(x1, y1, x2, y2);
+				L.r2_intex = findzero_int(x1, y1, x3, y3);
 			}
 			if (L.sgn_intex == 2)
 			{
 				//三角形越过界面
 				//a2位于Ω + a1、a3位于Ω -
-				L.r1_intex = findzero(x2, y2, x3, y3);
-				L.r2_intex = findzero(x2, y2, x1, y1);
+				L.r1_intex = findzero_int(x2, y2, x3, y3);
+				L.r2_intex = findzero_int(x2, y2, x1, y1);
 			}
 			if (L.sgn_intex == -2)
 			{
-				L.r1_intex = findzero(x2, y2, x3, y3);
-				L.r2_intex = findzero(x2, y2, x1, y1);
+				L.r1_intex = findzero_int(x2, y2, x3, y3);
+				L.r2_intex = findzero_int(x2, y2, x1, y1);
 			}
 			if (L.sgn_intex == 3)
 			{
-				L.r1_intex = findzero(x3, y3, x1, y1);
-				L.r2_intex = findzero(x3, y3, x2, y2);
+				L.r1_intex = findzero_int(x3, y3, x1, y1);
+				L.r2_intex = findzero_int(x3, y3, x2, y2);
 			}
 			if (L.sgn_intex == -3)
 			{
-				L.r1_intex = findzero(x3, y3, x1, y1);
-				L.r2_intex = findzero(x3, y3, x2, y2);
+				L.r1_intex = findzero_int(x3, y3, x1, y1);
+				L.r2_intex = findzero_int(x3, y3, x2, y2);
 			}
 		}
 
@@ -6437,7 +6437,7 @@ void InhomogeneousThreeCavity::tri_int1(double x1, double  x2, double  x3, doubl
 				L.C_intex = Vector2d(x3, y3);  //与B按照逆时针相对排列
 				L.v_intex = Vector3i(1, 2, 3); //标识ABC三点分别对应的点
 				L.r1_intex = 1;
-				L.r2_intex = findzero(x1, y1, x3, y3);
+				L.r2_intex = findzero_int(x1, y1, x3, y3);
 			}
 			if (L.sgn_intex == -11)
 			{
@@ -6446,7 +6446,7 @@ void InhomogeneousThreeCavity::tri_int1(double x1, double  x2, double  x3, doubl
 				L.C_intex = Vector2d(x3, y3);
 				L.v_intex = Vector3i(1, 2, 3);
 				L.r1_intex = 1;
-				L.r2_intex = findzero(x1, y1, x3, y3);
+				L.r2_intex = findzero_int(x1, y1, x3, y3);
 			}
 			if (L.sgn_intex == 12)
 			{
@@ -6455,7 +6455,7 @@ void InhomogeneousThreeCavity::tri_int1(double x1, double  x2, double  x3, doubl
 				L.C_intex = Vector2d(x1, y1);
 				L.v_intex = Vector3i(2, 3, 1);
 				L.r1_intex = 1;
-				L.r2_intex = findzero(x2, y2, x1, y1);
+				L.r2_intex = findzero_int(x2, y2, x1, y1);
 			}
 			if (L.sgn_intex == -12)
 			{
@@ -6464,7 +6464,7 @@ void InhomogeneousThreeCavity::tri_int1(double x1, double  x2, double  x3, doubl
 				L.C_intex = Vector2d(x1, y1);
 				L.v_intex = Vector3i(2, 3, 1);
 				L.r1_intex = 1;
-				L.r2_intex = findzero(x2, y2, x1, y1);
+				L.r2_intex = findzero_int(x2, y2, x1, y1);
 			}
 			if (L.sgn_intex == 13)
 			{
@@ -6473,7 +6473,7 @@ void InhomogeneousThreeCavity::tri_int1(double x1, double  x2, double  x3, doubl
 				L.C_intex = Vector2d(x2, y2);
 				L.v_intex = Vector3i(3, 1, 2);
 				L.r1_intex = 1;
-				L.r2_intex = findzero(x3, y3, x2, y2);
+				L.r2_intex = findzero_int(x3, y3, x2, y2);
 			}
 			if (L.sgn_intex == -13)
 			{
@@ -6482,7 +6482,7 @@ void InhomogeneousThreeCavity::tri_int1(double x1, double  x2, double  x3, doubl
 				L.C_intex = Vector2d(x2, y2);
 				L.v_intex = Vector3i(3, 1, 2);
 				L.r1_intex = 1;
-				L.r2_intex = findzero(x3, y3, x2, y2);
+				L.r2_intex = findzero_int(x3, y3, x2, y2);
 			}
 		}
 	}
@@ -7292,17 +7292,17 @@ void InhomogeneousThreeCavity::reloadtriex(Triangle_All &T2, Triangle_All &T)
 {
 	//abs(T.sgn) < 10 && T.sgn > 0
 
-	if (T.sgn_int == 10)
+	if (T.sgn_intex == 10)
 	{
 		T2.sgn_int = T.sgn_intex;
 		T2.x_int = T.x_intex; T2.y_int = T.y_intex;
 	}
-	else if (T.sgn_int == -10)
+	else if (T.sgn_intex == -10)
 	{
 		T2.sgn_int = T.sgn_intex;
 		T2.x_int = T.x_intex; T2.y_int = T.y_intex;
 	}
-	else if (abs(T.sgn_int) < 10)
+	else if (abs(T.sgn_intex) < 10)
 	{
 		T2.sgn_int = T.sgn_intex;
 		T2.x_int = T.x_intex; T2.y_int = T.y_intex;
@@ -7323,7 +7323,7 @@ void InhomogeneousThreeCavity::reloadtriex(Triangle_All &T2, Triangle_All &T)
 		T2.u5_int = T.u5_intex;
 		T2.u5_int_ = T.u5_intex_;
 	}
-	else if (abs(T.sgn_int) > 10)
+	else if (abs(T.sgn_intex) > 10)
 	{
 		T2.sgn_int = T.sgn_intex;
 		T2.x_int = T.x_intex; T2.y_int = T.y_intex;
@@ -7499,10 +7499,10 @@ Vector4cd InhomogeneousThreeCavity::solveweak4(Triangle_All &T, double v2, doubl
 		}
 
 		complex<double> c1, c2, c3, c4;
-		c1 = out4(1)*u4_(2) + out4(3)*u5_(2) + out5(1)*u4(2) + out5(2)*u5(2);
-		c2 = out4(1)*u4_(3) + out4(2) + out4(3)*u5_(3) + out5(1)*u4(3) + out5(2)*u5(3);
-		c3 = out4(1)*u4_(1) + out4(3)*u5_(1) + out5(1)*u4(1) + out5(2)*u5(1) + out5(3);
-		c4 = out4(1)*u4_(4) + out4(3)*u5_(4) + out5(1)*u4(4) + out5(2)*u5(4);
+		c1 = out4(0)*u4_(1) + out4(2)*u5_(1) + out5(0)*u4(1) + out5(1)*u5(1);
+		c2 = out4(0)*u4_(2) + out4(1) + out4(2)*u5_(2) + out5(0)*u4(2) + out5(1)*u5(2);
+		c3 = out4(0)*u4_(0) + out4(2)*u5_(0) + out5(0)*u4(0) + out5(1)*u5(0) + out5(2);
+		c4 = out4(0)*u4_(3) + out4(2)*u5_(3) + out5(0)*u4(3) + out5(1)*u5(3);
 
 		Vector4cd out(c1, c2, c3, c4);
 		return out;
