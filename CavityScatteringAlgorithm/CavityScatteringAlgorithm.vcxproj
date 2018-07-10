@@ -158,6 +158,9 @@
     <ClInclude Include="InhomogeneousSingalRectangleCavityAAMM1.h" />
     <ClInclude Include="InhomogeneousSingalRectangleCavityAAMM2.h" />
     <ClInclude Include="InhomogeneousThreeCavity.h" />
+    <ClInclude Include="InhomogeneousThreeCircleCavity.h" />
+    <ClInclude Include="InhomogeneousThreeCircleCircleCavity.h" />
+    <ClInclude Include="InhomogeneousThreeCircleRectangleCavity.h" />
     <ClInclude Include="InhomogeneousThreeRectangleCavity.h" />
     <ClInclude Include="InhomogeneousThreeRectangleCircleCavity.h" />
     <ClInclude Include="InhomogeneousThreeRectangleRectangleCavity.h" />
@@ -176,6 +179,9 @@
     <ClCompile Include="InhomogeneousSingalRectangleCavity.cpp" />
     <ClCompile Include="InhomogeneousSingalRectangleCavityAAMM2.cpp" />
     <ClCompile Include="InhomogeneousThreeCavity.cpp" />
+    <ClCompile Include="InhomogeneousThreeCircleCavity.cpp" />
+    <ClCompile Include="InhomogeneousThreeCircleCircleCavity.cpp" />
+    <ClCompile Include="InhomogeneousThreeCircleRectangleCavity.cpp" />
     <ClCompile Include="InhomogeneousThreeRectangleCavity.cpp" />
     <ClCompile Include="InhomogeneousThreeRectangleCircleCavity.cpp" />
     <ClCompile Include="InhomogeneousThreeRectangleRectangleCavity.cpp" />
