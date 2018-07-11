@@ -7273,7 +7273,7 @@ void InhomogeneousThreeCavity::reloadtri(Triangle_All &T2, Triangle_All &T)
 		T2.u4_int = T.u4_int; T2.u4_int_ = T.u4_int_;
 		T2.u5_int = T.u5_int; T2.u5_int_ = T.u5_int_;
 	}
-	else if (abs(T2.sgn_int) > 10)
+	else if (abs(T.sgn_int) > 10)
 	{
 		T2.sgn_int = T.sgn_int;
 		T2.x_int = T.x_int; T2.y_int = T.y_int;
