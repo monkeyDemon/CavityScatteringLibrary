@@ -290,6 +290,46 @@ public:
 		for (int i = 0; i < tri_normal.size(); i++)
 			tri_normal[i].resize(meshHeight);
 	}
+	~TriangleMesh()
+	{
+		printf("TriangleMesh析构函数已被调用!\n");
+
+		//释放tri_all占用的空间
+		//先释放指针元素指向的空间
+		Triangle_All *item = NULL;
+		for (int i = 0; i<tri_all.size(); i++) {
+			for (int j = 0; j < tri_all[i].size(); j++)
+			{
+				item = tri_all[i][j];
+				delete (Triangle_All*)item;
+			}
+		}
+		//再释放指针数组占用的空间
+		vector<vector<Triangle_All*>> tri_all_tmp;
+		tri_all.swap(tri_all_tmp);
+
+
+		//释放tri_normal占用的空间
+		//先释放指针元素指向的空间
+		Triangle_Normal *item2 = NULL;
+		for (int i = 0; i<tri_normal.size(); i++) {
+			for (int j = 0; j < tri_normal[i].size(); j++)
+			{
+				item2 = tri_normal[i][j];
+				delete (Triangle_Normal*)item2;
+			}
+		}
+		//再释放指针数组占用的空间
+		printf("释放前Triangle_Normal占用内存%d\n", tri_normal.capacity());
+		vector<vector<Triangle_Normal*>> tri_normal_tmp;
+		tri_normal.swap(tri_normal_tmp);
+		printf("释放后Triangle_Normal占用内存%d\n", tri_normal.capacity());
+
+
+		//释放tri_sign占用的空间
+		vector<vector<bool>> tri_sign_tmp;
+		tri_sign.swap(tri_sign_tmp);
+	}
 
 	bool Get_sign(int i, int j)
 	{

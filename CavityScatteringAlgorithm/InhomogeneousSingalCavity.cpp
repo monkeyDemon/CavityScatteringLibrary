@@ -98,6 +98,74 @@ bool InhomogeneousSingalCavity::Solve()
 }
 
 
+bool InhomogeneousSingalCavity::SolveAperture(string title, string xlabel, string ylabel, int sign)
+{
+	char *checkLog = "";
+	bool checkResult;
+	checkResult = InitialCheck(checkLog);
+
+	if (checkResult == false)
+	{
+		printf(checkLog);
+		return false;
+	}
+
+	MyTimer myTimer(1);
+
+	myTimer.Start("setTri");
+	TriangleMesh U(this->meshWidth, this->meshHeight);
+	TriangleMesh L(this->meshWidth, this->meshHeight);
+	//int nn;
+	//vector<int> nu;
+	//vector<vector<double>> nbound;
+	setTri(U, L, nn, nu, nbound);
+	myTimer.EndAndPrint();
+
+
+	this->G_aperture = ApertureIntegral::computeG(nbound[0].size(), this->k0, this->apertureLeft, this->apertureRight);
+	//cout << G_aperture << endl;
+
+	this->g_aperture = compute_g(G_aperture, nbound);   //注意这里会变
+														//cout << g_aperture << endl;
+
+	myTimer.Start("setGrid");
+	vector<vector<gridCell>> gridCell = setGrid(U, L, nbound, nu);
+	myTimer.EndAndPrint();
+
+	myTimer.Start("setRightHand");
+	VectorXcd rh = setRightHand(U, L, nu);
+	//cout << rh;
+	myTimer.EndAndPrint();
+
+	myTimer.Start("setA");
+	//SparseMatrix<complex<double>> A = setA(nn, nu, nbound, gridCell);
+	mxArray * mx_A = setA_mx(nn, nu, nbound, gridCell);
+	myTimer.EndAndPrint();
+
+	myTimer.Start("setB");
+	//VectorXcd B = setB(gridCell, rh, nn, nu);
+	mxArray *mx_B = setB_mx(gridCell, rh, nn, nu);
+	myTimer.EndAndPrint();
+
+	myTimer.Start("solveX");
+	//VectorXcd x = solveX(A, B);
+	VectorXcd x = solveX_mx(mx_A, mx_B);
+	myTimer.EndAndPrint();
+	//cout << x << endl;
+
+	myTimer.Start("assign");
+	assign(x, U, L, nu);
+	myTimer.EndAndPrint();
+
+	myTimer.Start("getAperture");
+	this->solutionOfAperture = getAperture(nbound, U, L);
+	myTimer.EndAndPrint();
+	//cout << solutionOfAperture << endl;
+
+	this->PlotAperture(title, xlabel, ylabel, sign);
+}
+
+
 void InhomogeneousSingalCavity::PlotTriangleMesh(string title, string xlabel, string ylabel)
 {
 	char *checkLog = "";

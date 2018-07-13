@@ -115,6 +115,91 @@ bool InhomogeneousThreeCavity::Solve()
 }
 
 
+bool InhomogeneousThreeCavity::SolveAperture(string title, string xlabel, string ylabel, int sign)
+{
+	char *checkLog = "";
+	bool checkResult;
+	checkResult = InitialCheck(checkLog);
+
+	if (checkResult == false)
+	{
+		printf(checkLog);
+		return false;
+	}
+
+	MyTimer myTimer(1);
+
+	myTimer.Start("setTri");
+	TriangleMesh U(this->meshWidth, this->meshHeight);
+	TriangleMesh L(this->meshWidth, this->meshHeight);
+	//int nn;
+	//vector<int> nu;
+	//vector<vector<double>> nbound;
+	setTri(U, L, nn, nu, nbound);
+	myTimer.EndAndPrint();
+
+
+	this->G1_aperture = ApertureIntegral::computeG(nbound[0].size() / 3, this->k0, this->aperture1Left, this->aperture1Right);
+	this->G2_aperture = ApertureIntegral::computeG(nbound[0].size() / 3, this->k0, this->aperture2Left, this->aperture2Right);
+	this->G3_aperture = ApertureIntegral::computeG(nbound[0].size() / 3, this->k0, this->aperture3Left, this->aperture3Right);
+
+	this->g_aperture = compute_g(G1_aperture, nbound);   //注意这里会变
+
+	myTimer.Start("setGrid");
+	vector<vector<gridCell>> grid_Cell = setGrid(U, L, nbound, nu);
+	myTimer.EndAndPrint();
+
+	myTimer.Start("setRightHand");
+	VectorXcd rh = setRightHand(U, L, nu);
+	myTimer.EndAndPrint();
+
+	myTimer.Start("setA");
+	//SparseMatrix<complex<double>> A = setA(nn, nu, nbound, gridCell);
+	mxArray * mx_A = setA_mx(nn, nu, nbound, grid_Cell);
+	myTimer.EndAndPrint();
+
+	myTimer.Start("setB");
+	//VectorXcd B = setB(gridCell, rh, nn, nu);
+	mxArray *mx_B = setB_mx(grid_Cell, rh, nn, nu);
+	myTimer.EndAndPrint();
+
+	myTimer.Start("solveX");
+	//VectorXcd x = solveX(A, B);
+	VectorXcd x = solveX_mx(mx_A, mx_B);
+	myTimer.EndAndPrint();
+	//cout << x << endl;
+
+	myTimer.Start("assign");
+	assign(x, U, L, nu);
+	myTimer.EndAndPrint();
+
+	myTimer.Start("getAperture");
+	this->solutionOfAperture = getAperture(nbound, U, L);
+	myTimer.EndAndPrint();
+	//cout << solutionOfAperture << endl;
+
+	//this->PlotAperture(title, xlabel, ylabel, sign);
+
+
+	//释放资源
+	//TriangleMesh的资源释放在析构函数中，程序会自动调用
+
+	//matlab数组mxArray需要调用专门的函数进行释放，否则也会内存泄漏
+	mxDestroyArray(mx_A);
+	mxDestroyArray(mx_B);
+
+	//释放nu，nbound
+	vector<int> nu_tmp;
+	nu.swap(nu_tmp);
+	vector<vector<double>> nbound_tmp;
+	nbound.swap(nbound_tmp);
+	
+	//释放gridCell
+	vector<vector<gridCell>> gridCell_tmp;
+	grid_Cell.swap(gridCell_tmp);
+}
+
+
 void InhomogeneousThreeCavity::PlotTriangleMesh(string title, string xlabel, string ylabel)
 {
 	char *checkLog = "";
@@ -1734,6 +1819,9 @@ vector<vector<gridCell>> InhomogeneousThreeCavity::setGrid(TriangleMesh &U, Tria
 			// |    \|
 			// -------
 			// 1      2
+			//if(j==307 && l==122)
+			//	printf("%d  %d\n", j, l);
+			//printf("%d  %d\n", j, l);
 
 			int id = j + l*(m - 1);
 			gridCell grid;
@@ -7273,7 +7361,7 @@ void InhomogeneousThreeCavity::reloadtri(Triangle_All &T2, Triangle_All &T)
 		T2.u4_int = T.u4_int; T2.u4_int_ = T.u4_int_;
 		T2.u5_int = T.u5_int; T2.u5_int_ = T.u5_int_;
 	}
-	else if (abs(T2.sgn_int) > 10)
+	else if (abs(T.sgn_int) > 10)
 	{
 		T2.sgn_int = T.sgn_int;
 		T2.x_int = T.x_int; T2.y_int = T.y_int;

@@ -69,118 +69,6 @@ bool Cavity::InitialCheck(char *checkLog) {
 }
 
 
-void Cavity::PlotAperture(string title, string xlabel, string ylabel, int sign)
-{
-	cout << endl << "正在调用matlab引擎进行绘图,请稍后..." << endl;
-
-	///获取用于绘图的横纵坐标数据
-	VectorXd plotX, plotY;
-	drawAperture(plotX, plotY, nbound, sign);
-	//cout << plotX << endl;
-	//cout << plotY << endl;
-
-
-	///获取程序当前工作路径
-	char cur_path[FILENAME_MAX];
-	getcwd(cur_path, FILENAME_MAX);
-	cout << "当前路径：" << cur_path << endl;
-
-
-	///构造修改当前工作路径的matlab命令
-	// 例如：cd(\"F:\\计算数学\\CavityScatteringAlgorithm\\Test\");
-	int len_path = -1; //获取路径的实际长度
-	for (int i = 0; i < size(cur_path); i++)
-	{
-		if (cur_path[i] == '\0')
-		{
-			len_path = i;
-			break;
-		}
-	}
-
-	const char *cmd_start = "cd(\"";
-	const char *cmd_end = "\");";
-	int len_start = strlen(cmd_start);
-	int len_end = strlen(cmd_end);
-
-	//组合出整个命令
-	//首先分配内存
-	char *cdCommand = (char*)malloc(len_start + len_path + len_end + 1);
-	if (!cdCommand)
-		abort();
-	//拼接
-	memcpy(cdCommand, cmd_start, len_start);
-	memcpy(cdCommand + len_start, cur_path, len_path);
-	memcpy(cdCommand + len_start + len_path, cmd_end, len_end);
-	cdCommand[len_start + len_path + len_end] = '\0';
-
-
-	//调用matalb引擎画图
-	mxArray *mx_xValue, *mx_apertureValue;
-
-	//将C中数组转化为matlab数组mxArray
-	mx_xValue = mxCreateDoubleMatrix(1, plotX.size(), mxREAL);
-	//memcpy(mxGetPr(matrix), m, sizeof(double) * 3 * 3);
-	double *xValuePr = mxGetPr(mx_xValue);
-	for (int i = 0; i < plotX.size(); i++)
-		*xValuePr++ = plotX(i);
-
-	mx_apertureValue = mxCreateDoubleMatrix(1, plotX.size(), mxREAL);
-	//memcpy(mxGetPr(matrix), m, sizeof(double) * 3 * 3);
-	double *apertureValuePr = mxGetPr(mx_apertureValue);
-	for (int i = 0; i < plotY.size(); i++)
-		*apertureValuePr++ = plotY(i);
-
-
-	///将需要的变量加入matlab引擎
-	engPutVariable(ep, "xValue", mx_xValue);
-	engPutVariable(ep, "apertureValue", mx_apertureValue);
-
-
-	///调用matlab的cd命令
-	//相当于调用类似如下命令：engEvalString(ep, "cd(\"F:\\计算数学\\CavityScatteringAlgorithm\\Test\");");
-	engEvalString(ep, cdCommand);
-	//cout << cdCommand << endl;
-
-	//以弃用，修改起来太麻烦，不够灵活
-	///调用编写的matlab函数plotAperture（plotAperture.m文件应存放于当前路径下）
-	//engEvalString(ep, "plotAperture( xValue, apertureValue)");
-
-	//直接调用matlab的内置函数绘图
-
-	engEvalString(ep, "figure");
-	engEvalString(ep, "plot(xValue, apertureValue, 'b');");
-
-	engEvalString(ep, "xlabel('x', 'FontSize', 12);");
-
-	if (sign == 0)//幅值
-		engEvalString(ep, "ylabel('Magnitude', 'FontSize', 12);");
-	else if (sign == 1)//实部
-		engEvalString(ep, "ylabel('Real', 'FontSize', 12);");
-	else if (sign == -1)//虚部
-		engEvalString(ep, "ylabel('Imaginary', 'FontSize', 12);");
-	else if (sign == 10)//相位
-		engEvalString(ep, "ylabel('Phase', 'FontSize', 12);");
-	else
-	{
-		;
-	}
-
-	engEvalString(ep, "set(gca, 'LineWidth', 1.5);");
-
-	//set(gca, 'XLim', [para.box.left para.box.right]);
-	//set(gca, 'XTick', -3:1 : 3);
-	//set(gca, 'YLim', [0 1.5]);
-	//set(gca, 'YTick', 0:0.5 : 1.5);
-	//set(gca, 'YLim', [-20 50]);
-	//set(gca, 'YTick', -20:10 : 50);
-
-
-	//如无法成功绘图，需要重新注册matlab引擎
-	//详见https://blog.csdn.net/xiaoqiang920/article/details/8949254
-}
-
-
 //求解并绘制RCS
 //interval：计算RCS的间隔，目前的合法取值有：0.125，0.25，0.5，1
 void Cavity::SolveRCS(double interval)
@@ -570,5 +458,117 @@ int Cavity::sign(double num)
 	else
 		sign = -1;
 	return sign;
+}
+
+
+void Cavity::PlotAperture(string title, string xlabel, string ylabel, int sign)
+{
+	cout << endl << "正在调用matlab引擎进行绘图,请稍后..." << endl;
+
+	///获取用于绘图的横纵坐标数据
+	VectorXd plotX, plotY;
+	drawAperture(plotX, plotY, nbound, sign);
+	//cout << plotX << endl;
+	//cout << plotY << endl;
+
+
+	///获取程序当前工作路径
+	char cur_path[FILENAME_MAX];
+	getcwd(cur_path, FILENAME_MAX);
+	cout << "当前路径：" << cur_path << endl;
+
+
+	///构造修改当前工作路径的matlab命令
+	// 例如：cd(\"F:\\计算数学\\CavityScatteringAlgorithm\\Test\");
+	int len_path = -1; //获取路径的实际长度
+	for (int i = 0; i < size(cur_path); i++)
+	{
+		if (cur_path[i] == '\0')
+		{
+			len_path = i;
+			break;
+		}
+	}
+
+	const char *cmd_start = "cd(\"";
+	const char *cmd_end = "\");";
+	int len_start = strlen(cmd_start);
+	int len_end = strlen(cmd_end);
+
+	//组合出整个命令
+	//首先分配内存
+	char *cdCommand = (char*)malloc(len_start + len_path + len_end + 1);
+	if (!cdCommand)
+		abort();
+	//拼接
+	memcpy(cdCommand, cmd_start, len_start);
+	memcpy(cdCommand + len_start, cur_path, len_path);
+	memcpy(cdCommand + len_start + len_path, cmd_end, len_end);
+	cdCommand[len_start + len_path + len_end] = '\0';
+
+
+	//调用matalb引擎画图
+	mxArray *mx_xValue, *mx_apertureValue;
+
+	//将C中数组转化为matlab数组mxArray
+	mx_xValue = mxCreateDoubleMatrix(1, plotX.size(), mxREAL);
+	//memcpy(mxGetPr(matrix), m, sizeof(double) * 3 * 3);
+	double *xValuePr = mxGetPr(mx_xValue);
+	for (int i = 0; i < plotX.size(); i++)
+		*xValuePr++ = plotX(i);
+
+	mx_apertureValue = mxCreateDoubleMatrix(1, plotX.size(), mxREAL);
+	//memcpy(mxGetPr(matrix), m, sizeof(double) * 3 * 3);
+	double *apertureValuePr = mxGetPr(mx_apertureValue);
+	for (int i = 0; i < plotY.size(); i++)
+		*apertureValuePr++ = plotY(i);
+
+
+	///将需要的变量加入matlab引擎
+	engPutVariable(ep, "xValue", mx_xValue);
+	engPutVariable(ep, "apertureValue", mx_apertureValue);
+
+
+	///调用matlab的cd命令
+	//相当于调用类似如下命令：engEvalString(ep, "cd(\"F:\\计算数学\\CavityScatteringAlgorithm\\Test\");");
+	engEvalString(ep, cdCommand);
+	//cout << cdCommand << endl;
+
+	//以弃用，修改起来太麻烦，不够灵活
+	///调用编写的matlab函数plotAperture（plotAperture.m文件应存放于当前路径下）
+	//engEvalString(ep, "plotAperture( xValue, apertureValue)");
+
+	//直接调用matlab的内置函数绘图
+
+	engEvalString(ep, "figure");
+	engEvalString(ep, "plot(xValue, apertureValue, 'b');");
+
+	engEvalString(ep, "xlabel('x', 'FontSize', 12);");
+
+	if (sign == 0)//幅值
+		engEvalString(ep, "ylabel('Magnitude', 'FontSize', 12);");
+	else if (sign == 1)//实部
+		engEvalString(ep, "ylabel('Real', 'FontSize', 12);");
+	else if (sign == -1)//虚部
+		engEvalString(ep, "ylabel('Imaginary', 'FontSize', 12);");
+	else if (sign == 10)//相位
+		engEvalString(ep, "ylabel('Phase', 'FontSize', 12);");
+	else
+	{
+		;
+	}
+
+	engEvalString(ep, "set(gca, 'LineWidth', 1.5);");
+
+	//set(gca, 'XLim', [para.box.left para.box.right]);
+	//set(gca, 'XTick', -3:1 : 3);
+	//set(gca, 'YLim', [0 1.5]);
+	//set(gca, 'YTick', 0:0.5 : 1.5);
+	//set(gca, 'YLim', [-20 50]);
+	//set(gca, 'YTick', -20:10 : 50);
+
+
+	//如无法成功绘图，需要重新注册matlab引擎
+	//详见https://blog.csdn.net/xiaoqiang920/article/details/8949254
 }
 

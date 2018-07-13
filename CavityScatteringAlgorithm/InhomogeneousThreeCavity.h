@@ -11,6 +11,7 @@ public:
 	void InitAperture(double apertureY, double aperture1Left, double aperture1Right, double aperture2Left, double aperture2Right, double aperture3Left, double aperture3Right);
 
 	bool Solve();
+	bool SolveAperture(string title, string xlabel, string ylabel, int sign);
 
 	void PlotTriangleMesh(string title, string xlabel, string ylabel);
 
