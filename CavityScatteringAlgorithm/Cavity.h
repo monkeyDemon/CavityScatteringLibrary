@@ -30,17 +30,8 @@ public:
 	//void InitCavityShapeParameter() = 0;
 	bool InitialCheck(char *checkLog);
 	virtual bool Solve()=0;
+	virtual bool SolveAperture(string title, string xlabel, string ylabel, int sign) = 0;
 	void SolveRCS(double interval);
-
-	/*
-	绘制口径面处的数值解
-	sign 标识绘制数值解的类型：
-		sign = 0   幅值
-		sign = 1   实部
-		sign = -1  虚部
-		sign = 10 相位
-	*/
-	void PlotAperture(string title, string xlabel, string ylabel, int sign);
 
 	/*
 	绘制三角形网格
@@ -119,6 +110,16 @@ protected:
 	int findXIndexinNbound(vector<vector<double>> nbound, double xIndex);
 	SparseMatrix<complex<double>> buildSparseMatrixA(double* pA, int MatrixSize, int ArowNum);
 	int sign(double num);
+
+	/*
+	绘制口径面处的数值解
+	sign 标识绘制数值解的类型：
+	sign = 0   幅值
+	sign = 1   实部
+	sign = -1  虚部
+	sign = 10 相位
+	*/
+	void PlotAperture(string title, string xlabel, string ylabel, int sign);
 private:
 	
 };
