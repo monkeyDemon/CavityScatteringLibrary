@@ -10,7 +10,7 @@ public:
 	//初始化口径面信息
 	void InitAperture(double apertureLeft, double apertureRight, double apertureY);
 		
-	bool Solve();
+	bool SolveCavity(string title, string xlabel, string ylabel);
 	bool SolveAperture(string title, string xlabel, string ylabel, int sign);
 
 	void PlotTriangleMesh(string title, string xlabel, string ylabel) ;
@@ -49,6 +49,8 @@ protected:
 	void assign(VectorXcd u, TriangleMesh &U, TriangleMesh &L, vector<int> &nu);
 	VectorXcd getAperture(vector<vector<double>> &nbound, TriangleMesh &U, TriangleMesh &L);
 	void drawAperture(VectorXd &plotX, VectorXd &plotY, vector<vector<double>> &nbound, int sign);
+
+	bool solve();
 private:
 	//setTri中需要使用的子函数
 	void setTriangleType(double x1, double x2, double x3, double y1, double y2, double y3, int &sgn);

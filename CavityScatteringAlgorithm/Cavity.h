@@ -29,8 +29,12 @@ public:
 	//void InitAperture(double apertureLeft, double apertureRight, double apertureY);
 	//void InitCavityShapeParameter() = 0;
 	bool InitialCheck(char *checkLog);
-	virtual bool Solve()=0;
+
+	//求解并绘制腔体内数值解
+	virtual bool SolveCavity(string title, string xlabel, string ylabel) = 0;
+	//求解并绘制口径面处数值解
 	virtual bool SolveAperture(string title, string xlabel, string ylabel, int sign) = 0;
+	//求解腔体的RCS并绘图
 	void SolveRCS(double interval);
 
 	/*
@@ -119,7 +123,8 @@ protected:
 	sign = -1  虚部
 	sign = 10 相位
 	*/
-	void PlotAperture(string title, string xlabel, string ylabel, int sign);
+	void plotAperture(string title, string xlabel, string ylabel, int sign);
+	virtual bool solve() = 0;
 private:
 	
 };

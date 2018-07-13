@@ -66,11 +66,11 @@ int main()
 	//// 绘制三角形网格
 	//cavity.PlotTriangleMesh("title", "xlabel", "ylabel");
 
-	////// 求解
-	////cavity.Solve();//求解
-	////
-	////// 口径面解的可视化
-	////cavity.PlotAperture("title", "xlabel", "ylabel", 0);
+	////求解-并绘制口径面处的解
+	//cavity.SolveAperture("title", "xlabel", "ylabel", 0);
+
+	////求解-并绘制整个腔体内的数值解
+	//cavity.SolveCavity("title", "xlabel", "ylabel");
 
 	////// 计算并绘制RCS
 	////double interval = 0.25;
@@ -120,11 +120,11 @@ int main()
 	//// 绘制三角形网格
 	//cavity.PlotTriangleMesh("title", "xlabel", "ylabel");
 
-	///////求解
-	////cavity.Solve();//求解
+	////求解-并绘制口径面处的解
+	//cavity.SolveAperture("title", "xlabel", "ylabel", 0);
 
-	///////可视化
-	////cavity.PlotAperture("title", "xlabel", "ylabel", 0);
+	////求解-并绘制整个腔体内的数值解
+	//cavity.SolveCavity("title", "xlabel", "ylabel");
 
 	////double interval = 0.25;
 	////cavity.SolveRCS(interval);
@@ -171,11 +171,11 @@ int main()
 	//// 绘制三角形网格
 	//cavity.PlotTriangleMesh("title", "xlabel", "ylabel");
 
-	///////求解
-	////cavity.Solve();//求解
+	////求解-并绘制口径面处的解
+	//cavity.SolveAperture("title", "xlabel", "ylabel", 0);
 
-	///////可视化
-	////cavity.PlotAperture("title", "xlabel", "ylabel", 0);
+	////求解-并绘制整个腔体内的数值解
+	//cavity.SolveCavity("title", "xlabel", "ylabel");
 
 	/////*double interval = 0.25;
 	////cavity.SolveRCS(interval);*/
@@ -257,12 +257,15 @@ int main()
 	//// 绘制三角形网格
 	//cavity.PlotTriangleMesh("title", "xlabel", "ylabel");
 
-	///////求解
-	////cavity.Solve();//求解
+	////求解-并绘制口径面处的解
+	//cavity.SolveAperture("title", "xlabel", "ylabel", 0);
 
-	///////可视化
-	////cavity.PlotAperture("title", "xlabel", "ylabel", 0);
-
+	////求解-并绘制整个腔体内的数值解
+	//cavity.SolveCavity("title", "xlabel", "ylabel");
+	
+	////求解-并绘制RCS
+	//double interval = 0.5;
+	//cavity.SolveRCS(interval);
 	#pragma endregion
 
 	#pragma region 矩形腔体+矩形非均匀介质
@@ -341,11 +344,15 @@ int main()
 	//// 绘制三角形网格
 	//cavity.PlotTriangleMesh("title", "xlabel", "ylabel");
 
-	///////求解
-	////cavity.Solve();//求解
+	////求解-并绘制口径面处的解
+	//cavity.SolveAperture("title", "xlabel", "ylabel", 0);
 
-	///////可视化
-	////cavity.PlotAperture("title", "xlabel", "ylabel", 0);
+	////求解-并绘制整个腔体内的数值解
+	//cavity.SolveCavity("title", "xlabel", "ylabel");
+	
+	////求解-并绘制RCS
+	//double interval = 0.5;
+	//cavity.SolveRCS(interval);
 
 	#pragma endregion
 
@@ -419,12 +426,18 @@ int main()
 	//// 绘制三角形网格
 	//cavity.PlotTriangleMesh("title", "xlabel", "ylabel");
 
-	///求解-并绘制口径面处的解
-	for(int i=0;i<200;i++)
-		cavity.SolveAperture("title", "xlabel", "ylabel", 0);
+	////求解-并绘制口径面处的解
+	//cavity.SolveAperture("title", "xlabel", "ylabel", 0);
 
-	////double interval = 0.5;
-	////cavity.SolveRCS(interval);
+	////求解-并绘制口径面处的解
+	//cavity.SolveAperture("title", "xlabel", "ylabel", 0);
+
+	////求解-并绘制整个腔体内的数值解
+	//cavity.SolveCavity("title", "xlabel", "ylabel");
+
+	//求解-并绘制RCS
+	double interval = 0.5;
+	cavity.SolveRCS(interval);
 
 	#pragma endregion
 
@@ -494,15 +507,15 @@ int main()
 	//// 绘制三角形网格
 	//cavity.PlotTriangleMesh("title", "xlabel", "ylabel");
 
-	/////求解
-	//cavity.Solve();//求解
+	////求解-并绘制口径面处的解
+	//cavity.SolveAperture("title", "xlabel", "ylabel", 0);
 
-	/////可视化
-	//cavity.PlotAperture("title", "xlabel", "ylabel", 0);
+	////求解-并绘制整个腔体内的数值解
+	//cavity.SolveCavity("title", "xlabel", "ylabel");
 
-	// 计算并绘制RCS
-	double interval = 0.5;
-	cavity.SolveRCS(interval);
+	//// 计算并绘制RCS
+	//double interval = 0.5;
+	//cavity.SolveRCS(interval);
 
 	#pragma endregion
 
@@ -588,11 +601,18 @@ int main()
 	//box3_int.cavityRight = 2.25;
 	//cavity.InitCavityInhomogeneousShapeParameter(box1_int, box2_int, box3_int);
 
-	/////求解
-	//cavity.Solve();//求解
+	//// 绘制三角形网格
+	//cavity.PlotTriangleMesh("title", "xlabel", "ylabel");
 
-	/////可视化
-	//cavity.PlotAperture("title", "xlabel", "ylabel", 0);
+	////求解-并绘制口径面处的解
+	//cavity.SolveAperture("title", "xlabel", "ylabel", 0);
+
+	////求解-并绘制整个腔体内的数值解
+	//cavity.SolveCavity("title", "xlabel", "ylabel");
+
+	//// 计算并绘制RCS
+	//double interval = 0.5;
+	//cavity.SolveRCS(interval);
 
 	#pragma endregion
 

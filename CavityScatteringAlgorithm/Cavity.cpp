@@ -104,7 +104,7 @@ void Cavity::SolveRCS(double interval)
 		cout << "============================" << endl;
 		cout << "theta = " << theta << endl;
 		cout << "============================" << endl;
-		this->Solve();
+		this->solve();
 		cout << endl;
 
 		// 计算当前theta的RCS
@@ -461,7 +461,7 @@ int Cavity::sign(double num)
 }
 
 
-void Cavity::PlotAperture(string title, string xlabel, string ylabel, int sign)
+void Cavity::plotAperture(string title, string xlabel, string ylabel, int sign)
 {
 	cout << endl << "正在调用matlab引擎进行绘图,请稍后..." << endl;
 
