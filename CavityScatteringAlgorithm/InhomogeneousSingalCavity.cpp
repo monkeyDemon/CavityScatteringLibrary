@@ -57,7 +57,6 @@ bool InhomogeneousSingalCavity::solve()
 
 
 	this->G_aperture = ApertureIntegral::computeG(nbound[0].size(), this->k0, this->apertureLeft, this->apertureRight);
-	//cout << G_aperture << endl;
 
 	this->g_aperture = compute_g(G_aperture, nbound);   //注意这里会变
 	//cout << g_aperture << endl;
@@ -98,21 +97,13 @@ bool InhomogeneousSingalCavity::solve()
 
 
 	//*********释放资源*********
-	//TriangleMesh的资源释放在析构函数中，程序会自动调用
+	printf("正在释放资源...\n");
+	//TriangleMesh内部的属性包含指针，需要手动释放内存
+	//其资源释放定义在析构函数中，程序会自动调用
 
 	//matlab数组mxArray需要调用专门的函数进行释放，否则也会内存泄漏
 	mxDestroyArray(mx_A);
 	mxDestroyArray(mx_B);
-
-	//释放nu，nbound
-	vector<int> nu_tmp;
-	nu.swap(nu_tmp);
-	vector<vector<double>> nbound_tmp;
-	nbound.swap(nbound_tmp);
-
-	//释放gridCell
-	vector<vector<gridCell>> gridCell_tmp;
-	grid_Cell.swap(gridCell_tmp);
 }
 
 bool InhomogeneousSingalCavity::SolveCavity(string title, string xlabel, string ylabel)
@@ -188,16 +179,6 @@ bool InhomogeneousSingalCavity::SolveCavity(string title, string xlabel, string 
 	//matlab数组mxArray需要调用专门的函数进行释放，否则也会内存泄漏
 	mxDestroyArray(mx_A);
 	mxDestroyArray(mx_B);
-
-	//释放nu，nbound
-	vector<int> nu_tmp;
-	nu.swap(nu_tmp);
-	vector<vector<double>> nbound_tmp;
-	nbound.swap(nbound_tmp);
-
-	//释放gridCell
-	vector<vector<gridCell>> gridCell_tmp;
-	grid_Cell.swap(gridCell_tmp);
 }
 
 
@@ -274,16 +255,6 @@ bool InhomogeneousSingalCavity::SolveAperture(string title, string xlabel, strin
 	//matlab数组mxArray需要调用专门的函数进行释放，否则也会内存泄漏
 	mxDestroyArray(mx_A);
 	mxDestroyArray(mx_B);
-
-	//释放nu，nbound
-	vector<int> nu_tmp;
-	nu.swap(nu_tmp);
-	vector<vector<double>> nbound_tmp;
-	nbound.swap(nbound_tmp);
-
-	//释放gridCell
-	vector<vector<gridCell>> gridCell_tmp;
-	grid_Cell.swap(gridCell_tmp);
 }
 
 

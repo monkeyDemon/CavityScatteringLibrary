@@ -366,12 +366,12 @@ int main()
 	double VirtualRight = 3;
 	cavity.InitVirtualBorder(VirtualTop, VirtualBottom, VirtualLeft, VirtualRight);
 
-	//int m = 48;
-	//int n = 6;
+	int m = 48;
+	int n = 6;
 	//int m = 192;
 	//int n = 24;
-	int m = 2400;
-	int n = 300;
+	//int m = 2400;
+	//int n = 300;
 	//int m = 3360;
 	//int n = 420;
 	cavity.InitMesh(m, n);

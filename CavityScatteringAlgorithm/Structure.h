@@ -292,8 +292,6 @@ public:
 	}
 	~TriangleMesh()
 	{
-		printf("TriangleMesh析构函数已被调用!\n");
-
 		//释放tri_all占用的空间
 		//先释放指针元素指向的空间
 		Triangle_All *item = NULL;

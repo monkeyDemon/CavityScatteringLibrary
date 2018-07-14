@@ -173,6 +173,12 @@ void Cavity::SolveRCS(double interval)
 	//engEvalString(ep, "set(gca, 'YTick', -70:10 : 20, 'LineWidth', 1.2);");
 	engEvalString(ep, "xlabel('Observation angle(degree)', 'FontSize', 12);");
 	engEvalString(ep, "ylabel('Backscatter RCS(dB)', 'FontSize', 12);");
+
+
+	//*********释放资源*********
+	//matlab数组mxArray需要调用专门的函数进行释放，否则也会内存泄漏
+	mxDestroyArray(mx_xValue);
+	mxDestroyArray(mx_RCS);
 }
 
 
