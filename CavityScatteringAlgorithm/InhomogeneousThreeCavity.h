@@ -82,6 +82,8 @@ protected:
 	void assign(VectorXcd u, TriangleMesh &U, TriangleMesh &L, vector<int> &nu);
 	VectorXcd getAperture(vector<vector<double>> &nbound, TriangleMesh &U, TriangleMesh &L);
 	void drawAperture(VectorXd &plotX, VectorXd &plotY, vector<vector<double>> &nbound, int sign);
+	void draw_int(Triangle_All &T, double scale);
+	void draw_intex(Triangle_All &T, double scale);
 
 	bool solve();
 private:

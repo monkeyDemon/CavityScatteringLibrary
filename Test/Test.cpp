@@ -368,21 +368,21 @@ int main()
 
 	//int m = 48;
 	//int n = 6;
-	//int m = 192;
-	//int n = 24;
-	int m = 2400;
-	int n = 300;
+	int m = 192;
+	int n = 24;
+	//int m = 2400;
+	//int n = 300;
 	//int m = 3360;
 	//int n = 420;
 	cavity.InitMesh(m, n);
 
-	double k0 = 16 * M_PI;
+	double k0 = 2 * M_PI;
 	complex<double> epr1(1, 0);
-	complex<double> epr1_int(1, 1);
+	complex<double> epr1_int(4, 1);
 	complex<double> epr2(1, 0);
-	complex<double> epr2_int(1, 1);
+	complex<double> epr2_int(4, 4);
 	complex<double> epr3(1, 0);
-	complex<double> epr3_int(1, 1);
+	complex<double> epr3_int(4, 1);
 	double theta = 0;
 	cavity.InitElectromagneticParameter(k0, epr1, epr1_int, epr2, epr2_int, epr3, epr3_int, theta);
 
@@ -429,12 +429,12 @@ int main()
 	////求解-并绘制口径面处的解
 	//cavity.SolveAperture("title", "xlabel", "ylabel", 0);
 
-	////求解-并绘制整个腔体内的数值解
-	//cavity.SolveCavity("title", "xlabel", "ylabel");
+	//求解-并绘制整个腔体内的数值解
+	cavity.SolveCavity("title", "xlabel", "ylabel");
 
-	//求解-并绘制RCS
-	double interval = 0.5;
-	cavity.SolveRCS(interval);
+	////求解-并绘制RCS
+	//double interval = 0.5;
+	//cavity.SolveRCS(interval);
 
 	#pragma endregion
 

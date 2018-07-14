@@ -183,15 +183,503 @@ bool InhomogeneousThreeCavity::SolveCavity(string title, string xlabel, string y
 	assign(x, U, L, nu);
 	myTimer.EndAndPrint();
 
-	myTimer.Start("getAperture");
-	this->solutionOfAperture = getAperture(nbound, U, L);
-	myTimer.EndAndPrint();
-	//cout << solutionOfAperture << endl;
 
-	//this->plotAperture(title, xlabel, ylabel, sign);
+	//******绘制整个腔体的数值解******
+	myTimer.Start("绘制整个腔体的数值解");
+	//调用matalb引擎画图
+	engEvalString(ep, "figure");
+	engEvalString(ep, "hold on;");
+
+	// 定义matlab数组mxArray
+	mxArray *mx_x, *mx_y, *mx_z, *mx_c;
+
+	//将C中数组转化为matlab数组mxArray
+	mx_x = mxCreateDoubleMatrix(3, 1, mxREAL);
+	mx_y = mxCreateDoubleMatrix(3, 1, mxREAL);
+	mx_z = mxCreateDoubleMatrix(3, 1, mxREAL);
+	mx_c = mxCreateDoubleMatrix(3, 1, mxREAL);
+
+	// 定义matlab数组的数据指针
+	double *x_Pr, *y_Pr, *z_Pr, *c_Pr;
+
+	int m = this->meshWidth;
+	int n = this->meshHeight;
+	double scale;
+	for (int j = 0; j < m; j++)
+	{
+		for (int l = 0; l < n; l++)
+		{
+			// 如需要继续缩减内存，在这里将sgn==10排除
+
+			// 处理U
+			if (U.Get_sign(j, l))
+			{
+				// normal triangle
+				Triangle_Normal t = U.Get_normal(j, l);
+
+				if (t.sgn == -10)
+				{
+					if (abs(t.sgn_int) == 10)
+					{
+						if (t.sgn_int == -10)
+						{
+							if (abs(phi_int(t.x_int(1), t.y_int(1))) < 1e-10)
+								t.z_int(1) = t.z_int(1) - a(t.x_int(1), t.y_int(1));
+
+							if (abs(phi_int(t.x_int(2), t.y_int(2))) < 1e-10)
+								t.z_int(2) = t.z_int(2) - a(t.x_int(2), t.y_int(2));
+
+							if (abs(phi_int(t.x_int(3), t.y_int(3))) < 1e-10)
+								t.z_int(3) = t.z_int(3) - a(t.x_int(3), t.y_int(3));
+						}
+						x_Pr = mxGetPr(mx_x);
+						*x_Pr++ = t.x_int(0); *x_Pr++ = t.x_int(1); *x_Pr++ = t.x_int(2);
+						y_Pr = mxGetPr(mx_y);
+						*y_Pr++ = t.y_int(0); *y_Pr++ = t.y_int(1); *y_Pr++ = t.y_int(2);
+						z_Pr = mxGetPr(mx_z);
+						*z_Pr++ = abs(t.z_int(0)); *z_Pr++ = abs(t.z_int(1)); *z_Pr++ = abs(t.z_int(2));
+						c_Pr = mxGetPr(mx_c);
+						*c_Pr++ = abs(t.z_int(0)) / scale; *c_Pr++ = abs(t.z_int(1)) / scale; *c_Pr++ = abs(t.z_int(2)) / scale;
+						engPutVariable(ep, "x", mx_x); engPutVariable(ep, "y", mx_y);
+						engPutVariable(ep, "z", mx_z); engPutVariable(ep, "c", mx_c);
+						engEvalString(ep, "fill3(x, y, z, z, 'LineStyle', 'none');");
+					}
+					else
+					{
+						throw("error：程序不应运行到这里！请检查");
+					}
+				}
+			}
+			else
+			{
+				// all triangle
+				Triangle_All t = U.Get_all(j, l);
+
+				if (t.sgn == -10)
+				{
+					if (abs(t.sgn_int) == 10)
+					{
+						if (t.sgn_int == -10)
+						{
+							if (abs(phi_int(t.x_int(1), t.y_int(1))) < 1e-10)
+								t.z_int(1) = t.z_int(1) - a(t.x_int(1), t.y_int(1));
+
+							if (abs(phi_int(t.x_int(2), t.y_int(2))) < 1e-10)
+								t.z_int(2) = t.z_int(2) - a(t.x_int(2), t.y_int(2));
+
+							if (abs(phi_int(t.x_int(3), t.y_int(3))) < 1e-10)
+								t.z_int(3) = t.z_int(3) - a(t.x_int(3), t.y_int(3));
+						}
+						x_Pr = mxGetPr(mx_x);
+						*x_Pr++ = t.x_int(0); *x_Pr++ = t.x_int(1); *x_Pr++ = t.x_int(2);
+						y_Pr = mxGetPr(mx_y);
+						*y_Pr++ = t.y_int(0); *y_Pr++ = t.y_int(1); *y_Pr++ = t.y_int(2);
+						z_Pr = mxGetPr(mx_z);
+						*z_Pr++ = abs(t.z_int(0)); *z_Pr++ = abs(t.z_int(1)); *z_Pr++ = abs(t.z_int(2));
+						c_Pr = mxGetPr(mx_c);
+						*c_Pr++ = abs(t.z_int(0))/scale; *c_Pr++ = abs(t.z_int(1))/scale; *c_Pr++ = abs(t.z_int(2))/scale;
+						engPutVariable(ep, "x", mx_x); engPutVariable(ep, "y", mx_y);
+						engPutVariable(ep, "z", mx_z); engPutVariable(ep, "c", mx_c);
+						engEvalString(ep, "fill3(x, y, z, z, 'LineStyle', 'none');");
+					}
+					else
+					{
+						draw_int(t, scale);
+					}
+				}
+				if (abs(t.sgn) < 10)
+				{
+					if (t.sgn < 0)
+					{
+						if (abs(t.sgn_int) == 10)
+						{
+							if (t.sgn_int == -10)
+							{
+								if (abs(phi_int(t.x_int(1), t.y_int(1))) < 1e-10)
+									t.z_int(1) = t.z_int(1) - a(t.x_int(1), t.y_int(1));
+								if (abs(phi_int(t.x_int(2), t.y_int(2))) < 1e-10)
+									t.z_int(2) = t.z_int(2) - a(t.x_int(2), t.y_int(2));
+								if (abs(phi_int(t.x_int(3), t.y_int(3))) < 1e-10)
+									t.z_int(3) = t.z_int(3) - a(t.x_int(3), t.y_int(3));
+							}
+							x_Pr = mxGetPr(mx_x);
+							*x_Pr++ = t.x_int(0); *x_Pr++ = t.x_int(1); *x_Pr++ = t.x_int(2);
+							y_Pr = mxGetPr(mx_y);
+							*y_Pr++ = t.y_int(0); *y_Pr++ = t.y_int(1); *y_Pr++ = t.y_int(2);
+							z_Pr = mxGetPr(mx_z);
+							*z_Pr++ = abs(t.z_int(0)); *z_Pr++ = abs(t.z_int(1)); *z_Pr++ = abs(t.z_int(2));
+							c_Pr = mxGetPr(mx_c);
+							*c_Pr++ = abs(t.z_int(0)) / scale; *c_Pr++ = abs(t.z_int(1)) / scale; *c_Pr++ = abs(t.z_int(2)) / scale;
+							engPutVariable(ep, "x", mx_x); engPutVariable(ep, "y", mx_y);
+							engPutVariable(ep, "z", mx_z); engPutVariable(ep, "c", mx_c);
+							engEvalString(ep, "fill3(x, y, z, z, 'LineStyle', 'none');");
+						}
+						else
+						{
+							draw_int(t, scale);
+						}
+					}
+					if (t.sgn > 0)
+					{
+						if (abs(t.sgn_int) == 10)
+						{
+							if (t.sgn_int == -10)
+							{
+								if (abs(phi_int(t.x_int(1), t.y_int(1))) < 1e-10)
+									t.z_int(1) = t.z_int(1) - a(t.x_int(1), t.y_int(1));
+								if (abs(phi_int(t.x_int(2), t.y_int(2))) < 1e-10)
+									t.z_int(2) = t.z_int(2) - a(t.x_int(2), t.y_int(2));
+								if (abs(phi_int(t.x_int(3), t.y_int(3))) < 1e-10)
+									t.z_int(3) = t.z_int(3) - a(t.x_int(3), t.y_int(3));
+							}
+							x_Pr = mxGetPr(mx_x);
+							*x_Pr++ = t.x_int(0); *x_Pr++ = t.x_int(1); *x_Pr++ = t.x_int(2);
+							y_Pr = mxGetPr(mx_y);
+							*y_Pr++ = t.y_int(0); *y_Pr++ = t.y_int(1); *y_Pr++ = t.y_int(2);
+							z_Pr = mxGetPr(mx_z);
+							*z_Pr++ = abs(t.z_int(0)); *z_Pr++ = abs(t.z_int(1)); *z_Pr++ = abs(t.z_int(2));
+							c_Pr = mxGetPr(mx_c);
+							*c_Pr++ = abs(t.z_int(0)) / scale; *c_Pr++ = abs(t.z_int(1)) / scale; *c_Pr++ = abs(t.z_int(2)) / scale;
+							engPutVariable(ep, "x", mx_x); engPutVariable(ep, "y", mx_y);
+							engPutVariable(ep, "z", mx_z); engPutVariable(ep, "c", mx_c);
+							engEvalString(ep, "fill3(x, y, z, z, 'LineStyle', 'none');");
+						}
+						else
+						{
+							draw_int(t, scale);
+						}
+						if (abs(t.sgn_intex) == 10)
+						{
+							if (t.sgn_intex == -10)
+							{
+								if (abs(phi_int(t.x_intex(1), t.y_intex(1))) < 1e-10)
+									t.z_intex(1) = t.z_intex(1) - a(t.x_intex(1), t.y_intex(1));
+								if (abs(phi_int(t.x_intex(2), t.y_intex(2))) < 1e-10)
+									t.z_intex(2) = t.z_intex(2) - a(t.x_intex(2), t.y_intex(2));
+								if (abs(phi_int(t.x_intex(3), t.y_intex(3))) < 1e-10)
+									t.z_intex(3) = t.z_intex(3) - a(t.x_intex(3), t.y_intex(3));
+							}
+							x_Pr = mxGetPr(mx_x);
+							*x_Pr++ = t.x_intex(0); *x_Pr++ = t.x_intex(1); *x_Pr++ = t.x_intex(2);
+							y_Pr = mxGetPr(mx_y);
+							*y_Pr++ = t.y_intex(0); *y_Pr++ = t.y_intex(1); *y_Pr++ = t.y_intex(2);
+							z_Pr = mxGetPr(mx_z);
+							*z_Pr++ = abs(t.z_intex(0)); *z_Pr++ = abs(t.z_intex(1)); *z_Pr++ = abs(t.z_intex(2));
+							c_Pr = mxGetPr(mx_c);
+							*c_Pr++ = abs(t.z_intex(0)) / scale; *c_Pr++ = abs(t.z_intex(1)) / scale; *c_Pr++ = abs(t.z_intex(2)) / scale;
+							engPutVariable(ep, "x", mx_x); engPutVariable(ep, "y", mx_y);
+							engPutVariable(ep, "z", mx_z); engPutVariable(ep, "c", mx_c);
+							engEvalString(ep, "fill3(x, y, z, z, 'LineStyle', 'none');");
+						}
+						else
+						{
+							draw_intex(t, scale);
+						}
+					}
+				}
+				if (abs(t.sgn) > 10)
+				{
+					if (t.sgn > 0)
+					{
+						if (abs(t.sgn_int) == 10)
+						{
+							if (t.sgn_int == -10)
+							{
+								if( abs(phi_int(t.x_int(1), t.y_int(1))) < 1e-10 )
+									t.z_int(1) = t.z_int(1) - a(t.x_int(1), t.y_int(1));
+								if( abs(phi_int(t.x_int(2), t.y_int(2))) < 1e-10 )
+									t.z_int(2) = t.z_int(2) - a(t.x_int(2), t.y_int(2));
+								if( abs(phi_int(t.x_int(3), t.y_int(3))) < 1e-10 )
+									t.z_int(3) = t.z_int(3) - a(t.x_int(3), t.y_int(3));
+							}
+							x_Pr = mxGetPr(mx_x);
+							*x_Pr++ = t.x_int(0); *x_Pr++ = t.x_int(1); *x_Pr++ = t.x_int(2);
+							y_Pr = mxGetPr(mx_y);
+							*y_Pr++ = t.y_int(0); *y_Pr++ = t.y_int(1); *y_Pr++ = t.y_int(2);
+							z_Pr = mxGetPr(mx_z);
+							*z_Pr++ = abs(t.z_int(0)); *z_Pr++ = abs(t.z_int(1)); *z_Pr++ = abs(t.z_int(2));
+							c_Pr = mxGetPr(mx_c);
+							*c_Pr++ = abs(t.z_int(0)) / scale; *c_Pr++ = abs(t.z_int(1)) / scale; *c_Pr++ = abs(t.z_int(2)) / scale;
+							engPutVariable(ep, "x", mx_x); engPutVariable(ep, "y", mx_y);
+							engPutVariable(ep, "z", mx_z); engPutVariable(ep, "c", mx_c);
+							engEvalString(ep, "fill3(x, y, z, z, 'LineStyle', 'none');");
+						}
+						else
+						{
+							draw_int(t, scale);
+						}
+					}
+					if (t.sgn < 0)
+					{
+						if (abs(t.sgn_int) == 10)
+						{
+							if (t.sgn_int == -10)
+							{
+								if( abs(phi_int(t.x_int(1), t.y_int(1))) < 1e-10 )
+									t.z_int(1) = t.z_int(1) - a(t.x_int(1), t.y_int(1));
+								if( abs(phi_int(t.x_int(2), t.y_int(2))) < 1e-10 )
+									t.z_int(2) = t.z_int(2) - a(t.x_int(2), t.y_int(2));
+								if( abs(phi_int(t.x_int(3), t.y_int(3))) < 1e-10 )
+									t.z_int(3) = t.z_int(3) - a(t.x_int(3), t.y_int(3));
+							}
+							x_Pr = mxGetPr(mx_x);
+							*x_Pr++ = t.x_int(0); *x_Pr++ = t.x_int(1); *x_Pr++ = t.x_int(2);
+							y_Pr = mxGetPr(mx_y);
+							*y_Pr++ = t.y_int(0); *y_Pr++ = t.y_int(1); *y_Pr++ = t.y_int(2);
+							z_Pr = mxGetPr(mx_z);
+							*z_Pr++ = abs(t.z_int(0)); *z_Pr++ = abs(t.z_int(1)); *z_Pr++ = abs(t.z_int(2));
+							c_Pr = mxGetPr(mx_c);
+							*c_Pr++ = abs(t.z_int(0)) / scale; *c_Pr++ = abs(t.z_int(1)) / scale; *c_Pr++ = abs(t.z_int(2)) / scale;
+							engPutVariable(ep, "x", mx_x); engPutVariable(ep, "y", mx_y);
+							engPutVariable(ep, "z", mx_z); engPutVariable(ep, "c", mx_c);
+							engEvalString(ep, "fill3(x, y, z, z, 'LineStyle', 'none');");
+						}
+						else 
+						{
+							draw_int(t, scale);
+						}
+					}
+				}
+			}
 
 
-	//释放资源
+			// ------------处理L------------
+			if (L.Get_sign(j, l))
+			{
+				// normal triangle
+				Triangle_Normal t = L.Get_normal(j, l);
+
+				if (t.sgn == -10)
+				{
+					if (abs(t.sgn_int) == 10)
+					{
+						if (t.sgn_int == -10)
+						{
+							if (abs(phi_int(t.x_int(1), t.y_int(1))) < 1e-10)
+								t.z_int(1) = t.z_int(1) - a(t.x_int(1), t.y_int(1));
+
+							if (abs(phi_int(t.x_int(2), t.y_int(2))) < 1e-10)
+								t.z_int(2) = t.z_int(2) - a(t.x_int(2), t.y_int(2));
+
+							if (abs(phi_int(t.x_int(3), t.y_int(3))) < 1e-10)
+								t.z_int(3) = t.z_int(3) - a(t.x_int(3), t.y_int(3));
+						}
+						x_Pr = mxGetPr(mx_x);
+						*x_Pr++ = t.x_int(0); *x_Pr++ = t.x_int(1); *x_Pr++ = t.x_int(2);
+						y_Pr = mxGetPr(mx_y);
+						*y_Pr++ = t.y_int(0); *y_Pr++ = t.y_int(1); *y_Pr++ = t.y_int(2);
+						z_Pr = mxGetPr(mx_z);
+						*z_Pr++ = abs(t.z_int(0)); *z_Pr++ = abs(t.z_int(1)); *z_Pr++ = abs(t.z_int(2));
+						c_Pr = mxGetPr(mx_c);
+						*c_Pr++ = abs(t.z_int(0)) / scale; *c_Pr++ = abs(t.z_int(1)) / scale; *c_Pr++ = abs(t.z_int(2)) / scale;
+						engPutVariable(ep, "x", mx_x); engPutVariable(ep, "y", mx_y);
+						engPutVariable(ep, "z", mx_z); engPutVariable(ep, "c", mx_c);
+						engEvalString(ep, "fill3(x, y, z, z, 'LineStyle', 'none');");
+					}
+					else
+					{
+						throw("error：程序不应运行到这里！请检查");
+					}
+				}
+			}
+			else
+			{
+				// all triangle
+				Triangle_All t = L.Get_all(j, l);
+
+				if (t.sgn == -10)
+				{
+					if (abs(t.sgn_int) == 10)
+					{
+						if (t.sgn_int == -10)
+						{
+							if (abs(phi_int(t.x_int(1), t.y_int(1))) < 1e-10)
+								t.z_int(1) = t.z_int(1) - a(t.x_int(1), t.y_int(1));
+
+							if (abs(phi_int(t.x_int(2), t.y_int(2))) < 1e-10)
+								t.z_int(2) = t.z_int(2) - a(t.x_int(2), t.y_int(2));
+
+							if (abs(phi_int(t.x_int(3), t.y_int(3))) < 1e-10)
+								t.z_int(3) = t.z_int(3) - a(t.x_int(3), t.y_int(3));
+						}
+						x_Pr = mxGetPr(mx_x);
+						*x_Pr++ = t.x_int(0); *x_Pr++ = t.x_int(1); *x_Pr++ = t.x_int(2);
+						y_Pr = mxGetPr(mx_y);
+						*y_Pr++ = t.y_int(0); *y_Pr++ = t.y_int(1); *y_Pr++ = t.y_int(2);
+						z_Pr = mxGetPr(mx_z);
+						*z_Pr++ = abs(t.z_int(0)); *z_Pr++ = abs(t.z_int(1)); *z_Pr++ = abs(t.z_int(2));
+						c_Pr = mxGetPr(mx_c);
+						*c_Pr++ = abs(t.z_int(0)) / scale; *c_Pr++ = abs(t.z_int(1)) / scale; *c_Pr++ = abs(t.z_int(2)) / scale;
+						engPutVariable(ep, "x", mx_x); engPutVariable(ep, "y", mx_y);
+						engPutVariable(ep, "z", mx_z); engPutVariable(ep, "c", mx_c);
+						engEvalString(ep, "fill3(x, y, z, z, 'LineStyle', 'none');");
+					}
+					else
+					{
+						draw_int(t, scale);
+					}
+				}
+				if (abs(t.sgn) < 10)
+				{
+					if (t.sgn < 0)
+					{
+						if (abs(t.sgn_int) == 10)
+						{
+							if (t.sgn_int == -10)
+							{
+								if (abs(phi_int(t.x_int(1), t.y_int(1))) < 1e-10)
+									t.z_int(1) = t.z_int(1) - a(t.x_int(1), t.y_int(1));
+								if (abs(phi_int(t.x_int(2), t.y_int(2))) < 1e-10)
+									t.z_int(2) = t.z_int(2) - a(t.x_int(2), t.y_int(2));
+								if (abs(phi_int(t.x_int(3), t.y_int(3))) < 1e-10)
+									t.z_int(3) = t.z_int(3) - a(t.x_int(3), t.y_int(3));
+							}
+							x_Pr = mxGetPr(mx_x);
+							*x_Pr++ = t.x_int(0); *x_Pr++ = t.x_int(1); *x_Pr++ = t.x_int(2);
+							y_Pr = mxGetPr(mx_y);
+							*y_Pr++ = t.y_int(0); *y_Pr++ = t.y_int(1); *y_Pr++ = t.y_int(2);
+							z_Pr = mxGetPr(mx_z);
+							*z_Pr++ = abs(t.z_int(0)); *z_Pr++ = abs(t.z_int(1)); *z_Pr++ = abs(t.z_int(2));
+							c_Pr = mxGetPr(mx_c);
+							*c_Pr++ = abs(t.z_int(0)) / scale; *c_Pr++ = abs(t.z_int(1)) / scale; *c_Pr++ = abs(t.z_int(2)) / scale;
+							engPutVariable(ep, "x", mx_x); engPutVariable(ep, "y", mx_y);
+							engPutVariable(ep, "z", mx_z); engPutVariable(ep, "c", mx_c);
+							engEvalString(ep, "fill3(x, y, z, z, 'LineStyle', 'none');");
+						}
+						else
+						{
+							draw_int(t, scale);
+						}
+					}
+					if (t.sgn > 0)
+					{
+						if (abs(t.sgn_int) == 10)
+						{
+							if (t.sgn_int == -10)
+							{
+								if (abs(phi_int(t.x_int(1), t.y_int(1))) < 1e-10)
+									t.z_int(1) = t.z_int(1) - a(t.x_int(1), t.y_int(1));
+								if (abs(phi_int(t.x_int(2), t.y_int(2))) < 1e-10)
+									t.z_int(2) = t.z_int(2) - a(t.x_int(2), t.y_int(2));
+								if (abs(phi_int(t.x_int(3), t.y_int(3))) < 1e-10)
+									t.z_int(3) = t.z_int(3) - a(t.x_int(3), t.y_int(3));
+							}
+							x_Pr = mxGetPr(mx_x);
+							*x_Pr++ = t.x_int(0); *x_Pr++ = t.x_int(1); *x_Pr++ = t.x_int(2);
+							y_Pr = mxGetPr(mx_y);
+							*y_Pr++ = t.y_int(0); *y_Pr++ = t.y_int(1); *y_Pr++ = t.y_int(2);
+							z_Pr = mxGetPr(mx_z);
+							*z_Pr++ = abs(t.z_int(0)); *z_Pr++ = abs(t.z_int(1)); *z_Pr++ = abs(t.z_int(2));
+							c_Pr = mxGetPr(mx_c);
+							*c_Pr++ = abs(t.z_int(0)) / scale; *c_Pr++ = abs(t.z_int(1)) / scale; *c_Pr++ = abs(t.z_int(2)) / scale;
+							engPutVariable(ep, "x", mx_x); engPutVariable(ep, "y", mx_y);
+							engPutVariable(ep, "z", mx_z); engPutVariable(ep, "c", mx_c);
+							engEvalString(ep, "fill3(x, y, z, z, 'LineStyle', 'none');");
+						}
+						else
+						{
+							draw_int(t, scale);
+						}
+						if (abs(t.sgn_intex) == 10)
+						{
+							if (t.sgn_intex == -10)
+							{
+								if (abs(phi_int(t.x_intex(1), t.y_intex(1))) < 1e-10)
+									t.z_intex(1) = t.z_intex(1) - a(t.x_intex(1), t.y_intex(1));
+								if (abs(phi_int(t.x_intex(2), t.y_intex(2))) < 1e-10)
+									t.z_intex(2) = t.z_intex(2) - a(t.x_intex(2), t.y_intex(2));
+								if (abs(phi_int(t.x_intex(3), t.y_intex(3))) < 1e-10)
+									t.z_intex(3) = t.z_intex(3) - a(t.x_intex(3), t.y_intex(3));
+							}
+							x_Pr = mxGetPr(mx_x);
+							*x_Pr++ = t.x_intex(0); *x_Pr++ = t.x_intex(1); *x_Pr++ = t.x_intex(2);
+							y_Pr = mxGetPr(mx_y);
+							*y_Pr++ = t.y_intex(0); *y_Pr++ = t.y_intex(1); *y_Pr++ = t.y_intex(2);
+							z_Pr = mxGetPr(mx_z);
+							*z_Pr++ = abs(t.z_intex(0)); *z_Pr++ = abs(t.z_intex(1)); *z_Pr++ = abs(t.z_intex(2));
+							c_Pr = mxGetPr(mx_c);
+							*c_Pr++ = abs(t.z_intex(0)) / scale; *c_Pr++ = abs(t.z_intex(1)) / scale; *c_Pr++ = abs(t.z_intex(2)) / scale;
+							engPutVariable(ep, "x", mx_x); engPutVariable(ep, "y", mx_y);
+							engPutVariable(ep, "z", mx_z); engPutVariable(ep, "c", mx_c);
+							engEvalString(ep, "fill3(x, y, z, z, 'LineStyle', 'none');");
+						}
+						else
+						{
+							draw_intex(t, scale);
+						}
+					}
+				}
+				if (abs(t.sgn) > 10)
+				{
+					if (t.sgn > 0)
+					{
+						if (abs(t.sgn_int) == 10)
+						{
+							if (t.sgn_int == -10)
+							{
+								if (abs(phi_int(t.x_int(1), t.y_int(1))) < 1e-10)
+									t.z_int(1) = t.z_int(1) - a(t.x_int(1), t.y_int(1));
+								if (abs(phi_int(t.x_int(2), t.y_int(2))) < 1e-10)
+									t.z_int(2) = t.z_int(2) - a(t.x_int(2), t.y_int(2));
+								if (abs(phi_int(t.x_int(3), t.y_int(3))) < 1e-10)
+									t.z_int(3) = t.z_int(3) - a(t.x_int(3), t.y_int(3));
+							}
+							x_Pr = mxGetPr(mx_x);
+							*x_Pr++ = t.x_int(0); *x_Pr++ = t.x_int(1); *x_Pr++ = t.x_int(2);
+							y_Pr = mxGetPr(mx_y);
+							*y_Pr++ = t.y_int(0); *y_Pr++ = t.y_int(1); *y_Pr++ = t.y_int(2);
+							z_Pr = mxGetPr(mx_z);
+							*z_Pr++ = abs(t.z_int(0)); *z_Pr++ = abs(t.z_int(1)); *z_Pr++ = abs(t.z_int(2));
+							c_Pr = mxGetPr(mx_c);
+							*c_Pr++ = abs(t.z_int(0)) / scale; *c_Pr++ = abs(t.z_int(1)) / scale; *c_Pr++ = abs(t.z_int(2)) / scale;
+							engPutVariable(ep, "x", mx_x); engPutVariable(ep, "y", mx_y);
+							engPutVariable(ep, "z", mx_z); engPutVariable(ep, "c", mx_c);
+							engEvalString(ep, "fill3(x, y, z, z, 'LineStyle', 'none');");
+						}
+						else
+						{
+							draw_int(t, scale);
+						}
+					}
+					if (t.sgn < 0)
+					{
+						if (abs(t.sgn_int) == 10)
+						{
+							if (t.sgn_int == -10)
+							{
+								if (abs(phi_int(t.x_int(1), t.y_int(1))) < 1e-10)
+									t.z_int(1) = t.z_int(1) - a(t.x_int(1), t.y_int(1));
+								if (abs(phi_int(t.x_int(2), t.y_int(2))) < 1e-10)
+									t.z_int(2) = t.z_int(2) - a(t.x_int(2), t.y_int(2));
+								if (abs(phi_int(t.x_int(3), t.y_int(3))) < 1e-10)
+									t.z_int(3) = t.z_int(3) - a(t.x_int(3), t.y_int(3));
+							}
+							x_Pr = mxGetPr(mx_x);
+							*x_Pr++ = t.x_int(0); *x_Pr++ = t.x_int(1); *x_Pr++ = t.x_int(2);
+							y_Pr = mxGetPr(mx_y);
+							*y_Pr++ = t.y_int(0); *y_Pr++ = t.y_int(1); *y_Pr++ = t.y_int(2);
+							z_Pr = mxGetPr(mx_z);
+							*z_Pr++ = abs(t.z_int(0)); *z_Pr++ = abs(t.z_int(1)); *z_Pr++ = abs(t.z_int(2));
+							c_Pr = mxGetPr(mx_c);
+							*c_Pr++ = abs(t.z_int(0)) / scale; *c_Pr++ = abs(t.z_int(1)) / scale; *c_Pr++ = abs(t.z_int(2)) / scale;
+							engPutVariable(ep, "x", mx_x); engPutVariable(ep, "y", mx_y);
+							engPutVariable(ep, "z", mx_z); engPutVariable(ep, "c", mx_c);
+							engEvalString(ep, "fill3(x, y, z, z, 'LineStyle', 'none');");
+						}
+						else
+						{
+							draw_int(t, scale);
+						}
+					}
+				}
+			}
+		}
+	}
+	engEvalString(ep, "hold off");
+	engEvalString(ep, "colorbar");
+
+
+	//******释放资源******
 	//TriangleMesh的资源释放在析构函数中，程序会自动调用
 
 	//matlab数组mxArray需要调用专门的函数进行释放，否则也会内存泄漏
@@ -5033,6 +5521,241 @@ void InhomogeneousThreeCavity::drawAperture(VectorXd &plotX, VectorXd &plotY, ve
 	{
 		;
 	}
+}
+
+
+void InhomogeneousThreeCavity::draw_int(Triangle_All &t, double scale)
+{
+	// 定义matlab数组mxArray
+	mxArray *mx_x, *mx_y, *mx_z, *mx_c;
+
+	//将C中数组转化为matlab数组mxArray
+	mx_x = mxCreateDoubleMatrix(3, 1, mxREAL);
+	mx_y = mxCreateDoubleMatrix(3, 1, mxREAL);
+	mx_z = mxCreateDoubleMatrix(3, 1, mxREAL);
+	mx_c = mxCreateDoubleMatrix(3, 1, mxREAL);
+
+	// 定义matlab数组的数据指针
+	double *x_Pr, *y_Pr, *z_Pr, *c_Pr;
+
+	if (abs(t.sgn_int) < 10)
+	{
+		x_Pr = mxGetPr(mx_x);
+		*x_Pr++ = t.x1_int; *x_Pr++ = t.x4_int; *x_Pr++ = t.x5_int;
+		y_Pr = mxGetPr(mx_y);
+		*y_Pr++ = t.y1_int; *y_Pr++ = t.y4_int; *y_Pr++ = t.y5_int;
+		z_Pr = mxGetPr(mx_z);
+		*z_Pr++ = abs(t.z1_int); *z_Pr++ = abs(t.z4_int); *z_Pr++ = abs(t.z5_int);
+		c_Pr = mxGetPr(mx_c);
+		*c_Pr++ = abs(t.z1_int) / scale; *c_Pr++ = abs(t.z4_int) / scale; *c_Pr++ = abs(t.z5_int) / scale;
+		engPutVariable(ep, "x", mx_x); engPutVariable(ep, "y", mx_y);
+		engPutVariable(ep, "z", mx_z); engPutVariable(ep, "c", mx_c);
+		engEvalString(ep, "fill3(x, y, z, z, 'LineStyle', 'none');");
+
+		x_Pr = mxGetPr(mx_x);
+		*x_Pr++ = t.x2_int; *x_Pr++ = t.x3_int; *x_Pr++ = t.x4_int;
+		y_Pr = mxGetPr(mx_y);
+		*y_Pr++ = t.y2_int; *y_Pr++ = t.y3_int; *y_Pr++ = t.y4_int;
+		z_Pr = mxGetPr(mx_z);
+		*z_Pr++ = abs(t.z2_int); *z_Pr++ = abs(t.z3_int); *z_Pr++ = abs(t.z4_int);
+		c_Pr = mxGetPr(mx_c);
+		*c_Pr++ = abs(t.z2_int) / scale; *c_Pr++ = abs(t.z3_int) / scale; *c_Pr++ = abs(t.z4_int) / scale;
+		engPutVariable(ep, "x", mx_x); engPutVariable(ep, "y", mx_y);
+		engPutVariable(ep, "z", mx_z); engPutVariable(ep, "c", mx_c);
+		engEvalString(ep, "fill3(x, y, z, z, 'LineStyle', 'none');");
+
+		x_Pr = mxGetPr(mx_x);
+		*x_Pr++ = t.x3_int; *x_Pr++ = t.x5_int; *x_Pr++ = t.x4_int;
+		y_Pr = mxGetPr(mx_y);
+		*y_Pr++ = t.y3_int; *y_Pr++ = t.y5_int; *y_Pr++ = t.y4_int;
+		z_Pr = mxGetPr(mx_z);
+		*z_Pr++ = abs(t.z3_int); *z_Pr++ = abs(t.z5_int); *z_Pr++ = abs(t.z4_int);
+		c_Pr = mxGetPr(mx_c);
+		*c_Pr++ = abs(t.z3_int) / scale; *c_Pr++ = abs(t.z5_int) / scale; *c_Pr++ = abs(t.z4_int) / scale;
+		engPutVariable(ep, "x", mx_x); engPutVariable(ep, "y", mx_y);
+		engPutVariable(ep, "z", mx_z); engPutVariable(ep, "c", mx_c);
+		engEvalString(ep, "fill3(x, y, z, z, 'LineStyle', 'none');");
+	}
+
+	if (abs(t.sgn_int) > 10)
+	{
+		if (t.sgn_int > 0)
+		{
+			x_Pr = mxGetPr(mx_x);
+			*x_Pr++ = t.x1_int; *x_Pr++ = t.x2_int; *x_Pr++ = t.x5_int;
+			y_Pr = mxGetPr(mx_y);
+			*y_Pr++ = t.y1_int; *y_Pr++ = t.y2_int; *y_Pr++ = t.y5_int;
+			z_Pr = mxGetPr(mx_z);
+			*z_Pr++ = abs(t.z1_int); *z_Pr++ = abs(t.z2_int); *z_Pr++ = abs(t.z5_int);
+			c_Pr = mxGetPr(mx_c);
+			*c_Pr++ = abs(t.z1_int) / scale; *c_Pr++ = abs(t.z2_int) / scale; *c_Pr++ = abs(t.z5_int) / scale;
+			engPutVariable(ep, "x", mx_x); engPutVariable(ep, "y", mx_y);
+			engPutVariable(ep, "z", mx_z); engPutVariable(ep, "c", mx_c);
+			engEvalString(ep, "fill3(x, y, z, z, 'LineStyle', 'none');");
+
+			x_Pr = mxGetPr(mx_x);
+			*x_Pr++ = t.x2_int; *x_Pr++ = t.x3_int; *x_Pr++ = t.x5_int;
+			y_Pr = mxGetPr(mx_y);
+			*y_Pr++ = t.y2_int; *y_Pr++ = t.y3_int; *y_Pr++ = t.y5_int;
+			z_Pr = mxGetPr(mx_z);
+			*z_Pr++ = abs(t.z2_int); *z_Pr++ = abs(t.z3_int); *z_Pr++ = abs(t.z5_int);
+			c_Pr = mxGetPr(mx_c);
+			*c_Pr++ = abs(t.z2_int) / scale; *c_Pr++ = abs(t.z3_int) / scale; *c_Pr++ = abs(t.z5_int) / scale;
+			engPutVariable(ep, "x", mx_x); engPutVariable(ep, "y", mx_y);
+			engPutVariable(ep, "z", mx_z); engPutVariable(ep, "c", mx_c);
+			engEvalString(ep, "fill3(x, y, z, z, 'LineStyle', 'none');");
+		}
+		if (t.sgn_int < 0)
+		{
+			x_Pr = mxGetPr(mx_x);
+			*x_Pr++ = t.x1_int; *x_Pr++ = t.x2_int; *x_Pr++ = t.x5_int;
+			y_Pr = mxGetPr(mx_y);
+			*y_Pr++ = t.y1_int; *y_Pr++ = t.y2_int; *y_Pr++ = t.y5_int;
+			z_Pr = mxGetPr(mx_z);
+			*z_Pr++ = abs(t.z1_int); *z_Pr++ = abs(t.z2_int); *z_Pr++ = abs(t.z5_int);
+			c_Pr = mxGetPr(mx_c);
+			*c_Pr++ = abs(t.z1_int) / scale; *c_Pr++ = abs(t.z2_int) / scale; *c_Pr++ = abs(t.z5_int) / scale;
+			engPutVariable(ep, "x", mx_x); engPutVariable(ep, "y", mx_y);
+			engPutVariable(ep, "z", mx_z); engPutVariable(ep, "c", mx_c);
+			engEvalString(ep, "fill3(x, y, z, z, 'LineStyle', 'none');");
+
+			x_Pr = mxGetPr(mx_x);
+			*x_Pr++ = t.x2_int; *x_Pr++ = t.x3_int; *x_Pr++ = t.x5_int;
+			y_Pr = mxGetPr(mx_y);
+			*y_Pr++ = t.y2_int; *y_Pr++ = t.y3_int; *y_Pr++ = t.y5_int;
+			z_Pr = mxGetPr(mx_z);
+			*z_Pr++ = abs(t.z2_int); *z_Pr++ = abs(t.z3_int); *z_Pr++ = abs(t.z5_int);
+			c_Pr = mxGetPr(mx_c);
+			*c_Pr++ = abs(t.z2_int) / scale; *c_Pr++ = abs(t.z3_int) / scale; *c_Pr++ = abs(t.z5_int) / scale;
+			engPutVariable(ep, "x", mx_x); engPutVariable(ep, "y", mx_y);
+			engPutVariable(ep, "z", mx_z); engPutVariable(ep, "c", mx_c);
+			engEvalString(ep, "fill3(x, y, z, z, 'LineStyle', 'none');");
+		}
+	}
+
+	//**********资源释放**********
+	mxDestroyArray(mx_x);
+	mxDestroyArray(mx_y);
+	mxDestroyArray(mx_z);
+	mxDestroyArray(mx_c);
+}
+
+
+
+void InhomogeneousThreeCavity::draw_intex(Triangle_All &t, double scale)
+{
+	// 定义matlab数组mxArray
+	mxArray *mx_x, *mx_y, *mx_z, *mx_c;
+
+	//将C中数组转化为matlab数组mxArray
+	mx_x = mxCreateDoubleMatrix(3, 1, mxREAL);
+	mx_y = mxCreateDoubleMatrix(3, 1, mxREAL);
+	mx_z = mxCreateDoubleMatrix(3, 1, mxREAL);
+	mx_c = mxCreateDoubleMatrix(3, 1, mxREAL);
+
+	// 定义matlab数组的数据指针
+	double *x_Pr, *y_Pr, *z_Pr, *c_Pr;
+
+	if (abs(t.sgn_intex) < 10)
+	{
+		x_Pr = mxGetPr(mx_x);
+		*x_Pr++ = t.x1_intex; *x_Pr++ = t.x4_intex; *x_Pr++ = t.x5_intex;
+		y_Pr = mxGetPr(mx_y);
+		*y_Pr++ = t.y1_intex; *y_Pr++ = t.y4_intex; *y_Pr++ = t.y5_intex;
+		z_Pr = mxGetPr(mx_z);
+		*z_Pr++ = abs(t.z1_intex); *z_Pr++ = abs(t.z4_intex); *z_Pr++ = abs(t.z5_intex);
+		c_Pr = mxGetPr(mx_c);
+		*c_Pr++ = abs(t.z1_intex) / scale; *c_Pr++ = abs(t.z4_intex) / scale; *c_Pr++ = abs(t.z5_intex) / scale;
+		engPutVariable(ep, "x", mx_x); engPutVariable(ep, "y", mx_y);
+		engPutVariable(ep, "z", mx_z); engPutVariable(ep, "c", mx_c);
+		engEvalString(ep, "fill3(x, y, z, z, 'LineStyle', 'none');");
+
+		x_Pr = mxGetPr(mx_x);
+		*x_Pr++ = t.x2_intex; *x_Pr++ = t.x3_intex; *x_Pr++ = t.x4_intex;
+		y_Pr = mxGetPr(mx_y);
+		*y_Pr++ = t.y2_intex; *y_Pr++ = t.y3_intex; *y_Pr++ = t.y4_intex;
+		z_Pr = mxGetPr(mx_z);
+		*z_Pr++ = abs(t.z2_intex); *z_Pr++ = abs(t.z3_intex); *z_Pr++ = abs(t.z4_intex);
+		c_Pr = mxGetPr(mx_c);
+		*c_Pr++ = abs(t.z2_intex) / scale; *c_Pr++ = abs(t.z3_intex) / scale; *c_Pr++ = abs(t.z4_intex) / scale;
+		engPutVariable(ep, "x", mx_x); engPutVariable(ep, "y", mx_y);
+		engPutVariable(ep, "z", mx_z); engPutVariable(ep, "c", mx_c);
+		engEvalString(ep, "fill3(x, y, z, z, 'LineStyle', 'none');");
+
+		x_Pr = mxGetPr(mx_x);
+		*x_Pr++ = t.x3_intex; *x_Pr++ = t.x5_intex; *x_Pr++ = t.x4_intex;
+		y_Pr = mxGetPr(mx_y);
+		*y_Pr++ = t.y3_intex; *y_Pr++ = t.y5_intex; *y_Pr++ = t.y4_intex;
+		z_Pr = mxGetPr(mx_z);
+		*z_Pr++ = abs(t.z3_intex); *z_Pr++ = abs(t.z5_intex); *z_Pr++ = abs(t.z4_intex);
+		c_Pr = mxGetPr(mx_c);
+		*c_Pr++ = abs(t.z3_intex) / scale; *c_Pr++ = abs(t.z5_intex) / scale; *c_Pr++ = abs(t.z4_intex) / scale;
+		engPutVariable(ep, "x", mx_x); engPutVariable(ep, "y", mx_y);
+		engPutVariable(ep, "z", mx_z); engPutVariable(ep, "c", mx_c);
+		engEvalString(ep, "fill3(x, y, z, z, 'LineStyle', 'none');");
+	}
+
+	if (abs(t.sgn_intex) > 10)
+	{
+		if (t.sgn_intex > 0)
+		{
+			x_Pr = mxGetPr(mx_x);
+			*x_Pr++ = t.x1_intex; *x_Pr++ = t.x2_intex; *x_Pr++ = t.x5_intex;
+			y_Pr = mxGetPr(mx_y);
+			*y_Pr++ = t.y1_intex; *y_Pr++ = t.y2_intex; *y_Pr++ = t.y5_intex;
+			z_Pr = mxGetPr(mx_z);
+			*z_Pr++ = abs(t.z1_intex); *z_Pr++ = abs(t.z2_intex); *z_Pr++ = abs(t.z5_intex);
+			c_Pr = mxGetPr(mx_c);
+			*c_Pr++ = abs(t.z1_intex) / scale; *c_Pr++ = abs(t.z2_intex) / scale; *c_Pr++ = abs(t.z5_intex) / scale;
+			engPutVariable(ep, "x", mx_x); engPutVariable(ep, "y", mx_y);
+			engPutVariable(ep, "z", mx_z); engPutVariable(ep, "c", mx_c);
+			engEvalString(ep, "fill3(x, y, z, z, 'LineStyle', 'none');");
+
+			x_Pr = mxGetPr(mx_x);
+			*x_Pr++ = t.x2_intex; *x_Pr++ = t.x3_intex; *x_Pr++ = t.x5_intex;
+			y_Pr = mxGetPr(mx_y);
+			*y_Pr++ = t.y2_intex; *y_Pr++ = t.y3_intex; *y_Pr++ = t.y5_intex;
+			z_Pr = mxGetPr(mx_z);
+			*z_Pr++ = abs(t.z2_intex); *z_Pr++ = abs(t.z3_intex); *z_Pr++ = abs(t.z5_intex);
+			c_Pr = mxGetPr(mx_c);
+			*c_Pr++ = abs(t.z2_intex) / scale; *c_Pr++ = abs(t.z3_intex) / scale; *c_Pr++ = abs(t.z5_intex) / scale;
+			engPutVariable(ep, "x", mx_x); engPutVariable(ep, "y", mx_y);
+			engPutVariable(ep, "z", mx_z); engPutVariable(ep, "c", mx_c);
+			engEvalString(ep, "fill3(x, y, z, z, 'LineStyle', 'none');");
+		}
+		if (t.sgn_intex < 0)
+		{
+			x_Pr = mxGetPr(mx_x);
+			*x_Pr++ = t.x1_intex; *x_Pr++ = t.x2_intex; *x_Pr++ = t.x5_intex;
+			y_Pr = mxGetPr(mx_y);
+			*y_Pr++ = t.y1_intex; *y_Pr++ = t.y2_intex; *y_Pr++ = t.y5_intex;
+			z_Pr = mxGetPr(mx_z);
+			*z_Pr++ = abs(t.z1_intex); *z_Pr++ = abs(t.z2_intex); *z_Pr++ = abs(t.z5_intex);
+			c_Pr = mxGetPr(mx_c);
+			*c_Pr++ = abs(t.z1_intex) / scale; *c_Pr++ = abs(t.z2_intex) / scale; *c_Pr++ = abs(t.z5_intex) / scale;
+			engPutVariable(ep, "x", mx_x); engPutVariable(ep, "y", mx_y);
+			engPutVariable(ep, "z", mx_z); engPutVariable(ep, "c", mx_c);
+			engEvalString(ep, "fill3(x, y, z, z, 'LineStyle', 'none');");
+
+			x_Pr = mxGetPr(mx_x);
+			*x_Pr++ = t.x2_intex; *x_Pr++ = t.x3_intex; *x_Pr++ = t.x5_intex;
+			y_Pr = mxGetPr(mx_y);
+			*y_Pr++ = t.y2_intex; *y_Pr++ = t.y3_intex; *y_Pr++ = t.y5_intex;
+			z_Pr = mxGetPr(mx_z);
+			*z_Pr++ = abs(t.z2_intex); *z_Pr++ = abs(t.z3_intex); *z_Pr++ = abs(t.z5_intex);
+			c_Pr = mxGetPr(mx_c);
+			*c_Pr++ = abs(t.z2_intex) / scale; *c_Pr++ = abs(t.z3_intex) / scale; *c_Pr++ = abs(t.z5_intex) / scale;
+			engPutVariable(ep, "x", mx_x); engPutVariable(ep, "y", mx_y);
+			engPutVariable(ep, "z", mx_z); engPutVariable(ep, "c", mx_c);
+			engEvalString(ep, "fill3(x, y, z, z, 'LineStyle', 'none');");
+		}
+	}
+
+	//**********资源释放**********
+	mxDestroyArray(mx_x);
+	mxDestroyArray(mx_y);
+	mxDestroyArray(mx_z);
+	mxDestroyArray(mx_c);
 }
 
 
