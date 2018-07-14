@@ -4279,18 +4279,24 @@ mxArray* InhomogeneousThreeCavity::setA_mx(double nn, vector<int> &nu, vector<ve
 	mx_A = mxCreateDoubleMatrix(3, ArowNum, mxCOMPLEX);
 	double *AvaluePr = mxGetPr(mx_A);
 	double *AvaluePi = mxGetPi(mx_A);
+	double *pA_result = A_result;
 	for (int i = 0; i < ArowNum; i++)
 	{
 		//行索引
-		*AvaluePr++ = *A_result++; ////这个索引是从1计数的(因此传给matlab不需要-1)
+		*AvaluePr++ = *pA_result++; ////这个索引是从1计数的(因此传给matlab不需要-1)
 		*AvaluePi++ = 0;
 		//列索引
-		*AvaluePr++ = *A_result++;
+		*AvaluePr++ = *pA_result++;
 		*AvaluePi++ = 0;
 		//取值
-		*AvaluePr++ = *A_result++;
-		*AvaluePi++ = *A_result++;
+		*AvaluePr++ = *pA_result++;
+		*AvaluePi++ = *pA_result++;
 	}
+
+	//释放资源
+	free(A_result);
+	free(A);
+
 	return mx_A;
 }
 
