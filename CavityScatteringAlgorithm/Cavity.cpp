@@ -570,5 +570,7 @@ void Cavity::plotAperture(string title, string xlabel, string ylabel, int sign)
 
 	//如无法成功绘图，需要重新注册matlab引擎
 	//详见https://blog.csdn.net/xiaoqiang920/article/details/8949254
+
+	free(cdCommand);
 }
 

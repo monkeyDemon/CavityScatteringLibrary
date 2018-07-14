@@ -3849,6 +3849,10 @@ SparseMatrix<complex<double>> InhomogeneousSingalCavity::setA(double nn, vector<
 	//将三元组形式数据转换为系数矩阵形式
 	SparseMatrix<complex<double>> matrixA = buildSparseMatrixA(A_result, nn, ArowNum);
 
+	//释放资源
+	free(A_result);
+	free(A);
+
 	return matrixA;
 }
 
