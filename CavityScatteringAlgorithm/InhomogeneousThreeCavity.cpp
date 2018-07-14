@@ -263,7 +263,7 @@ bool InhomogeneousThreeCavity::SolveAperture(string title, string xlabel, string
 	myTimer.EndAndPrint();
 	//cout << solutionOfAperture << endl;
 
-	//this->plotAperture(title, xlabel, ylabel, sign);
+	this->plotAperture(title, xlabel, ylabel, sign);
 
 
 	//สอทลืสิด

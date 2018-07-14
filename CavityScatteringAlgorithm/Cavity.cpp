@@ -173,6 +173,7 @@ void Cavity::SolveRCS(double interval)
 	//engEvalString(ep, "set(gca, 'YTick', -70:10 : 20, 'LineWidth', 1.2);");
 	engEvalString(ep, "xlabel('Observation angle(degree)', 'FontSize', 12);");
 	engEvalString(ep, "ylabel('Backscatter RCS(dB)', 'FontSize', 12);");
+	engEvalString(ep, "set(gca, 'LineWidth', 1.5);");
 
 
 	//*********释放资源*********
@@ -547,8 +548,7 @@ void Cavity::plotAperture(string title, string xlabel, string ylabel, int sign)
 	//直接调用matlab的内置函数绘图
 
 	engEvalString(ep, "figure");
-	engEvalString(ep, "plot(xValue, apertureValue, 'b');");
-
+	engEvalString(ep, "plot(xValue, apertureValue, 'b', 'LineWidth', 1.2);");
 	engEvalString(ep, "xlabel('x', 'FontSize', 12);");
 
 	if (sign == 0)//幅值
@@ -563,7 +563,6 @@ void Cavity::plotAperture(string title, string xlabel, string ylabel, int sign)
 	{
 		;
 	}
-
 	engEvalString(ep, "set(gca, 'LineWidth', 1.5);");
 
 	//set(gca, 'XLim', [para.box.left para.box.right]);
