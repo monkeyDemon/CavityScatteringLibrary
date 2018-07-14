@@ -305,8 +305,7 @@ public:
 			}
 		}
 		//再释放指针数组占用的空间
-		vector<vector<Triangle_All*>> tri_all_tmp;
-		tri_all.swap(tri_all_tmp);
+		vector<vector<Triangle_All*>>().swap(tri_all);
 
 
 		//释放tri_normal占用的空间
@@ -320,15 +319,7 @@ public:
 			}
 		}
 		//再释放指针数组占用的空间
-		printf("释放前Triangle_Normal占用内存%d\n", tri_normal.capacity());
-		vector<vector<Triangle_Normal*>> tri_normal_tmp;
-		tri_normal.swap(tri_normal_tmp);
-		printf("释放后Triangle_Normal占用内存%d\n", tri_normal.capacity());
-
-
-		//释放tri_sign占用的空间
-		vector<vector<bool>> tri_sign_tmp;
-		tri_sign.swap(tri_sign_tmp);
+		vector<vector<Triangle_Normal*>>().swap(tri_normal);
 	}
 
 	bool Get_sign(int i, int j)
