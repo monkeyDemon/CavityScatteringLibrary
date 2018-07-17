@@ -368,15 +368,19 @@ int main()
 
 	//int m = 48;
 	//int n = 6;
-	int m = 192;
-	int n = 24;
-	//int m = 2400;
-	//int n = 300;
+	//int m = 192;
+	//int n = 24;
+	//int m = 384;
+	//int n = 40;
+	int m = 2400;
+	int n = 300;
 	//int m = 3360;
 	//int n = 420;
+	/*int m = 4032;
+	int n = 504;*/
 	cavity.InitMesh(m, n);
 
-	double k0 = 2 * M_PI;
+	double k0 = 16 * M_PI;
 	complex<double> epr1(1, 0);
 	complex<double> epr1_int(4, 1);
 	complex<double> epr2(1, 0);
@@ -429,12 +433,12 @@ int main()
 	////求解-并绘制口径面处的解
 	//cavity.SolveAperture("title", "xlabel", "ylabel", 0);
 
-	//求解-并绘制整个腔体内的数值解
-	cavity.SolveCavity("title", "xlabel", "ylabel");
+	////求解-并绘制整个腔体内的数值解
+	//cavity.SolveCavity("title", "xlabel", "ylabel");
 
-	////求解-并绘制RCS
-	//double interval = 0.5;
-	//cavity.SolveRCS(interval);
+	//求解-并绘制RCS
+	double interval = 0.5;
+	cavity.SolveRCS(interval);
 
 	#pragma endregion
 
@@ -443,16 +447,20 @@ int main()
 	//InhomogeneousThreeCircleCircleCavity cavity(1);
 	/////初始化参数
 	//double VirtualTop = 0;
-	//double VirtualBottom = -0.75;
+	//double VirtualBottom = -0.6;
 	//double VirtualLeft = -3;
 	//double VirtualRight = 3;
 	//cavity.InitVirtualBorder(VirtualTop, VirtualBottom, VirtualLeft, VirtualRight);
 
 	////int m = 48;
 	////int n = 6;
-	//int m = 192;
-	//int n = 24;
 	////int m = 192;
+	////int n = 24;
+	////int m = 288;
+	////int n = 30;
+	//int m = 384;
+	//int n = 40;
+	////int m = 960;
 	////int n = 96;
 	////int m = 2400;
 	////int n = 300;
@@ -501,18 +509,20 @@ int main()
 	//circle3_int.radius = 0.6;
 	//cavity.InitCavityInhomogeneousShapeParameter(circle1_int, circle2_int, circle3_int);
 
-	//// 绘制三角形网格
-	//cavity.PlotTriangleMesh("title", "xlabel", "ylabel");
+	////// 绘制三角形网格
+	////cavity.PlotTriangleMesh("title", "xlabel", "ylabel");
 
-	////求解-并绘制口径面处的解
-	//cavity.SolveAperture("title", "xlabel", "ylabel", 0);
+
+
+	//////求解-并绘制口径面处的解
+	////cavity.SolveAperture("title", "xlabel", "ylabel", 0);
 
 	////求解-并绘制整个腔体内的数值解
 	//cavity.SolveCavity("title", "xlabel", "ylabel");
 
-	//// 计算并绘制RCS
-	//double interval = 0.5;
-	//cavity.SolveRCS(interval);
+	////// 计算并绘制RCS
+	////double interval = 0.5;
+	////cavity.SolveRCS(interval);
 
 	#pragma endregion
 

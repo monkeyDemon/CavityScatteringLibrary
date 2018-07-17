@@ -189,6 +189,7 @@ bool InhomogeneousThreeCavity::SolveCavity(string title, string xlabel, string y
 	//调用matalb引擎画图
 	engEvalString(ep, "figure");
 	engEvalString(ep, "hold on;");
+	engEvalString(ep, "colormap(jet)");
 
 	// 定义matlab数组mxArray
 	mxArray *mx_x, *mx_y, *mx_z, *mx_c;
@@ -675,9 +676,41 @@ bool InhomogeneousThreeCavity::SolveCavity(string title, string xlabel, string y
 			}
 		}
 	}
-	engEvalString(ep, "hold off");
-	engEvalString(ep, "colorbar");
 
+	//设置图像的相关信息（坐标轴范围，刻度，色带等）
+	double left = this->virtualBorderLeft;
+	double right = this->virtualBorderRight;
+	double bottom = this->virtualBorderBottom;
+	double top = this->virtualBorderTop;
+	//double bottom = -0.6;
+	//double top = 0.2;
+
+	mxArray *mx_l, *mx_r, *mx_b, *mx_t;
+	double *l_Pr, *r_Pr, *b_Pr, *t_Pr;
+
+	mx_l = mxCreateDoubleMatrix(1, 1, mxREAL);
+	mx_r = mxCreateDoubleMatrix(1, 1, mxREAL);
+	mx_b = mxCreateDoubleMatrix(1, 1, mxREAL);
+	mx_t = mxCreateDoubleMatrix(1, 1, mxREAL);
+
+	l_Pr = mxGetPr(mx_l);
+	*l_Pr = left;
+	r_Pr = mxGetPr(mx_r);
+	*r_Pr = right;
+	b_Pr = mxGetPr(mx_b);
+	*b_Pr = bottom;
+	t_Pr = mxGetPr(mx_t);
+	*t_Pr = top;
+	engPutVariable(ep, "left", mx_l); engPutVariable(ep, "right", mx_r);
+	engPutVariable(ep, "bottom", mx_b); engPutVariable(ep, "top", mx_t);
+
+	engEvalString(ep, "set(gca, 'XLim', [left right]);");
+	engEvalString(ep, "set(gca, 'XTick', left: 1 : right);");
+	engEvalString(ep, "set(gca, 'YLim', [bottom top]);");
+	engEvalString(ep, "set(gca, 'YTick', bottom: 0.2 : top);");
+
+	engEvalString(ep, "colorbar");
+	engEvalString(ep, "hold off");
 
 	//******释放资源******
 	//TriangleMesh的资源释放在析构函数中，程序会自动调用
